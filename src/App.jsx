@@ -16,7 +16,6 @@ import Blogs from './pages/Blogs'
 import Footer from './components/Footer'
 import { MusicProvider } from './context/MusicContext'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
-import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
     const { loading } = useAuth()
