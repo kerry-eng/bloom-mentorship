@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Home from './pages/Home'
+import HomeBoy from './pages/HomeBoy'
 import Auth from './pages/Auth'
 import Booking from './pages/Booking'
 import Dashboard from './pages/Dashboard'
@@ -14,6 +15,8 @@ import About from './pages/About'
 import Blogs from './pages/Blogs'
 import Footer from './components/Footer'
 import { MusicProvider } from './context/MusicContext'
+import { ThemeProvider, useTheme } from './context/ThemeContext'
+import { ThemeProvider } from './context/ThemeContext'
 
 function App() {
     const { loading } = useAuth()
@@ -28,33 +31,40 @@ function App() {
     }
 
     return (
-        <MusicProvider>
-            {!['/dashboard', '/auth'].includes(location.pathname) && <Navbar />}
-            {!['/dashboard', '/auth'].includes(location.pathname) && <MusivePlayer />}
-            <Routes>
-                <Route path="/" element={<Home />} />
-                <Route path="/auth" element={<Auth />} />
-                <Route path="/booking" element={
-                    <ProtectedRoute><Booking /></ProtectedRoute>
-                } />
-                <Route path="/dashboard" element={
-                    <ProtectedRoute><Dashboard /></ProtectedRoute>
-                } />
-                <Route path="/personalization" element={
-                    <ProtectedRoute><Personalization /></ProtectedRoute>
-                } />
-                <Route path="/reflections" element={
-                    <ProtectedRoute><Reflections /></ProtectedRoute>
-                } />
-                <Route path="/about" element={<About />} />
-                <Route path="/blogs" element={<Blogs />} />
-                <Route path="/session/:sessionId" element={<Session />} />
+        <ThemeProvider>
+            <MusicProvider>
+                {!['/dashboard', '/auth'].includes(location.pathname) && <Navbar />}
+                {!['/dashboard', '/auth'].includes(location.pathname) && <MusivePlayer />}
+                <Routes>
+                    <Route path="/" element={<HomeLoader />} />
+                    <Route path="/auth" element={<Auth />} />
+                    <Route path="/booking" element={
+                        <ProtectedRoute><Booking /></ProtectedRoute>
+                    } />
+                    <Route path="/dashboard" element={
+                        <ProtectedRoute><Dashboard /></ProtectedRoute>
+                    } />
+                    <Route path="/personalization" element={
+                        <ProtectedRoute><Personalization /></ProtectedRoute>
+                    } />
+                    <Route path="/reflections" element={
+                        <ProtectedRoute><Reflections /></ProtectedRoute>
+                    } />
+                    <Route path="/about" element={<About />} />
+                    <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/session/:sessionId" element={<Session />} />
 
-                <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-            {!['/dashboard', '/auth'].includes(location.pathname) && <Footer />}
-        </MusicProvider>
+                    <Route path="*" element={<Navigate to="/" replace />} />
+                </Routes>
+                {!['/dashboard', '/auth'].includes(location.pathname) && <Footer />}
+            </MusicProvider>
+        </ThemeProvider>
     )
+}
+
+function HomeLoader() {
+    const { theme } = useTheme()
+    return theme === 'bo' ? <HomeBoy /> : <Home />
 }
 
 export default App

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../supabase';
 import MoodChecker from '../components/MoodChecker';
 import JournalPreview from '../components/JournalPreview';
@@ -8,6 +9,7 @@ import './Reflections.css';
 
 export default function Reflections() {
     const { user } = useAuth();
+    const { theme } = useTheme();
     const [reflections, setReflections] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -36,7 +38,7 @@ export default function Reflections() {
     }
 
     return (
-        <div className="reflections-page">
+        <div className={`reflections-page ${theme === 'bo' ? 'theme-bo' : ''}`}>
             <div className="container reflections-container">
                 <header className="reflections-header fade-in">
                     <Link to="/dashboard" className="back-btn" aria-label="Back">

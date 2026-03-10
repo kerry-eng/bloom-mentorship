@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import { supabase } from '../supabase'
 import MusivePlayer from '../components/MusivePlayer'
 import './Dashboard.css'
@@ -30,6 +31,7 @@ function getGreeting() {
 
 export default function Dashboard() {
     const { user, profile } = useAuth()
+    const { theme } = useTheme()
     const [sessions, setSessions] = useState([])
     const [stats, setStats] = useState({
         sessions: 0,
@@ -451,7 +453,7 @@ export default function Dashboard() {
     )
 
     return (
-        <div className={`dashboard-page workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
+        <div className={`dashboard-wrapper ${theme === 'bo' ? 'theme-bo' : ''} workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
             <div className="workspace-container">
                 <aside className={`workspace-sidebar glass-card-vibe ${isMobileMenuOpen ? 'open' : ''}`}>
                     <div className="sidebar-brand">

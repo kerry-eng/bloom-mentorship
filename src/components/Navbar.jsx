@@ -1,10 +1,13 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
 import './Navbar.css'
+import './NavbarTheme.css'
 
 export default function Navbar() {
     const { user, signOut } = useAuth()
+    const { theme, toggleTheme } = useTheme()
     const [scrolled, setScrolled] = useState(false)
     const [menuOpen, setMenuOpen] = useState(false)
     const location = useLocation()
@@ -48,6 +51,13 @@ export default function Navbar() {
                         <>
                             <Link to="/dashboard" className="navbar__link">Dashboard</Link>
                             <div className="navbar__actions">
+                                <button
+                                    onClick={toggleTheme}
+                                    className="btn-theme-toggle"
+                                    title={`Switch to ${theme === 'bloom' ? 'Strength Mode' : 'Gloria Mode'}`}
+                                >
+                                    {theme === 'bloom' ? '⚡' : '🌸'}
+                                </button>
                                 <Link to="/booking" className="btn btn-primary btn-sm btn-book btn-nav-action">
                                     Book Session
                                 </Link>
@@ -56,6 +66,13 @@ export default function Navbar() {
                         </>
                     ) : (
                         <div className="navbar__actions">
+                            <button
+                                onClick={toggleTheme}
+                                className="btn-theme-toggle"
+                                title={`Switch to ${theme === 'bloom' ? 'Strength Mode' : 'Gloria Mode'}`}
+                            >
+                                {theme === 'bloom' ? '⚡' : '🌸'}
+                            </button>
                             <Link to="/auth" className="navbar__link btn-signin-nav">Sign In</Link>
                             <Link to="/booking" className="btn btn-primary btn-sm btn-book btn-nav-action">
                                 Book Session
