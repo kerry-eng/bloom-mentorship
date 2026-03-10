@@ -31,6 +31,13 @@ export default function Home() {
                             </div>
 
                             <div className="mindloop-hero-content-flex">
+                                <div className="mindloop-image-side">
+                                    <div className="portrait-container">
+                                        <img src="/hero.jpg" alt="Guide" className="portrait-img" />
+                                        <div className="portrait-glow"></div>
+                                    </div>
+                                </div>
+
                                 <div className="mindloop-text-side">
                                     <h1 className="mindloop-display">
                                         Find Peace, <br />
@@ -44,7 +51,6 @@ export default function Home() {
 
                                     <div className="mindloop-hero-btns">
                                         <Link to="/booking" className="mindloop-btn primary">Book Session Now</Link>
-                                        <Link to="/dashboard" className="mindloop-btn secondary">View Dashboard</Link>
                                     </div>
 
                                     <div className="mindloop-stats">
@@ -62,13 +68,6 @@ export default function Home() {
                                             <strong>98%</strong>
                                             <span>Satisfaction</span>
                                         </div>
-                                    </div>
-                                </div>
-
-                                <div className="mindloop-image-side">
-                                    <div className="portrait-container">
-                                        <img src="/hero.jpg" alt="Guide" className="portrait-img" />
-                                        <div className="portrait-glow"></div>
                                     </div>
                                 </div>
                             </div>
