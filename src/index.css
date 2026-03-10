@@ -2,7 +2,7 @@
    BLOOM MENTORSHIP — GLOBAL DESIGN SYSTEM
    Unisex, Professional, and Inclusive Aesthetic
    ============================================= */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@400;700&family=Dancing+Script:wght@400;700&display=swap');
 
 :root {
   --color-bg-base: #ffffff;
@@ -95,7 +95,7 @@
   /* Typography */
   --font-display: 'Playfair Display', serif;
   --font-body: 'Inter', sans-serif;
-  --font-script: 'Caveat', cursive;
+  --font-script: 'Dancing Script', cursive;
   --font-header-classic: 'Playfair Display', serif;
 
   --text-gradient: var(--gradient-meta);
