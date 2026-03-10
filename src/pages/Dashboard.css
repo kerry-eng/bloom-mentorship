@@ -817,6 +817,67 @@
     color: var(--color-text-soft);
 }
 
+.session-label-group {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.join-glow-link {
+    font-size: 0.7rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--color-primary);
+    background: var(--color-primary-light);
+    padding: 0.2rem 0.6rem;
+    border-radius: var(--radius-full);
+    text-decoration: none;
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+    transition: all 0.3s ease;
+}
+
+.join-glow-link:hover {
+    background: var(--color-primary);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+}
+
+.session-item-mini {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem 0;
+}
+
+.session-info {
+    flex: 1;
+}
+
+.past-session {
+    opacity: 0.7;
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+
+.session-meta {
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+    line-height: 1.6;
+}
+
+.mentor-name-tag {
+    font-size: 0.85rem;
+    color: var(--color-text-mid);
+}
+
+.session-price-tag {
+    font-family: var(--font-display);
+    font-weight: 800;
+    color: var(--color-primary);
+    font-size: 1.1rem;
+}
+
 .stat-card {
     display: flex;
     align-items: center;

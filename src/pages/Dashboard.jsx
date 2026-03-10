@@ -215,7 +215,17 @@ export default function Dashboard() {
                                         <div key={s.id} className="session-item-mini">
                                             <div className="session-dot"></div>
                                             <div className="session-info">
-                                                <strong>{s.session_label}</strong>
+                                                <div className="session-label-group">
+                                                    <strong>{s.session_label}</strong>
+                                                    {isJoinable(s.scheduled_at) && (
+                                                        <Link
+                                                            to={`/session/${s.id}?role=user`}
+                                                            className="join-glow-link"
+                                                        >
+                                                            Join Now
+                                                        </Link>
+                                                    )}
+                                                </div>
                                                 <span>{new Date(s.scheduled_at).toLocaleDateString()}</span>
                                             </div>
                                         </div>
@@ -310,29 +320,67 @@ export default function Dashboard() {
 
     const renderAssignments = () => (
         <div className="workspace-module fade-in">
-            <div className="module-header">
-                <h2 className="display-title sm">Performance Tracker</h2>
-                <p className="subtitle">Your professional roadmap. Key milestones and action items.</p>
+            <div className="module-header d-flex justify-content-between align-items-center">
+                <div>
+                    <h2 className="display-title sm">Your Sessions</h2>
+                    <p className="subtitle">Join active meetings or review past progress.</p>
+                </div>
+                <Link to="/booking" className="btn btn-primary btn-vibration btn-sm">New Booking</Link>
             </div>
 
             <div className="assignments-list mt-5">
-                <div className="glass-card-vibe p-5 assignment-item">
-                    <div className="assignment-status done">✓ DONE</div>
-                    <h3>Core Vision Session</h3>
-                    <p>Complete the vision board exercise from our last meeting.</p>
-                    <div className="assignment-footer mt-3">
-                        <span className="due-label">Completed Jun 12</span>
+                {sessions.length === 0 ? (
+                    <div className="glass-card-vibe p-5 text-center">
+                        <p className="empty-text">No mentorship sessions scheduled yet.</p>
+                        <Link to="/booking" className="text-link mt-3 d-inline-block">Book your first session</Link>
                     </div>
-                </div>
-                <div className="glass-card-vibe p-5 assignment-item">
-                    <div className="assignment-status pending">PENDING</div>
-                    <h3>Growth Habit Log</h3>
-                    <p>Track your daily focus habits for 7 consecutive days.</p>
-                    <div className="assignment-footer mt-3">
-                        <span className="due-label">Due in 3 days</span>
-                        <button className="btn btn-vibration-outline btn-sm">Upload Work</button>
-                    </div>
-                </div>
+                ) : (
+                    sessions.map(s => (
+                        <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at) ? 'past-session' : ''}`}>
+                            <div className="assignment-status-row d-flex justify-content-between align-items-center mb-4">
+                                <div className={`assignment-status ${new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at) ? 'done' : 'pending'}`}>
+                                    {new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at) ? '✓ COMPLETED' : 'UPCOMING'}
+                                </div>
+                                <span className="session-price-tag">KES {s.price?.toLocaleString()}</span>
+                            </div>
+
+                            <div className="session-content-row d-flex justify-content-between align-items-end">
+                                <div>
+                                    <h3 className="mb-2">{s.session_label || s.session_type}</h3>
+                                    <p className="session-meta">
+                                        📅 {new Date(s.scheduled_at).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                        <br />
+                                        ⏰ {new Date(s.scheduled_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+                                    </p>
+                                    {s.mentor && (
+                                        <p className="mentor-name-tag mt-2">
+                                            Mentor: <strong>{s.mentor.full_name}</strong>
+                                        </p>
+                                    )}
+                                </div>
+
+                                <div className="session-actions">
+                                    {isJoinable(s.scheduled_at) ? (
+                                        <Link
+                                            to={`/session/${s.id}?role=user`}
+                                            className="btn btn-primary btn-vibration px-5"
+                                        >
+                                            🎥 Join Meeting
+                                        </Link>
+                                    ) : new Date(s.scheduled_at) > new Date() ? (
+                                        <button className="btn btn-vibration-outline disabled" disabled>
+                                            Starts soon
+                                        </button>
+                                    ) : (
+                                        <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview'); /* Scroll to reflection */ }}>
+                                            Record Reflection
+                                        </button>
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     )
@@ -422,7 +470,7 @@ export default function Dashboard() {
                             <span className="nav-text">Community</span>
                         </button>
                         <button className={`nav-item ${activeView === 'assignments' ? 'active' : ''}`} onClick={() => { setActiveView('assignments'); setIsMobileMenuOpen(false); }}>
-                            <span className="nav-text">Tasks</span>
+                            <span className="nav-text">Sessions</span>
                         </button>
                         <button className={`nav-item ${activeView === 'messages' ? 'active' : ''}`} onClick={() => { setActiveView('messages'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Messages</span>
