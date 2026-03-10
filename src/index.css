@@ -143,6 +143,24 @@
   --color-bg-base: #ffffff;
 }
 
+[data-theme='pink'] {
+  --color-primary: #db2777;
+  /* Rose Pink */
+  --color-primary-deep: #be185d;
+  --figma-gradient-btn: linear-gradient(135deg, #f472b6, #db2777);
+  --color-bg-base: #fff1f2;
+  /* Soft Rose tint */
+  --color-bg-alt: #ffe4e6;
+
+  --decor-orb-1: #fbcfe8;
+  --decor-orb-2: #f9a8d4;
+  --decor-orb-3: #fda4af;
+
+  --color-text-dark: #831843;
+  --color-text-mid: #9d174d;
+  --color-text-soft: #be185d;
+}
+
 body {
   font-family: var(--font-body);
   background-color: var(--color-bg-base);

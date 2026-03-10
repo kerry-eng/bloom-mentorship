@@ -453,7 +453,8 @@ export default function Dashboard() {
     )
 
     return (
-        <div className={`dashboard-wrapper ${theme === 'bo' ? 'theme-bo' : ''} workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
+    return (
+        <div className={`dashboard-wrapper ${theme === 'bo' ? 'theme-bo' : ''} ${theme === 'pink' ? 'theme-pink' : ''} workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
             <div className="workspace-container">
                 <aside className={`workspace-sidebar glass-card-vibe ${isMobileMenuOpen ? 'open' : ''}`}>
                     <div className="sidebar-brand">

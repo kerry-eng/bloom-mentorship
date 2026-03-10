@@ -38,7 +38,8 @@ export default function Reflections() {
     }
 
     return (
-        <div className={`reflections-page ${theme === 'bo' ? 'theme-bo' : ''}`}>
+    return (
+        <div className={`reflections-page ${theme === 'bo' ? 'theme-bo' : ''} ${theme === 'pink' ? 'theme-pink' : ''}`}>
             <div className="container reflections-container">
                 <header className="reflections-header fade-in">
                     <Link to="/dashboard" className="back-btn" aria-label="Back">

@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useTheme } from '../context/ThemeContext'
 import './Home.css'
 
 export default function Home() {
+    const { theme } = useTheme()
     useEffect(() => {
         window.scrollTo(0, 0)
     }, [])
 
     return (
-        <div className="home-container">
+        <div className={`home-container ${theme === 'pink' ? 'theme-pink' : ''}`}>
             {/* ─── Background Decor ─── */}
             <div className="bg-decor" aria-hidden="true">
                 <div className="decor-orb orb-1"></div>

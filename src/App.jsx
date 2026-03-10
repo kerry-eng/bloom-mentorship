@@ -63,7 +63,8 @@ function App() {
 
 function HomeLoader() {
     const { theme } = useTheme()
-    return theme === 'bo' ? <HomeBoy /> : <Home />
+    if (theme === 'bo') return <HomeBoy />
+    return <Home />
 }
 
 export default App
