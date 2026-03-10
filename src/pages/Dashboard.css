@@ -133,7 +133,26 @@
 .topbar-right {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
+}
+
+.notification-wrapper {
+    position: relative;
+}
+
+.notification-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 8px;
+    height: 8px;
+    background: #ef4444;
+    border-radius: 50%;
+    border: 2px solid white;
+}
+
+.bell-icon {
+    font-size: 1.2rem;
 }
 
 .search-bar-mini {
@@ -1367,8 +1386,12 @@
     }
 
     .topbar-right {
-        display: none;
-        /* Hide non-essential pill on mobile topbar */
+        display: flex;
+        gap: 1rem;
+    }
+
+    .welcome-text {
+        font-size: 0.65rem;
     }
 
     .sidebar-overlay {

@@ -23,6 +23,13 @@ function isJoinable(dateStr) {
     return diff < 15 * 60000 && diff > -90 * 60000
 }
 
+function getGreeting() {
+    const hour = new Date().getHours()
+    if (hour < 12) return 'Good morning'
+    if (hour < 17) return 'Good afternoon'
+    return 'Good evening'
+}
+
 export default function Dashboard() {
     const { user, profile } = useAuth()
     const [sessions, setSessions] = useState([])
@@ -158,7 +165,7 @@ export default function Dashboard() {
                 <div className="bento-layout fade-in">
                     <div className="bento-main-col">
                         <section className="hero-greeting">
-                            <h1 className="display-title">Good morning, {user?.email?.split('@')[0] || 'Member'}.</h1>
+                            <h1 className="display-title">{getGreeting()}, {user?.email?.split('@')[0] || 'Member'}.</h1>
                             <p className="subtitle">Consistency is the architecture of success.</p>
                         </section>
 
@@ -497,10 +504,15 @@ export default function Dashboard() {
                             >
                                 <span className="hamburger"></span>
                             </button>
-                            <span className="welcome-text">Account: <span className="user-name">{profile?.full_name || user?.email}</span></span>
                         </div>
                         <div className="topbar-right">
-                            <span className="pill-label-vibe">Zen Executive Active</span>
+                            <div className="notification-wrapper">
+                                <button className="topbar-btn">
+                                    <span className="bell-icon">🔔</span>
+                                    <span className="notification-badge"></span>
+                                </button>
+                            </div>
+                            <span className="welcome-text">Account: <span className="user-name">{profile?.full_name || user?.email}</span></span>
                         </div>
                     </header>
 
