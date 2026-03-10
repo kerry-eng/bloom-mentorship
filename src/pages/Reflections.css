@@ -17,6 +17,18 @@
     gap: 2rem;
 }
 
+.mindset-tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 2rem;
+    margin-bottom: 4rem;
+}
+
+.tool-card {
+    padding: 2rem;
+    height: 100%;
+}
+
 .reflection-card {
     padding: 2.5rem;
     display: flex;
@@ -82,6 +94,12 @@
 .empty-icon {
     font-size: 4rem;
     margin-bottom: 1.5rem;
+}
+
+@media (max-width: 1024px) {
+    .mindset-tools-grid {
+        grid-template-columns: 1fr;
+    }
 }
 
 @media (max-width: 768px) {

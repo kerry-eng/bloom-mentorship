@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../supabase'
-import MoodChecker from '../components/MoodChecker'
-import JournalPreview from '../components/JournalPreview'
 import MusivePlayer from '../components/MusivePlayer'
 import './Dashboard.css'
 
@@ -41,7 +39,6 @@ export default function Dashboard() {
     })
     const [moodHistory, setMoodHistory] = useState([])
     const [loading, setLoading] = useState(true)
-    const [showMoodLogger, setShowMoodLogger] = useState(false)
     const [showMusicPlayer, setShowMusicPlayer] = useState(false)
     const [activeReflectionSession, setActiveReflectionSession] = useState(null)
     const [reflectionForm, setReflectionForm] = useState({
@@ -65,13 +62,13 @@ export default function Dashboard() {
     }, [user])
 
     useEffect(() => {
-        if (showMoodLogger || showMusicPlayer) {
+        if (showMusicPlayer) {
             document.body.style.overflow = 'hidden'
         } else {
             document.body.style.overflow = 'unset'
         }
         return () => { document.body.style.overflow = 'unset' }
-    }, [showMoodLogger, showMusicPlayer])
+    }, [showMusicPlayer])
 
     async function fetchAllData() {
         setLoading(true)
@@ -178,13 +175,7 @@ export default function Dashboard() {
                                 <span className="label">Sessions</span>
                                 <span className="value">{stats.sessions}</span>
                             </div>
-                            <div className="stat-card">
-                                <span className="label">Journals</span>
-                                <span className="value">{stats.journals}</span>
-                            </div>
                         </div>
-
-                        <JournalPreview onEntrySaved={fetchAllData} />
                     </div>
 
                     <div className="bento-side-col">
@@ -479,6 +470,9 @@ export default function Dashboard() {
                         <button className={`nav-item ${activeView === 'assignments' ? 'active' : ''}`} onClick={() => { setActiveView('assignments'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Sessions</span>
                         </button>
+                        <Link to="/reflections" className="nav-item">
+                            <span className="nav-text">Reflections</span>
+                        </Link>
                         <button className={`nav-item ${activeView === 'messages' ? 'active' : ''}`} onClick={() => { setActiveView('messages'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Messages</span>
                         </button>
@@ -532,16 +526,15 @@ export default function Dashboard() {
             </div>
 
             {/* Modals */}
-            {(showMoodLogger || showMusicPlayer) && (
-                <div className="modal-backdrop" onClick={() => { setShowMoodLogger(false); setShowMusicPlayer(false); }}>
+            {showMusicPlayer && (
+                <div className="modal-backdrop" onClick={() => { setShowMusicPlayer(false); }}>
                     <div className="modal-container" onClick={e => e.stopPropagation()}>
                         <div className="modal-content glass-card-vibe p-5">
                             <div className="modal-header">
-                                <h3 className="display-title sm">{showMoodLogger ? "DAILY VIBE CHECK" : "FOCUS MODE"}</h3>
-                                <button className="close-btn" onClick={() => { setShowMoodLogger(false); setShowMusicPlayer(false); }}>&times;</button>
+                                <h3 className="display-title sm">FOCUS MODE</h3>
+                                <button className="close-btn" onClick={() => { setShowMusicPlayer(false); }}>&times;</button>
                             </div>
-                            {showMoodLogger && <MoodChecker onEntrySaved={fetchAllData} />}
-                            {showMusicPlayer && <MusivePlayer inline={true} />}
+                            <MusivePlayer inline={true} />
                         </div>
                     </div>
                 </div>

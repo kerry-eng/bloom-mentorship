@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { supabase } from '../supabase';
+import MoodChecker from '../components/MoodChecker';
+import JournalPreview from '../components/JournalPreview';
 import './Reflections.css';
 
 export default function Reflections() {
@@ -43,10 +45,23 @@ export default function Reflections() {
                         </svg>
                     </Link>
                     <div className="header-titles">
-                        <h1 className="display-title">Journey History</h1>
-                        <p className="subtitle">A comprehensive record of your insights and growth milestones.</p>
+                        <h1 className="display-title">Mindset Hub</h1>
+                        <p className="subtitle">Cultivate your focus. Record your evolution.</p>
                     </div>
                 </header>
+
+                <div className="mindset-tools-grid mb-5">
+                    <div className="tool-card glass-card fade-in">
+                        <MoodChecker onEntrySaved={fetchReflections} />
+                    </div>
+                    <div className="tool-card glass-card fade-in">
+                        <JournalPreview onEntrySaved={fetchReflections} />
+                    </div>
+                </div>
+
+                <div className="section-label mb-4 fade-in">
+                    <span className="pill-label-vibe">JOURNEY HISTORY</span>
+                </div>
 
                 {loading ? (
                     <div className="text-center py-5"><div className="spinner mx-auto" /></div>
