@@ -1,0 +1,95 @@
+.reflections-page {
+    padding: 8rem 0 6rem;
+    min-height: 100vh;
+    background: var(--color-bg-base);
+}
+
+.reflections-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.reflections-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 2rem;
+}
+
+.reflection-card {
+    padding: 2.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.date-tag {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.5rem;
+}
+
+.session-title {
+    font-size: 1.5rem;
+    color: var(--color-text-dark);
+}
+
+.reflection-card-content {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.content-block h4 {
+    font-size: 0.85rem;
+    color: var(--color-text-soft);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+.content-block p {
+    font-size: 1rem;
+    color: var(--color-text-mid);
+    line-height: 1.6;
+}
+
+.reflection-card-footer {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--color-slate-light);
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--color-accent-deep);
+    background: var(--color-accent-light);
+    padding: 0.3rem 0.75rem;
+    border-radius: var(--radius-full);
+}
+
+.empty-state {
+    text-align: center;
+    padding: 5rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.empty-icon {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+    .reflections-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .reflection-card {
+        padding: 1.5rem;
+    }
+}

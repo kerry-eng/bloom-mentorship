@@ -1,0 +1,149 @@
+.personalize-page {
+    min-height: 100vh;
+    padding: 8rem 0 6rem;
+    background: var(--color-bg-base);
+    display: flex;
+    align-items: center;
+}
+
+.personalize-card {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 4rem;
+}
+
+.step-indicator {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--color-primary);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* Mood Grid */
+.mood-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.mood-option-btn {
+    background: white;
+    border: 1px solid var(--color-slate-light);
+    border-radius: var(--radius-lg);
+    padding: 2rem 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.mood-option-btn:hover {
+    border-color: var(--color-primary);
+    background: var(--color-primary-light);
+}
+
+.mood-option-btn.active {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.mood-option-btn .emoji {
+    font-size: 2.5rem;
+}
+
+.mood-option-btn .name {
+    font-weight: 600;
+    color: var(--color-text-dark);
+}
+
+/* Interests Grid */
+.interests-selection-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+}
+
+.interest-tag-btn {
+    background: white;
+    border: 1px solid var(--color-slate-light);
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--radius-full);
+    font-weight: 600;
+    color: var(--color-text-mid);
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.interest-tag-btn:hover {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+}
+
+.interest-tag-btn.active {
+    background: var(--color-primary);
+    color: white;
+    border-color: var(--color-primary);
+}
+
+/* Sound Grid */
+.sound-selection-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+}
+
+.sound-option-card {
+    background: white;
+    border: 1px solid var(--color-slate-light);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    cursor: pointer;
+    transition: all var(--transition-smooth);
+}
+
+.sound-option-card:hover {
+    border-color: var(--color-primary);
+}
+
+.sound-option-card.active {
+    background: var(--color-primary-light);
+    border-color: var(--color-primary);
+    box-shadow: 0 0 0 2px var(--color-primary);
+}
+
+.sound-option-card .icon {
+    font-size: 2rem;
+}
+
+.sound-option-card .name {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--color-text-dark);
+}
+
+.personalize-footer {
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 600px) {
+    .personalize-card {
+        padding: 2rem;
+    }
+
+    .mood-selection-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .sound-selection-grid {
+        grid-template-columns: 1fr;
+    }
+}

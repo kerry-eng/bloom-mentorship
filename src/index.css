@@ -1,0 +1,371 @@
+/* =============================================
+   BLOOM MENTORSHIP — GLOBAL DESIGN SYSTEM
+   Unisex, Professional, and Inclusive Aesthetic
+   ============================================= */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@400;500;600;700;800;900&family=Caveat:wght@400;700&display=swap');
+
+:root {
+  --color-bg-base: #ffffff;
+  /* Clean White */
+  --color-bg-alt: #fafafa;
+
+  --color-primary: #111111;
+  /* Absolute Authority */
+  --color-primary-light: #f5f5f5;
+  --color-primary-deep: #000000;
+
+  /* Zen Monochrome Palette */
+  --color-slate: #888888;
+  --color-slate-light: #f1f1f1;
+  --color-slate-deep: #444444;
+
+  --color-text-dark: #000000;
+  --color-text-mid: #333333;
+  --color-text-soft: #777777;
+  --color-white: #ffffff;
+
+  /* Executive Accents */
+  --color-gold: #c5a059;
+  --color-bronze: #8e734a;
+
+  /* Figma / UI Tokens */
+  --figma-bg-base: #f8fafc;
+  --figma-blob-primary: rgba(16, 185, 129, 0.08);
+  --figma-blob-secondary: rgba(5, 150, 105, 0.08);
+
+  --figma-badge-indigo: #10b981;
+  /* Swapped to emerald */
+  --figma-badge-emerald: #059669;
+
+  --figma-tape-indigo: #a7f3d0;
+  /* Swapped to emerald */
+  --figma-tape-emerald: #6ee7b7;
+
+  --figma-text-primary: #10b981;
+  --figma-gradient-btn: linear-gradient(135deg, #10b981, #059669);
+
+  /* Premium Publication Gradients */
+  --gradient-lush: linear-gradient(to bottom, #ffffff, #fafafa);
+  --gradient-sage: linear-gradient(135deg, #111111 0%, #444444 100%);
+  --gradient-meta: linear-gradient(to right, #000000 0%, #333333 100%);
+  --gradient-hot: linear-gradient(135deg, #c5a059, #8e734a);
+  --gradient-indigo-soft: linear-gradient(to bottom, #ffffff, #f9f9f9);
+  --gradient-glass: none;
+
+  /* Hairline & Airy Shadows */
+  --glow-border: 1px solid #eeeeee;
+  --glow-shadow: 0 1px 2px rgba(0, 0, 0, 0.01), 0 4px 12px rgba(0, 0, 0, 0.02);
+  --glow-text: none;
+
+  /* Enhanced Glass */
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 20px 50px rgba(15, 23, 42, 0.1);
+  --glass-blur: blur(20px);
+
+  /* Liquid Glass Kit Evolution 🔮 */
+  --liquid-glass-bg: rgba(255, 255, 255, 0.45);
+  --liquid-glass-border: 1px solid rgba(255, 255, 255, 0.5);
+  --liquid-glass-highlight: 1px solid rgba(255, 255, 255, 0.9);
+  --liquid-glass-blur: blur(40px);
+  --liquid-glass-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 20px 40px -10px rgba(0, 0, 0, 0.1),
+    inset 0 0 20px rgba(255, 255, 255, 0.4);
+  --liquid-inner-glow: inset 0 0 30px rgba(255, 255, 255, 0.5);
+  --liquid-radius: 40px;
+  --liquid-gradient: linear-gradient(135deg, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0.2) 100%);
+
+  /* Mindloop Ethereal System 🌸 */
+  --mindloop-sky: linear-gradient(180deg, #94b9ff 0%, #ffcdc2 100%);
+  --mindloop-glass: rgba(255, 255, 255, 0.15);
+  --mindloop-text: #ffffff;
+  --mindloop-blur: blur(20px);
+  --font-mindloop: 'Inter', sans-serif;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* Typography */
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+  --font-script: 'Caveat', cursive;
+  --font-header-classic: 'Playfair Display', serif;
+
+  --text-gradient: var(--gradient-meta);
+
+  /* Zen Radius */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 12px;
+  --radius-full: 9999px;
+
+  /* Shadows */
+  --shadow-soft: 0 4px 12px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-lg: 0 16px 48px rgba(15, 23, 42, 0.12);
+  --shadow-float: 0 30px 60px rgba(15, 23, 42, 0.15);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-smooth: 0.3s ease-in-out;
+
+  /* Layout Spacing */
+  --page-padding-top: 10rem;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-bg-base);
+  color: var(--color-text-dark);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Reset & Base ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: 14px;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ─── Typography ─── */
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-text-dark);
+}
+
+h1 {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: -0.01em;
+}
+
+h3 {
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+}
+
+h4 {
+  font-size: 1.2rem;
+}
+
+p {
+  color: var(--color-text-mid);
+  font-size: 1rem;
+}
+
+/* ─── Shared Utilities ─── */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 0 var(--space-md);
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  padding: var(--space-xl);
+  transition: all var(--transition-smooth);
+}
+
+.glass-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.section-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--space-sm);
+  display: block;
+}
+
+/* ─── Buttons ─── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-smooth);
+  border: none;
+  font-size: 1rem;
+}
+
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover {
+  background: var(--color-primary-deep);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+}
+
+.btn-secondary {
+  background: white;
+  border: 1.5px solid var(--color-slate-light);
+  color: var(--color-text-mid);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* ─── Forms ─── */
+.form-input {
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+  border: 1.5px solid var(--color-slate-light);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body);
+  transition: all var(--transition-fast);
+  outline: none;
+}
+
+.form-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+}
+
+/* ─── Animations ─── */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px) rotate(var(--rot, 0deg));
+  }
+
+  50% {
+    transform: translateY(-15px) rotate(var(--rot, 0deg));
+  }
+
+  100% {
+    transform: translateY(0px) rotate(var(--rot, 0deg));
+  }
+}
+
+@keyframes pulse-soft {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: scale(1.05);
+    opacity: 0.4;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.6s ease forwards;
+}
+
+.fade-in-delay-1 {
+  animation: fadeInUp 0.6s 0.1s ease both;
+}
+
+.fade-in-delay-2 {
+  animation: fadeInUp 0.6s 0.2s ease both;
+}
+
+.fade-in-delay-3 {
+  animation: fadeInUp 0.6s 0.3s ease both;
+}
+
+/* ─── Scrollbar ─── */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-slate-light);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-soft);
+}
+
+/* ─── Spinner ─── */
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--color-primary-light);
+  border-top-color: var(--color-primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

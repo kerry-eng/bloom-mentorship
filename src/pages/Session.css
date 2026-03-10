@@ -1,0 +1,335 @@
+.session-page {
+    position: fixed;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--figma-bg-base);
+    overflow: hidden;
+}
+
+.session__topbar {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    border-bottom: 1.5px dashed rgba(171, 140, 242, 0.3);
+    z-index: 10;
+    background: white;
+}
+
+.session__topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.session__logo {
+    color: var(--figma-text-purple);
+}
+
+.session__info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+}
+
+.session__name {
+    color: var(--color-text-dark);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.session__live {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.8rem;
+    color: var(--figma-badge-green);
+    font-weight: 600;
+}
+
+.session__live-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--figma-badge-green);
+    border-radius: 50%;
+    animation: pulse 2s ease infinite;
+}
+
+.session__end {
+    border-color: rgba(220, 60, 60, 0.3) !important;
+    color: #e05555 !important;
+    background: rgba(220, 60, 60, 0.05) !important;
+    font-weight: 600;
+    font-family: var(--font-body);
+}
+
+.session__end:hover {
+    background: rgba(220, 60, 60, 0.1) !important;
+    border-color: #e05555 !important;
+}
+
+.session__room {
+    flex: 1;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    background: var(--figma-bg-base);
+}
+
+/* Lobby — shown before the call starts */
+.session__lobby {
+    background: white;
+    box-shadow: 0 10px 30px rgba(171, 140, 242, 0.08);
+    border: 1.5px dashed var(--color-lavender-light);
+}
+
+/* Video Grid — flex column: remote video on top, controls fixed at bottom */
+.session__video-grid {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background: #0a0a0a;
+    /* Dark background is better for video calls */
+    position: relative;
+}
+
+/* Remote video container */
+.session__video-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    pointer-events: none;
+}
+
+/* The actual remote video element */
+.session__video-main {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #1a1a2e;
+    display: block;
+    pointer-events: none;
+}
+
+/* Self-view */
+.session__video-self {
+    position: absolute;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    width: 140px;
+    height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    z-index: 6;
+    background: #000;
+    transition: all 0.2s ease;
+}
+
+/* Audio Level / Speaking Indicator */
+.is-speaking {
+    border-color: var(--figma-badge-green) !important;
+    box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.3), 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+    animation: speakPulse 1.5s infinite;
+}
+
+@keyframes speakPulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.6), 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(76, 175, 80, 0), 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(76, 175, 80, 0), 0 10px 40px rgba(0, 0, 0, 0.4);
+    }
+}
+
+.session__video-self video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transform: scaleX(-1);
+}
+
+/* Connecting overlay */
+.session__video-overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 5, 20, 0.85);
+    z-index: 2;
+    gap: 0.75rem;
+    pointer-events: none !important;
+}
+
+.session__video-overlay--small {
+    background: rgba(20, 15, 30, 0.9);
+}
+
+/* Label badge for videos */
+.session__video-label {
+    position: absolute;
+    bottom: 0.75rem;
+    left: 0.75rem;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    font-size: 0.75rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    padding: 0.3rem 0.8rem;
+    border-radius: 999px;
+    backdrop-filter: blur(8px);
+}
+
+/* Controls Bar */
+.session__controls {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1rem 2rem;
+    background: rgba(30, 20, 45, 0.85);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 999px;
+    z-index: 50;
+    pointer-events: auto;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.session__control-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1.5px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    pointer-events: auto !important;
+    z-index: 60;
+}
+
+.session__control-btn span {
+    position: absolute;
+    bottom: -1.75rem;
+    font-size: 0.7rem;
+    font-family: var(--font-body);
+    color: rgba(255, 255, 255, 0.8);
+    white-space: nowrap;
+}
+
+.session__control-btn:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.session__control-btn--off {
+    background: rgba(232, 130, 130, 0.25) !important;
+    border-color: rgba(232, 130, 130, 0.5) !important;
+    color: #ffd6d6;
+}
+
+.session__control-btn--end {
+    background: rgba(220, 60, 60, 0.8) !important;
+    border-color: rgba(220, 60, 60, 1) !important;
+    width: 68px;
+    height: 68px;
+    font-size: 1.5rem;
+}
+
+.session__control-btn--end:hover {
+    background: rgba(235, 70, 70, 1) !important;
+    transform: translateY(-2px) scale(1.05);
+}
+
+/* Waiting state */
+.session__waiting {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: var(--figma-bg-base);
+    text-align: center;
+    padding: 2rem;
+}
+
+.session__waiting-pulse {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 1.5rem auto;
+}
+
+.session__pulse-ring {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border: 2px solid var(--figma-text-purple);
+    border-radius: 50%;
+    animation: ring-pulse 2s ease-out infinite;
+}
+
+.session__pulse-ring--2 {
+    animation-delay: 0.8s;
+}
+
+@keyframes ring-pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1.8);
+        opacity: 0;
+    }
+}
+
+.session__waiting-note {
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+    margin-top: 1.5rem;
+}
+
+/* Loading & Error states */
+.session-loading,
+.session-error {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5rem;
+    background: var(--figma-bg-base);
+    text-align: center;
+    padding: var(--space-xl);
+}
