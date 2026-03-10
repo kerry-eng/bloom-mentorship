@@ -50,6 +50,7 @@ export default function Dashboard() {
     const [activeView, setActiveView] = useState('overview')
     const [searchParams] = useSearchParams()
     const justBooked = searchParams.get('booked') === '1'
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     useEffect(() => {
         if (!user) return
@@ -404,9 +405,9 @@ export default function Dashboard() {
     )
 
     return (
-        <div className="dashboard-page workspace-page">
+        <div className={`dashboard-page workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
             <div className="workspace-container">
-                <aside className="workspace-sidebar glass-card-vibe">
+                <aside className={`workspace-sidebar glass-card-vibe ${isMobileMenuOpen ? 'open' : ''}`}>
                     <div className="sidebar-brand">
                         <Link to="/" className="brand-logo">
                             <span className="logo-icon">🌿</span>
@@ -441,6 +442,13 @@ export default function Dashboard() {
                 <main className="workspace-main">
                     <header className="workspace-topbar">
                         <div className="topbar-left">
+                            <button
+                                className="mobile-toggle-btn"
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                aria-label="Toggle Menu"
+                            >
+                                <span className="hamburger"></span>
+                            </button>
                             <span className="welcome-text">Account: <span className="user-name">{profile?.full_name || user?.email}</span></span>
                         </div>
                         <div className="topbar-right">
