@@ -415,19 +415,19 @@ export default function Dashboard() {
                         </Link>
                     </div>
                     <div className="sidebar-nav">
-                        <button className={`nav-item ${activeView === 'overview' ? 'active' : ''}`} onClick={() => setActiveView('overview')}>
+                        <button className={`nav-item ${activeView === 'overview' ? 'active' : ''}`} onClick={() => { setActiveView('overview'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Overview</span>
                         </button>
-                        <button className={`nav-item ${activeView === 'community' ? 'active' : ''}`} onClick={() => setActiveView('community')}>
+                        <button className={`nav-item ${activeView === 'community' ? 'active' : ''}`} onClick={() => { setActiveView('community'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Community</span>
                         </button>
-                        <button className={`nav-item ${activeView === 'assignments' ? 'active' : ''}`} onClick={() => setActiveView('assignments')}>
+                        <button className={`nav-item ${activeView === 'assignments' ? 'active' : ''}`} onClick={() => { setActiveView('assignments'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Tasks</span>
                         </button>
-                        <button className={`nav-item ${activeView === 'messages' ? 'active' : ''}`} onClick={() => setActiveView('messages')}>
+                        <button className={`nav-item ${activeView === 'messages' ? 'active' : ''}`} onClick={() => { setActiveView('messages'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Messages</span>
                         </button>
-                        <button className={`nav-item ${activeView === 'write-blog' ? 'active' : ''}`} onClick={() => setActiveView('write-blog')}>
+                        <button className={`nav-item ${activeView === 'write-blog' ? 'active' : ''}`} onClick={() => { setActiveView('write-blog'); setIsMobileMenuOpen(false); }}>
                             <span className="nav-text">Studio</span>
                         </button>
                     </div>
@@ -464,6 +464,11 @@ export default function Dashboard() {
                         {activeView === 'write-blog' && renderBlogStudio()}
                     </div>
                 </main>
+
+                {/* Mobile Backdrop */}
+                {isMobileMenuOpen && (
+                    <div className="sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
+                )}
             </div>
 
             {/* Modals */}
