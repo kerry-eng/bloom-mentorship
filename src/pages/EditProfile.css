@@ -1,0 +1,131 @@
+.edit-profile-page {
+    padding: 3rem 4rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.edit-profile-header {
+    margin-bottom: 3rem;
+}
+
+.form-section {
+    border-radius: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.section-title {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-vibration);
+    letter-spacing: -0.02em;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.form-group label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 1rem;
+    padding: 1rem 1.25rem;
+    color: var(--text-vibration);
+    font-size: 1rem;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--accent-bloom);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 4px rgba(var(--accent-vibe-rgb), 0.1);
+}
+
+.interests-selection-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+.interest-tag-btn {
+    padding: 0.75rem 1.25rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.interest-tag-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-vibration);
+}
+
+.interest-tag-btn.active {
+    background: var(--accent-bloom);
+    border-color: var(--accent-bloom);
+    color: white;
+    box-shadow: 0 4px 15px rgba(var(--accent-vibe-rgb), 0.3);
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.save-message {
+    font-weight: 500;
+}
+
+.save-message.success {
+    color: #4CAF50;
+}
+
+.save-message.error {
+    color: #F44336;
+}
+
+@media (max-width: 768px) {
+    .edit-profile-page {
+        padding: 2rem 1.5rem;
+    }
+    
+    .form-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+    
+    .form-actions button {
+        width: 100%;
+    }
+}

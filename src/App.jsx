@@ -13,6 +13,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import MusivePlayer from './components/MusivePlayer'
 import About from './pages/About'
 import Blogs from './pages/Blogs'
+import EditProfile from './pages/EditProfile'
 import Footer from './components/Footer'
 import { MusicProvider } from './context/MusicContext'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
@@ -51,11 +52,14 @@ function App() {
                     } />
                     <Route path="/about" element={<About />} />
                     <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/edit-profile" element={
+                        <ProtectedRoute><EditProfile /></ProtectedRoute>
+                    } />
                     <Route path="/session/:sessionId" element={<Session />} />
 
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
-                {!['/dashboard', '/auth'].includes(location.pathname) && <Footer />}
+                {!['/dashboard', '/auth', '/reflections', '/edit-profile'].includes(location.pathname) && <Footer />}
             </MusicProvider>
         </ThemeProvider>
     )

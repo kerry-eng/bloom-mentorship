@@ -33,7 +33,7 @@ function getGreeting() {
 }
 
 export default function Dashboard() {
-    const { user, profile } = useAuth()
+    const { user, profile, refreshProfile } = useAuth()
     const { theme } = useTheme()
     const [sessions, setSessions] = useState([])
     const [stats, setStats] = useState({
@@ -174,9 +174,8 @@ export default function Dashboard() {
 
         setUploading(prev => ({ ...prev, [type]: true }))
         try {
-            // In a real app, we would upload to Supabase Storage here.
-            // For now, we'll use a local preview and simulate a successful "save" to the profile
             const reader = new FileReader()
+            reader.readAsDataURL(file)
             reader.onloadend = async () => {
                 const base64data = reader.result
                 const { error } = await supabase
@@ -185,14 +184,12 @@ export default function Dashboard() {
                     .eq('id', user.id)
                 
                 if (error) throw error
-                // Refresh profile to show new image
-                window.location.reload() // Quickest way to reflect changes for now
+                await refreshProfile(user.id)
+                setUploading(prev => ({ ...prev, [type]: false }))
             }
-            reader.readAsDataURL(file)
         } catch (err) {
             console.error(`Upload error for ${type}:`, err)
             alert(`Failed to upload ${type}.`)
-        } finally {
             setUploading(prev => ({ ...prev, [type]: false }))
         }
     }
@@ -237,7 +234,8 @@ export default function Dashboard() {
                             <span className="pill-label-vibe">{getGreeting()}</span>
                         </div>
                         <h1>{profile?.full_name || user?.email?.split('@')[0]}</h1>
-                        <span className="location">📍 Kenya</span>
+                        <span className="location">📍 {profile?.location || 'Kenya'}</span>
+                        {profile?.bio && <p className="profile-bio-summary mt-2">{profile.bio}</p>}
                     </div>
                     <div className="profile-header-stats">
                         <div className="mini-stat">
@@ -249,7 +247,7 @@ export default function Dashboard() {
                             <span className="label">Sessions</span>
                         </div>
                     </div>
-                    <button className="edit-profile-btn">Edit Profile</button>
+                    <Link to="/edit-profile" className="edit-profile-btn">Edit Profile</Link>
                 </div>
             </div>
 
@@ -276,6 +274,16 @@ export default function Dashboard() {
                                 <span className="label">Phone number</span>
                                 <span className="value">{profile?.phone || 'Not provided'}</span>
                             </div>
+                            {(profile?.instagram_url || profile?.linkedin_url || profile?.twitter_url) && (
+                                <div className="info-item mt-3">
+                                    <span className="label">Social Connections</span>
+                                    <div className="social-links-mini mt-2">
+                                        {profile?.instagram_url && <a href={profile.instagram_url} target="_blank" rel="noreferrer" className="social-icon">📸</a>}
+                                        {profile?.linkedin_url && <a href={profile.linkedin_url} target="_blank" rel="noreferrer" className="social-icon">🔗</a>}
+                                        {profile?.twitter_url && <a href={profile.twitter_url} target="_blank" rel="noreferrer" className="social-icon">📱</a>}
+                                    </div>
+                                </div>
+                            )}
                         </div>
                     </div>
 

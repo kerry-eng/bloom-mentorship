@@ -90,6 +90,30 @@
     /* Zen minimalism */
 }
 
+/* Profile Bio & Socials */
+.profile-bio-summary {
+    font-size: 1rem;
+    color: var(--text-secondary);
+    max-width: 600px;
+    line-height: 1.6;
+}
+
+.social-links-mini {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-icon {
+    font-size: 1.25rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+    display: inline-block;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px);
+}
+
 .sidebar-footer {
     padding-top: 2rem;
 }
