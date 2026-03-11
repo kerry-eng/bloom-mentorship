@@ -35,42 +35,40 @@ export default function Navbar() {
             <div className="navbar__inner container">
                 <Link to="/" className="navbar__brand">
                     <div className="navbar__logo-wrapper">
-                        {theme === 'pink' ? (
-                            <span className="navbar__logo-icon-pink">💗</span>
-                        ) : (
-                            <svg className="navbar__logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 22C12 22 12 18 12 12C12 6 12 2 12 2M12 12C12 12 16 10 19 12C22 14 20 18 17 17C14 16 12 12 12 12ZM12 12C12 12 8 10 5 12C2 14 4 18 7 17C10 16 12 12 12 12ZM12 8C12 8 14 5 12 2C10 5 12 8 12 8Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                        )}
-                        <span className="navbar__logo-text">{theme === 'pink' ? 'bloom' : 'Bloom'}</span>
+                        <svg className="navbar__logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 22V12M12 12C12 12 16 10 19 12C22 14 20 18 17 17C14 16 12 12 12 12ZM12 12C12 12 8 10 5 12C2 14 4 18 7 17C10 16 12 12 12 12ZM12 8C12 8 14 5 12 2C10 5 12 8 12 8Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                        </svg>
+                        <span className="navbar__logo-text">Bloom</span>
                     </div>
                 </Link>
 
                 <div className={`navbar__links ${menuOpen ? 'open' : ''}`}>
-                    <Link to="/" className="navbar__link">{theme === 'pink' ? 'home' : 'Home'}</Link>
-                    <Link to="/about" className="navbar__link">{theme === 'pink' ? 'about' : 'About'}</Link>
-                    <Link to="/reflections" className="navbar__link">{theme === 'pink' ? 'reflections' : 'Reflections'}</Link>
-                    <Link to="/blogs" className="navbar__link">{theme === 'pink' ? 'blogs' : 'Blogs'}</Link>
+                    <Link to="/" className="navbar__link">Home</Link>
+                    <Link to="/about" className="navbar__link">About</Link>
+                    <Link to="/reflections" className="navbar__link">Reflections</Link>
+                    <Link to="/blogs" className="navbar__link">Blogs</Link>
 
-                    {theme === 'pink' && <div className="navbar__separator"></div>}
+                    <div className="navbar__separator"></div>
 
                     {user ? (
-                        <>
-                            <Link to="/dashboard" className="navbar__link">{theme === 'pink' ? 'dashboard' : 'Dashboard'}</Link>
-                            <div className="navbar__actions">
-                                <button
-                                    onClick={toggleTheme}
-                                    className="btn-theme-toggle"
-                                    title={`Switch Theme (Current: ${theme})`}
-                                >
-                                    {theme === 'bloom' ? '🌸' : '💗'}
-                                </button>
-                                <Link to="/booking" className="btn btn-primary btn-sm btn-book btn-nav-action">
-                                    Book Session
-                                </Link>
-                                <button onClick={handleSignOut} className="btn btn-secondary btn-sm btn-logout btn-nav-action">Sign Out</button>
-                            </div>
-                        </>
+                        <div className="navbar__actions">
+                            <Link to="/dashboard" className="navbar__link">Dashboard</Link>
+                            <button
+                                onClick={toggleTheme}
+                                className="btn-theme-toggle"
+                                title={`Switch Theme (Current: ${theme})`}
+                            >
+                                <span className="theme-toggle-icon">{theme === 'bloom' ? '🌸' : '💗'}</span>
+                            </button>
+                            <Link to="/booking" className="btn btn-nav-book">
+                                Book Session
+                            </Link>
+                            <button onClick={handleSignOut} className="btn-logout-minimal" title="Sign Out">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <path d="M9 21H5a2 2 0 01-2-2V5a2 2 0 012-2h4M16 17l5-5-5-5M21 12H9" />
+                                </svg>
+                            </button>
+                        </div>
                     ) : (
                         <div className="navbar__actions">
                             <button
@@ -78,10 +76,10 @@ export default function Navbar() {
                                 className="btn-theme-toggle"
                                 title={`Switch Theme (Current: ${theme})`}
                             >
-                                {theme === 'bloom' ? '🌸' : '💗'}
+                                <span className="theme-toggle-icon">{theme === 'bloom' ? '🌸' : '💗'}</span>
                             </button>
-                            <Link to="/auth" className="navbar__link btn-signin-nav">Sign In</Link>
-                            <Link to="/booking" className="btn btn-primary btn-sm btn-book btn-nav-action">
+                            <Link to="/auth" className="navbar__link">Sign In</Link>
+                            <Link to="/booking" className="btn btn-nav-book">
                                 Book Session
                             </Link>
                         </div>

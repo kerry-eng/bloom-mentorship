@@ -235,7 +235,7 @@ export default function Dashboard() {
                         </div>
                         <h1>{profile?.full_name || user?.email?.split('@')[0]}</h1>
                         <span className="location">📍 {profile?.location || 'Kenya'}</span>
-                        {profile?.bio && <p className="profile-bio-summary mt-2">{profile.bio}</p>}
+                        {profile?.bio && <p className="profile-bio-summary">{profile.bio}</p>}
                     </div>
                     <div className="profile-header-stats">
                         <div className="mini-stat">
