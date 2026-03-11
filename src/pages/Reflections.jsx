@@ -5,6 +5,7 @@ import { useTheme } from '../context/ThemeContext';
 import { supabase } from '../supabase';
 import MoodChecker from '../components/MoodChecker';
 import JournalPreview from '../components/JournalPreview';
+import DashboardLayout from '../components/DashboardLayout';
 import './Reflections.css';
 
 export default function Reflections() {
@@ -12,6 +13,7 @@ export default function Reflections() {
     const { theme } = useTheme();
     const [reflections, setReflections] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     useEffect(() => {
         if (!user) return;
@@ -38,37 +40,34 @@ export default function Reflections() {
     }
 
     return (
-        <div className={`reflections-page ${theme === 'bo' ? 'theme-bo' : ''} ${theme === 'pink' ? 'theme-pink' : ''}`}>
-            <div className="container reflections-container">
-                <header className="reflections-header fade-in">
-                    <Link to="/dashboard" className="back-btn" aria-label="Back">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                        </svg>
-                    </Link>
-                    <div className="header-titles">
-                        <h1 className="display-title">Mindset Hub</h1>
-                        <p className="subtitle">Cultivate your focus. Record your evolution.</p>
-                    </div>
+        <DashboardLayout
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+            onProfileClick={() => {}}
+        >
+            <div className="reflections-container-inner fade-in">
+                <header className="reflections-header-simple mb-5">
+                    <h1 className="display-title sm">Mindset Hub</h1>
+                    <p className="subtitle">Cultivate your focus. Record your evolution.</p>
                 </header>
 
                 <div className="mindset-tools-grid mb-5">
-                    <div className="tool-card glass-card fade-in">
+                    <div className="tool-card glass-card">
                         <MoodChecker onEntrySaved={fetchReflections} />
                     </div>
-                    <div className="tool-card glass-card fade-in">
+                    <div className="tool-card glass-card">
                         <JournalPreview onEntrySaved={fetchReflections} />
                     </div>
                 </div>
 
-                <div className="section-label mb-4 fade-in">
+                <div className="section-label mb-4">
                     <span className="pill-label-vibe">JOURNEY HISTORY</span>
                 </div>
 
                 {loading ? (
                     <div className="text-center py-5"><div className="spinner mx-auto" /></div>
                 ) : reflections.length === 0 ? (
-                    <div className="empty-state glass-card fade-in">
+                    <div className="empty-state glass-card">
                         <div className="empty-icon">📔</div>
                         <h3>No reflections on record</h3>
                         <p>Your session insights will appear here once you've completed a reflection on your dashboard.</p>
@@ -108,6 +107,6 @@ export default function Reflections() {
                     </div>
                 )}
             </div>
-        </div>
+        </DashboardLayout>
     );
 }

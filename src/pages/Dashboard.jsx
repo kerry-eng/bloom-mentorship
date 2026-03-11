@@ -7,6 +7,7 @@ import MusivePlayer from '../components/MusivePlayer'
 import { useRef } from 'react'
 import './Dashboard.css'
 import './ProfileView.css'
+import DashboardLayout from '../components/DashboardLayout'
 
 function timeUntil(dateStr) {
     const diff = new Date(dateStr) - new Date()
@@ -537,81 +538,18 @@ export default function Dashboard() {
 
 
     return (
-        <div className={`dashboard-wrapper ${theme === 'bo' ? 'theme-bo' : ''} ${theme === 'pink' ? 'theme-pink' : ''} workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
-            <div className="workspace-container">
-                <aside className={`workspace-sidebar glass-card-vibe ${isMobileMenuOpen ? 'open' : ''}`}>
-                    <div className="sidebar-brand">
-                        <Link to="/" className="brand-logo">
-                            <span className="logo-icon">🌿</span>
-                            <span className="logo-text">Bloom</span>
-                        </Link>
-                    </div>
-                    <div className="sidebar-nav">
-                        <button className={`nav-item ${activeView === 'overview' ? 'active' : ''}`} onClick={() => { setActiveView('overview'); setIsMobileMenuOpen(false); }}>
-                            <span className="nav-text">Overview</span>
-                        </button>
-                        <button className={`nav-item ${activeView === 'community' ? 'active' : ''}`} onClick={() => { setActiveView('community'); setIsMobileMenuOpen(false); }}>
-                            <span className="nav-text">Community</span>
-                        </button>
-                        <button className={`nav-item ${activeView === 'assignments' ? 'active' : ''}`} onClick={() => { setActiveView('assignments'); setIsMobileMenuOpen(false); }}>
-                            <span className="nav-text">Sessions</span>
-                        </button>
-                        <Link to="/reflections" className="nav-item">
-                            <span className="nav-text">Reflections</span>
-                        </Link>
-                        <button className={`nav-item ${activeView === 'messages' ? 'active' : ''}`} onClick={() => { setActiveView('messages'); setIsMobileMenuOpen(false); }}>
-                            <span className="nav-text">Messages</span>
-                        </button>
-                        <button className={`nav-item ${activeView === 'write-blog' ? 'active' : ''}`} onClick={() => { setActiveView('write-blog'); setIsMobileMenuOpen(false); }}>
-                            <span className="nav-text">Studio</span>
-                        </button>
-                    </div>
-                    <div className="sidebar-footer">
-                        <button className="nav-item logout-item" onClick={() => supabase.auth.signOut()}>
-                            <div className="nav-icon-bg logout">🚪</div>
-                            <span className="nav-text">Sign Out</span>
-                        </button>
-                    </div>
-                </aside>
-
-                <main className="workspace-main">
-                    <header className="workspace-topbar">
-                        <div className="topbar-left">
-                            <button
-                                className="mobile-toggle-btn"
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                aria-label="Toggle Menu"
-                            >
-                                <span className="hamburger"></span>
-                            </button>
-                        </div>
-                        <div className="topbar-right">
-                            <div className="notification-wrapper">
-                                <button className="topbar-btn">
-                                    <span className="bell-icon">🔔</span>
-                                    <span className="notification-badge"></span>
-                                </button>
-                            </div>
-                            <button className="topbar-user-link" onClick={() => setActiveView('overview')}>
-                                <span className="welcome-text">Account: <span className="user-name">{profile?.full_name || user?.email}</span></span>
-                            </button>
-                        </div>
-                    </header>
-
-                    <div className="workspace-content">
-                        {activeView === 'overview' && renderOverview()}
-                        {activeView === 'community' && renderCommunity()}
-                        {activeView === 'assignments' && renderAssignments()}
-                        {activeView === 'messages' && renderMessages()}
-                        {activeView === 'write-blog' && renderBlogStudio()}
-                    </div>
-                </main>
-
-                {/* Mobile Backdrop */}
-                {isMobileMenuOpen && (
-                    <div className="sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
-                )}
-            </div>
+        <DashboardLayout
+            isMobileMenuOpen={isMobileMenuOpen}
+            setIsMobileMenuOpen={setIsMobileMenuOpen}
+            activeView={activeView}
+            setActiveView={setActiveView}
+            onProfileClick={() => setActiveView('overview')}
+        >
+            {activeView === 'overview' && renderOverview()}
+            {activeView === 'community' && renderCommunity()}
+            {activeView === 'assignments' && renderAssignments()}
+            {activeView === 'messages' && renderMessages()}
+            {activeView === 'write-blog' && renderBlogStudio()}
 
             {/* Modals */}
             {showMusicPlayer && (
@@ -627,6 +565,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             )}
-        </div>
+        </DashboardLayout>
     )
 }

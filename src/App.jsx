@@ -32,8 +32,8 @@ function App() {
     return (
         <ThemeProvider>
             <MusicProvider>
-                {!['/dashboard', '/auth'].includes(location.pathname) && <Navbar />}
-                {!['/dashboard', '/auth'].includes(location.pathname) && <MusivePlayer />}
+                {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
+                {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <MusivePlayer />}
                 <Routes>
                     <Route path="/" element={<HomeLoader />} />
                     <Route path="/auth" element={<Auth />} />

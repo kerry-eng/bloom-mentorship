@@ -13,14 +13,17 @@
 
 /* Sidebar Refinement */
 .workspace-sidebar {
-    width: 240px;
-    height: 100vh;
+    width: 280px;
+    height: calc(100vh - 2rem);
     display: flex;
     flex-direction: column;
-    padding: 3rem 1.5rem;
+    padding: 4rem 2.5rem;
     background: white;
-    border-right: 1px solid #f1f1f1;
+    margin: 1rem;
+    border-radius: 40px;
+    border: 1px solid #f0f0f0;
     z-index: 100;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .sidebar-brand {
@@ -42,10 +45,10 @@
 
 .logo-text {
     font-family: var(--font-header-classic);
-    font-size: 1.6rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: #000000;
-    letter-spacing: -0.01em;
+    color: #333333;
+    letter-spacing: -0.02em;
 }
 
 .sidebar-nav {
@@ -58,28 +61,28 @@
 .nav-item {
     display: flex;
     align-items: center;
-    gap: 0.75rem;
-    padding: 0.75rem 0.5rem;
+    padding: 1rem 0;
     border: none;
     background: transparent;
     cursor: pointer;
     transition: all 0.2s ease;
-    color: #888888;
+    color: #999999;
     text-transform: uppercase;
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    font-weight: 600;
-    width: 100%;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    width: fit-content;
     border-bottom: 2px solid transparent;
+    margin-bottom: 0.5rem;
 }
 
 .nav-item:hover {
-    color: #000000;
+    color: #333333;
 }
 
 .nav-item.active {
-    color: #000000;
-    border-color: #000000;
+    color: #333333;
+    border-color: #333333;
 }
 
 .nav-icon {
@@ -89,12 +92,36 @@
 
 .sidebar-footer {
     padding-top: 2rem;
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
 }
 
-.logout-item:hover .nav-icon-bg.logout {
-    background: #fee2e2;
-    color: #ef4444;
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: #999999;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+    color: #333333;
+}
+
+.logout-icon {
+    font-size: 1.2rem;
+    opacity: 0.7;
+}
+
+.sidebar-divider {
+    height: 1px;
+    background: #f0f0f0;
+    margin: 2rem 0;
 }
 
 /* Main Workspace Area */
