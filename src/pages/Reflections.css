@@ -9,7 +9,13 @@
 }
 
 .reflections-header-simple {
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
+}
+
+.reflections-container-inner {
+    padding: 3rem 4rem;
+    max-width: 1300px;
+    margin: 0 auto;
 }
 
 .reflections-grid {
@@ -20,9 +26,9 @@
 
 .mindset-tools-grid {
     display: grid;
-    grid-template-columns: 1fr 1.5fr;
-    gap: 2rem;
-    margin-bottom: 4rem;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 3rem;
+    align-items: flex-start;
 }
 
 .tool-card {

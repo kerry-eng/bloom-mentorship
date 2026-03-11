@@ -51,16 +51,12 @@ export default function Reflections() {
                     <p className="subtitle">Cultivate your focus. Record your evolution.</p>
                 </header>
 
-                <div className="mindset-tools-grid mb-5">
-                    <div className="tool-card glass-card">
-                        <MoodChecker onEntrySaved={fetchReflections} />
-                    </div>
-                    <div className="tool-card glass-card">
-                        <JournalPreview onEntrySaved={fetchReflections} />
-                    </div>
+                <div className="mindset-tools-grid">
+                    <MoodChecker onEntrySaved={fetchReflections} />
+                    <JournalPreview onEntrySaved={fetchReflections} />
                 </div>
 
-                <div className="section-label mb-4">
+                <div className="section-label mt-5 mb-4">
                     <span className="pill-label-vibe">JOURNEY HISTORY</span>
                 </div>
 
