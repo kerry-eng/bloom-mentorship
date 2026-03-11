@@ -70,6 +70,13 @@ export default function Dashboard() {
     }, [user])
 
     useEffect(() => {
+        const viewParam = searchParams.get('view');
+        if (viewParam) {
+            setActiveView(viewParam);
+        }
+    }, [searchParams]);
+
+    useEffect(() => {
         if (showMusicPlayer) {
             document.body.style.overflow = 'hidden'
         } else {

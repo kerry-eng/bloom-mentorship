@@ -1,19 +1,22 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { supabase } from '../supabase';
 import { useTheme } from '../context/ThemeContext';
 
 export default function DashboardSidebar({ isMobileMenuOpen, setIsMobileMenuOpen, activeView, setActiveView }) {
     const { theme } = useTheme();
     const location = useLocation();
+    const navigate = useNavigate();
 
     const isDashboard = location.pathname === '/dashboard';
     const isReflections = location.pathname === '/reflections';
 
     const handleNavClick = (view) => {
-        if (setActiveView) {
+        if (!isDashboard) {
+            navigate(`/dashboard?view=${view}`);
+        } else if (setActiveView) {
             setActiveView(view);
         }
+        
         if (setIsMobileMenuOpen) {
             setIsMobileMenuOpen(false);
         }
