@@ -26,37 +26,70 @@
 }
 
 [data-theme='pink'] .btn-theme-toggle {
-    background: #fff1f2;
-    border-color: #fbcfe8;
+    background: #ffffff;
+    border: 1px solid #111111;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    margin-right: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0;
+    transition: all 0.2s ease;
 }
 
-/* ─── Pink Mode Floating Navbar ─── */
+[data-theme='pink'] .btn-theme-toggle:hover {
+    transform: scale(1.05);
+}
+
+[data-theme='pink'] .btn-theme-toggle::after {
+    content: '💗';
+    font-size: 1.2rem;
+}
+
+/* ─── Pink Mode Floating Navbar Redesign ─── */
 [data-theme='pink'] .navbar {
     background: transparent;
     padding-top: 1.5rem;
+    width: 100%;
+    display: flex;
+    justify-content: center;
 }
 
 [data-theme='pink'] .navbar__inner {
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+    backdrop-filter: blur(12px);
     border-radius: 99px;
-    padding: 0.8rem 2rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.03);
+    padding: 0.6rem 2.5rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    width: auto;
     max-width: fit-content;
     margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
 }
 
 [data-theme='pink'] .navbar__brand {
-    font-family: 'Dancing Script', cursive;
-    font-size: 1.5rem;
-    color: var(--color-primary);
-    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #000000;
+    text-transform: lowercase;
+    margin-right: 1.5rem;
+    display: flex;
+    align-items: center;
+    letter-spacing: -0.02em;
 }
 
-.navbar__logo-icon-pink, .navbar__logo-icon-bo {
-    font-size: 1.5rem;
-    margin-right: 0.5rem;
+[data-theme='pink'] .navbar__logo-icon-pink {
+    font-size: 1.3rem;
+    margin-right: 0.8rem;
+    filter: drop-shadow(0 2px 4px rgba(236, 72, 153, 0.2));
 }
 
 [data-theme='pink'] .navbar__logo-svg {
@@ -65,30 +98,87 @@
 
 [data-theme='pink'] .btn-book {
     border-radius: 99px;
-    padding: 0.6rem 2rem;
-    font-size: 0.85rem;
-    background: var(--figma-gradient-btn);
-    border: none;
+    padding: 0.7rem 1.8rem;
+    font-size: 0.875rem;
+    font-weight: 700;
+    background: #f472b6;
+    color: white;
     text-transform: lowercase;
+    border: none;
+    box-shadow: 0 4px 12px rgba(244, 114, 182, 0.3);
+    transition: all 0.2s ease;
+}
+
+[data-theme='pink'] .btn-book:hover {
+    background: #ec4899;
+    transform: scale(1.02);
+    box-shadow: 0 6px 16px rgba(244, 114, 182, 0.4);
 }
 
 [data-theme='pink'] .navbar__link {
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
+    font-size: 0.875rem;
     font-weight: 500;
-    margin: 0 1rem;
-    color: var(--color-text-mid);
+    color: #555555;
+    text-transform: lowercase;
+    transition: all 0.2s ease;
+    margin: 0 0.2rem;
     position: relative;
+    padding: 0.5rem 0.2rem;
+    display: flex;
+    align-items: center;
+}
+
+[data-theme='pink'] .navbar__link:hover {
+    color: #ec4899;
 }
 
 [data-theme='pink'] .navbar__link::after {
     content: '•';
-    position: absolute;
-    right: -1.2rem;
-    color: var(--color-primary-soft);
-    opacity: 0.5;
+    margin-left: 1rem;
+    color: #f472b6;
+    opacity: 0.4;
+    font-size: 1.2rem;
+    vertical-align: middle;
+    pointer-events: none;
 }
 
 [data-theme='pink'] .navbar__link:last-of-type::after {
     display: none;
+}
+
+[data-theme='pink'] .navbar__separator {
+    width: 1px;
+    height: 24px;
+    background: #e2e8f0;
+    margin: 0 1.2rem;
+    display: block;
+}
+
+[data-theme='pink'] .navbar__actions {
+    border-left: none;
+    padding-left: 0;
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+}
+
+[data-theme='pink'] .btn-signin-nav {
+    font-size: 0.875rem;
+    color: #555555;
+    text-transform: lowercase;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-right: 0;
+    position: relative;
+}
+
+[data-theme='pink'] .btn-signin-nav::after {
+    content: '•';
+    margin-left: 1rem;
+    color: #f472b6;
+    opacity: 0.4;
+    font-size: 1.2rem;
+    vertical-align: middle;
 }

@@ -37,8 +37,6 @@ export default function Navbar() {
                     <div className="navbar__logo-wrapper">
                         {theme === 'pink' ? (
                             <span className="navbar__logo-icon-pink">💗</span>
-                        ) : theme === 'bo' ? (
-                            <span className="navbar__logo-icon-bo">⚡</span>
                         ) : (
                             <svg className="navbar__logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M12 22C12 22 12 18 12 12C12 6 12 2 12 2M12 12C12 12 16 10 19 12C22 14 20 18 17 17C14 16 12 12 12 12ZM12 12C12 12 8 10 5 12C2 14 4 18 7 17C10 16 12 12 12 12ZM12 8C12 8 14 5 12 2C10 5 12 8 12 8Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -52,6 +50,9 @@ export default function Navbar() {
                     <Link to="/" className="navbar__link">{theme === 'pink' ? 'home' : 'Home'}</Link>
                     <Link to="/about" className="navbar__link">{theme === 'pink' ? 'about' : 'About'}</Link>
                     <Link to="/reflections" className="navbar__link">{theme === 'pink' ? 'reflections' : 'Reflections'}</Link>
+                    <Link to="/blogs" className="navbar__link">{theme === 'pink' ? 'blogs' : 'Blogs'}</Link>
+
+                    {theme === 'pink' && <div className="navbar__separator"></div>}
 
                     {user ? (
                         <>
@@ -62,9 +63,7 @@ export default function Navbar() {
                                     className="btn-theme-toggle"
                                     title={`Switch Theme (Current: ${theme})`}
                                 >
-                                    {theme === 'bloom' && '🌸'}
-                                    {theme === 'bo' && '⚡'}
-                                    {theme === 'pink' && '💗'}
+                                    {theme === 'bloom' ? '🌸' : '💗'}
                                 </button>
                                 <Link to="/booking" className="btn btn-primary btn-sm btn-book btn-nav-action">
                                     Book Session
@@ -79,9 +78,7 @@ export default function Navbar() {
                                 className="btn-theme-toggle"
                                 title={`Switch Theme (Current: ${theme})`}
                             >
-                                {theme === 'bloom' && '🌸'}
-                                {theme === 'bo' && '⚡'}
-                                {theme === 'pink' && '💗'}
+                                {theme === 'bloom' ? '🌸' : '💗'}
                             </button>
                             <Link to="/auth" className="navbar__link btn-signin-nav">Sign In</Link>
                             <Link to="/booking" className="btn btn-primary btn-sm btn-book btn-nav-action">

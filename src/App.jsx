@@ -1,7 +1,6 @@
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Home from './pages/Home'
-import HomeBoy from './pages/HomeBoy'
 import HomePink from './pages/HomePink'
 import Auth from './pages/Auth'
 import Booking from './pages/Booking'
@@ -64,7 +63,6 @@ function App() {
 
 function HomeLoader() {
     const { theme } = useTheme()
-    if (theme === 'bo') return <HomeBoy />
     if (theme === 'pink') return <HomePink />
     return <Home />
 }

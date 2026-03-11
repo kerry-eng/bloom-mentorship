@@ -338,6 +338,329 @@
 }
 
 /* Responsive */
+
+/* ─── Coaching Programs Section ─── */
+.pink-programs-section {
+    padding: 10rem 2rem 8rem;
+    position: relative;
+    z-index: 5;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.pink-section-header {
+    text-align: center;
+    margin-bottom: 5rem;
+}
+
+.sticker-lightning {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 2px 5px rgba(251, 191, 36, 0.3));
+}
+
+.pink-section-title {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
+    color: var(--color-text-dark);
+    margin-bottom: 1rem;
+}
+
+.pink-section-subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    color: var(--color-text-mid);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.pink-programs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(300px, 450px));
+    justify-content: center;
+    gap: 3rem;
+    perspective: 1000px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.pink-program-card {
+    background: white;
+    padding: 3rem;
+    border-radius: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.03);
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    transition: all 0.3s ease;
+}
+
+.pink-program-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.06);
+}
+
+.sticker-muscle {
+    position: absolute;
+    font-size: 1.8rem;
+    z-index: 10;
+    opacity: 0.8;
+}
+
+.muscle-tr { top: -15px; right: -15px; transform: rotate(15deg); }
+.muscle-tl { top: -15px; left: -15px; transform: rotate(-15deg); }
+.muscle-br { bottom: -15px; right: -15px; transform: rotate(-10deg); }
+.muscle-bl { bottom: -15px; left: -15px; transform: rotate(10deg); }
+
+.program-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    border-radius: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 2rem;
+}
+
+.purple-icon { background: #f3e8ff; }
+.pink-icon { background: #fff1f2; }
+.blue-icon { background: #e0f2fe; }
+.deep-purple-icon { background: #ede9fe; }
+
+.program-icon {
+    font-size: 1.8rem;
+}
+
+.pink-program-card h3 {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-dark);
+    letter-spacing: 0.05em;
+}
+
+.pink-program-card p {
+    font-size: 1rem;
+    color: var(--color-text-mid);
+    line-height: 1.5;
+    margin-bottom: 2rem;
+}
+
+.pink-learn-link {
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--color-primary-soft);
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.pink-learn-link:hover {
+    color: var(--color-primary);
+}
+
+.pink-help-pill-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 6rem;
+}
+
+.pink-help-pill {
+    background: white;
+    padding: 1.5rem 3rem;
+    border-radius: 999px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    color: var(--color-text-mid);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    font-size: 1rem;
+    text-align: center;
+}
+
+/* ─── What Makes Us Different Section ─── */
+.pink-different-section {
+    padding: 8rem 2rem;
+    background: #fafaf9; /* Extremely light beige/white */
+    position: relative;
+    z-index: 5;
+}
+
+.pink-different-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.pink-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid #fbcfe8;
+    border-radius: 99px;
+    font-size: 0.85rem;
+    color: #db2777;
+    background: white;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+}
+
+.pink-section-title-alt {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #1a1a1a;
+    margin-bottom: 1.5rem;
+}
+
+.pink-section-subtitle-alt {
+    max-width: 700px;
+    margin: 0 auto 5rem;
+    font-size: 1.1rem;
+    color: #666;
+    line-height: 1.6;
+}
+
+.pink-different-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+    margin-bottom: 5rem;
+}
+
+.different-card {
+    background: white;
+    padding: 3rem 2rem;
+    border-radius: 12px;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.different-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-purple-border { border-color: #ddd6fe; }
+.card-pink-border { border-color: #fce7f3; }
+.card-blue-border { border-color: #e0f2fe; }
+
+.card-washi-tape {
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-1deg);
+    width: 60px;
+    height: 24px;
+    background: rgba(224, 231, 255, 0.6);
+    backdrop-filter: blur(2px);
+    border-radius: 2px;
+    z-index: 10;
+}
+
+.different-icon-wrapper {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+}
+
+.icon-lavender { background: #f5f3ff; }
+.icon-peach { background: #fff1f2; }
+.icon-violet { background: #faf5ff; }
+
+.different-icon {
+    font-size: 1.4rem;
+}
+
+.different-card h3 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: #1a1a1a;
+}
+
+.different-card p {
+    font-size: 0.95rem;
+    color: #777;
+    line-height: 1.5;
+}
+
+.card-sparkle {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+    font-size: 0.8rem;
+    opacity: 0.3;
+}
+
+/* Bottom CTA Card */
+.pink-cta-card-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 4rem;
+}
+
+.pink-cta-card {
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    padding: 4rem 3rem;
+    border-radius: 12px;
+    border: 2px solid #ddd6fe;
+    position: relative;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.04);
+}
+
+.pink-cta-card .card-washi-tape {
+    width: 80px;
+    background: rgba(245, 243, 255, 0.8);
+}
+
+.cta-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.cta-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.2rem;
+    margin-bottom: 1rem;
+    color: #1a1a1a;
+}
+
+.pink-cta-card p {
+    color: #666;
+    margin-bottom: 2.5rem;
+    font-size: 1.1rem;
+}
+
+.btn-meet-therapists {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: linear-gradient(135deg, #fbcfe8 0%, #f472b6 100%);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 12px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 10px 20px rgba(244, 114, 182, 0.2);
+}
+
+.btn-meet-therapists:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 15px 30px rgba(244, 114, 182, 0.3);
+}
+
+/* Responsive */
 @media (max-width: 1024px) {
     .home-pink-layout {
         grid-template-columns: 1fr;
@@ -346,5 +669,50 @@
 
     .pink-visual-stack {
         height: 500px;
+    }
+
+    .pink-programs-grid {
+        grid-template-columns: 1fr;
+        max-width: 500px;
+    }
+
+    .pink-different-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .pink-programs-grid {
+        grid-template-columns: 1fr;
+        max-width: 100%;
+        padding: 0 1rem;
+        gap: 2rem;
+    }
+
+    .pink-program-card {
+        padding: 2.5rem 1.5rem;
+        max-width: 100%;
+    }
+
+    .pink-different-grid {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    
+    .pink-section-title-alt {
+        font-size: 2.5rem;
+    }
+
+    .pink-different-section {
+        padding: 5rem 1rem;
+    }
+
+    .pink-cta-card {
+        padding: 3rem 1.5rem;
+        max-width: 100%;
+    }
+
+    .cta-title {
+        font-size: 1.8rem;
     }
 }

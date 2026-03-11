@@ -11,11 +11,7 @@ export const ThemeProvider = ({ children }) => {
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme(prev => {
-            if (prev === 'bloom') return 'bo';
-            if (prev === 'bo') return 'pink';
-            return 'bloom';
-        });
+        setTheme(prev => (prev === 'bloom' ? 'pink' : 'bloom'));
     };
 
     return (
