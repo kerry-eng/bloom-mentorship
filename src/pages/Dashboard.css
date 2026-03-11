@@ -1486,5 +1486,59 @@
         display: none;
     }
 }
+/* ─── Pink Theme Overrides ─── */
+.dashboard-wrapper.theme-pink .workspace-sidebar {
+    background: #fff1f2;
+    border-right: 1px solid #ffe4e6;
+}
 
+.dashboard-wrapper.theme-pink .logo-text {
+    color: var(--color-primary);
+}
+
+.dashboard-wrapper.theme-pink .nav-item.active {
+    color: var(--color-primary);
+    border-bottom-color: var(--color-primary);
+}
+
+.dashboard-wrapper.theme-pink .nav-item:hover {
+    color: var(--color-primary);
+}
+
+.dashboard-wrapper.theme-pink .workspace-topbar {
+    background: #faf8f6;
+    border-bottom: 1px solid #fff1f2;
+}
+
+.dashboard-wrapper.theme-pink .workspace-main {
+    background: linear-gradient(135deg, #fff1f2 0%, #faf8f6 100%);
+}
+
+.dashboard-wrapper.theme-pink .bento-card {
+    background: white;
+    border-color: #ffe4e6;
+}
+
+.dashboard-wrapper.theme-pink .bento-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 10px 30px rgba(236, 72, 153, 0.05);
+}
+
+.dashboard-wrapper.theme-pink .stat-card {
+    border-color: #ffe4e6;
+}
+
+.dashboard-wrapper.theme-pink .stat-card:hover {
+    border-color: var(--color-primary);
+}
+
+.dashboard-wrapper.theme-pink .stat-icon {
+    background: #fff1f2;
+    color: var(--color-primary);
+}
+
+.dashboard-wrapper.theme-pink .pill-label-vibe {
+    background: #fdf2f8;
+    color: var(--color-primary);
+}
 /* --- RESPONSIVENESS END --- */

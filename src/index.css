@@ -144,21 +144,25 @@
 }
 
 [data-theme='pink'] {
-  --color-primary: #db2777;
-  /* Rose Pink */
-  --color-primary-deep: #be185d;
-  --figma-gradient-btn: linear-gradient(135deg, #f472b6, #db2777);
-  --color-bg-base: #fff1f2;
-  /* Soft Rose tint */
-  --color-bg-alt: #ffe4e6;
+  --color-primary: #ec4899;
+  /* Deep Pink */
+  --color-primary-soft: #f472b6;
+  --color-primary-glow: rgba(236, 72, 153, 0.15);
+  --figma-gradient-btn: linear-gradient(135deg, #f472b6, #ec4899);
+  --color-bg-base: #faf8f6;
+  /* Creamy White */
+  --color-bg-alt: #fff1f2;
 
   --decor-orb-1: #fbcfe8;
-  --decor-orb-2: #f9a8d4;
-  --decor-orb-3: #fda4af;
+  /* Light Pink */
+  --decor-orb-2: #e9d5ff;
+  /* Light Purple */
+  --decor-orb-3: #ffedd5;
+  /* Very light orange/peach */
 
-  --color-text-dark: #831843;
-  --color-text-mid: #9d174d;
-  --color-text-soft: #be185d;
+  --color-text-dark: #3f3f46;
+  --color-text-mid: #71717a;
+  --color-text-soft: #ec4899;
 }
 
 body {

@@ -1,0 +1,350 @@
+/* ─── HomePink.css ─── */
+.home-pink-wrapper {
+    background-color: var(--color-bg-base);
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    color: var(--color-text-dark);
+}
+
+/* ─── Background Decor ─── */
+.pink-bg-orbs {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.pink-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(100px);
+    opacity: 0.4;
+}
+
+.orb-1 {
+    top: -10%;
+    left: -10%;
+    width: 600px;
+    height: 600px;
+    background: var(--decor-orb-1);
+}
+
+.orb-2 {
+    bottom: -10%;
+    right: -10%;
+    width: 700px;
+    height: 700px;
+    background: var(--decor-orb-2);
+}
+
+.orb-3 {
+    top: 30%;
+    right: 20%;
+    width: 400px;
+    height: 400px;
+    background: var(--decor-orb-3);
+    opacity: 0.2;
+}
+
+/* ─── Container ─── */
+.home-pink-container {
+    max-width: 1300px;
+    margin: 0 auto;
+    padding: 8rem 2rem 5rem;
+    position: relative;
+    z-index: 5;
+}
+
+.home-pink-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+    position: relative;
+}
+
+/* ─── Hero Card ─── */
+.pink-hero-card-container {
+    position: relative;
+    padding: 2rem;
+}
+
+.pink-hero-card {
+    background: white;
+    padding: 4rem 3.5rem;
+    border-radius: 20px;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.02);
+}
+
+.pink-washi-tape {
+    position: absolute;
+    height: 35px;
+    width: 120px;
+    background: rgba(251, 207, 232, 0.7);
+    /* Soft Pink Tape */
+    border-radius: 3px;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+}
+
+.tape-top {
+    top: 5px;
+    left: 40px;
+    transform: rotate(-3deg);
+    background: rgba(251, 207, 232, 0.7);
+}
+
+.tape-bottom {
+    bottom: 5px;
+    right: 40px;
+    transform: rotate(2deg);
+    background: rgba(233, 213, 255, 0.7);
+    /* Soft Purple Tape */
+}
+
+.card-welcome {
+    display: block;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--color-text-mid);
+    margin-bottom: 1.5rem;
+}
+
+.card-title {
+    font-family: 'Dancing Script', cursive, sans-serif;
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--color-text-dark);
+    margin-bottom: 2rem;
+}
+
+.card-desc {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-mid);
+    margin-bottom: 3rem;
+    max-width: 90%;
+}
+
+.btn-pink-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--figma-gradient-btn);
+    color: white;
+    padding: 1rem 2.5rem;
+    border-radius: 99px;
+    text-decoration: none;
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    box-shadow: 0 10px 25px var(--color-primary-glow);
+    transition: all 0.3s ease;
+}
+
+.btn-pink-hero:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px var(--color-primary-glow);
+}
+
+/* ─── Floating Elements ─── */
+.pink-floating-quote {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    background: white;
+    padding: 1.2rem 2rem;
+    border-radius: 12px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.04);
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.1rem;
+    color: var(--color-text-mid);
+    border: 1px solid rgba(0, 0, 0, 0.02);
+    z-index: 10;
+    transform: rotate(2deg);
+}
+
+/* ─── Visual Stack (Polaroids) ─── */
+.pink-visual-stack {
+    position: relative;
+    height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.pink-polaroid-lg {
+    background: white;
+    padding: 1rem 1rem 4rem 1rem;
+    border-radius: 12px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
+    width: 380px;
+    transform: rotate(2deg);
+    position: relative;
+    z-index: 5;
+}
+
+.polaroid-img-main {
+    width: 100%;
+    aspect-ratio: 1/1.2;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    color: white;
+}
+
+.pink-gradient-bg {
+    background: linear-gradient(135deg, #f0abfc 0%, #f472b6 100%);
+}
+
+.main-heart {
+    font-size: 4rem;
+    margin-bottom: 1.5rem;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.1));
+}
+
+.main-polaroid-text {
+    font-family: 'Oswald', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+}
+
+.main-polaroid-sub {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.polaroid-label-lg {
+    display: block;
+    text-align: center;
+    margin-top: 1.5rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.2rem;
+    color: var(--color-text-mid);
+}
+
+.pink-polaroid-sm {
+    background: white;
+    padding: 0.8rem 0.8rem 2.5rem 0.8rem;
+    border-radius: 8px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.06);
+    width: 180px;
+    position: absolute;
+    z-index: 6;
+}
+
+.polaroid-top {
+    top: 20px;
+    left: 20px;
+    transform: rotate(-8deg);
+}
+
+.polaroid-bottom {
+    bottom: 20px;
+    right: 20px;
+    transform: rotate(10deg);
+}
+
+.polaroid-img-placeholder {
+    width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.purple-glow {
+    background: #f3e8ff;
+}
+
+.blue-glow {
+    background: #e0f2fe;
+}
+
+.polaroid-icon {
+    font-size: 2.5rem;
+}
+
+.polaroid-icon-sm {
+    font-size: 2.22rem;
+}
+
+.polaroid-label {
+    display: block;
+    text-align: center;
+    margin-top: 0.8rem;
+    font-family: 'Dancing Script', cursive;
+    font-size: 0.9rem;
+    color: var(--color-text-mid);
+}
+
+.pink-star-decor {
+    position: absolute;
+    font-size: 1.5rem;
+    opacity: 0.6;
+    z-index: 10;
+}
+
+.star-1 {
+    top: 10%;
+    right: 10%;
+    transform: rotate(15deg);
+}
+
+.star-2 {
+    bottom: 15%;
+    left: 0%;
+    transform: rotate(-10deg);
+}
+
+/* ─── Audio Toggle ─── */
+.pink-audio-toggle {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: var(--color-bg-alt);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary);
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.pink-audio-toggle:hover {
+    transform: scale(1.1);
+    background: white;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .home-pink-layout {
+        grid-template-columns: 1fr;
+        gap: 6rem;
+    }
+
+    .pink-visual-stack {
+        height: 500px;
+    }
+}

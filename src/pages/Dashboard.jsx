@@ -4,7 +4,9 @@ import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { supabase } from '../supabase'
 import MusivePlayer from '../components/MusivePlayer'
+import { useRef } from 'react'
 import './Dashboard.css'
+import './ProfileView.css'
 
 function timeUntil(dateStr) {
     const diff = new Date(dateStr) - new Date()
@@ -57,6 +59,9 @@ export default function Dashboard() {
     const [searchParams] = useSearchParams()
     const justBooked = searchParams.get('booked') === '1'
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const bannerInputRef = useRef(null)
+    const avatarInputRef = useRef(null)
+    const [uploading, setUploading] = useState({ banner: false, avatar: false })
 
     useEffect(() => {
         if (!user) return
@@ -155,100 +160,178 @@ export default function Dashboard() {
         }
     }
 
+    async function handleMediaUpload(event, type) {
+        const file = event.target.files[0]
+        if (!file) return
+
+        setUploading(prev => ({ ...prev, [type]: true }))
+        try {
+            // In a real app, we would upload to Supabase Storage here.
+            // For now, we'll use a local preview and simulate a successful "save" to the profile
+            const reader = new FileReader()
+            reader.onloadend = async () => {
+                const base64data = reader.result
+                const { error } = await supabase
+                    .from('profiles')
+                    .update({ [`${type}_url`]: base64data })
+                    .eq('id', user.id)
+                
+                if (error) throw error
+                // Refresh profile to show new image
+                window.location.reload() // Quickest way to reflect changes for now
+            }
+            reader.readAsDataURL(file)
+        } catch (err) {
+            console.error(`Upload error for ${type}:`, err)
+            alert(`Failed to upload ${type}.`)
+        } finally {
+            setUploading(prev => ({ ...prev, [type]: false }))
+        }
+    }
+
     const upcoming = sessions.filter(s => new Date(s.scheduled_at) > new Date() || isJoinable(s.scheduled_at))
     const past = sessions.filter(s => new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at))
 
     const renderOverview = () => (
-        <div className="workspace-main-content">
-            {activeTab === 'recent' ? (
-                <div className="bento-layout fade-in">
-                    <div className="bento-main-col">
-                        <section className="hero-greeting">
-                            <h1 className="display-title">{getGreeting()}, {user?.email?.split('@')[0] || 'Member'}.</h1>
-                            <p className="subtitle">Consistency is the architecture of success.</p>
-                        </section>
+        <div className="profile-view-container fade-in">
+            <div className="profile-banner-wrapper" onClick={() => bannerInputRef.current.click()}>
+                <img src={profile?.banner_url || "/profile/banner.png"} alt="Profile Banner" className="profile-banner-img" />
+                <div className="media-edit-overlay banner">
+                    <span className="icon">📷</span>
+                    <span>Change Banner</span>
+                </div>
+                <input 
+                    type="file" 
+                    ref={bannerInputRef} 
+                    style={{ display: 'none' }} 
+                    accept="image/*"
+                    onChange={(e) => handleMediaUpload(e, 'banner')}
+                />
+            </div>
 
-                        <div className="stats-bento-grid">
-                            <div className="stat-card">
-                                <span className="label">Growth Streak</span>
-                                <span className="value">{stats.streak} Days</span>
+            <div className="profile-header-meta">
+                <div className="profile-avatar-large" onClick={() => avatarInputRef.current.click()}>
+                    <img src={profile?.avatar_url || "/hero.jpg"} alt="User Avatar" />
+                    <div className="media-edit-overlay avatar">
+                        <span className="icon">📷</span>
+                    </div>
+                    <input 
+                        type="file" 
+                        ref={avatarInputRef} 
+                        style={{ display: 'none' }} 
+                        accept="image/*"
+                        onChange={(e) => handleMediaUpload(e, 'avatar')}
+                    />
+                </div>
+                <div className="profile-main-info">
+                    <div className="profile-user-titles">
+                        <div className="greeting-row">
+                            <span className="pill-label-vibe">{getGreeting()}</span>
+                        </div>
+                        <h1>{profile?.full_name || user?.email?.split('@')[0]}</h1>
+                        <span className="location">📍 Kenya</span>
+                    </div>
+                    <div className="profile-header-stats">
+                        <div className="mini-stat">
+                            <span className="value">{stats.streak}</span>
+                            <span className="label">Streak</span>
+                        </div>
+                        <div className="mini-stat">
+                            <span className="value">{stats.sessions}</span>
+                            <span className="label">Sessions</span>
+                        </div>
+                    </div>
+                    <button className="edit-profile-btn">Edit Profile</button>
+                </div>
+            </div>
+
+            <div className="profile-grid">
+                <aside className="profile-sidebar-col">
+                    <div className="profile-sidebar-card">
+                        <div className="sidebar-card-header">
+                            <span className="icon">😊</span>
+                            <h3>Profile</h3>
+                        </div>
+                        <div className="sidebar-card-body">
+                            <div className="info-item">
+                                <span className="label">Name</span>
+                                <span className="value">{profile?.full_name || 'Not set'}</span>
                             </div>
-                            <div className="stat-card">
-                                <span className="label">Sessions</span>
-                                <span className="value">{stats.sessions}</span>
+                            <div className="info-item">
+                                <span className="label">Date Joined</span>
+                                <div className="icon-text">
+                                    <span className="icon">🕒</span>
+                                    <span className="value">2 months ago</span>
+                                </div>
+                            </div>
+                            <div className="info-item">
+                                <span className="label">Phone number</span>
+                                <span className="value">{profile?.phone || 'Not provided'}</span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="bento-side-col">
-                        <section className="bento-card session-highlight">
-                            <div className="card-header">
-                                <h2 className="card-title">Reflection</h2>
-                                <span className="card-label">Active</span>
-                            </div>
-                            {activeReflectionSession ? (
-                                <div className="reflection-form compact">
-                                    <textarea
-                                        value={reflectionForm.notes}
-                                        onChange={e => setReflectionForm(f => ({ ...f, notes: e.target.value }))}
-                                        placeholder="Key takeaways..."
-                                    />
-                                    <button className="btn btn-primary btn-block" onClick={handleSaveReflection}>
-                                        Verify Reflection
-                                    </button>
-                                </div>
-                            ) : (
-                                <p className="empty-text">Review your progress to maintain momentum.</p>
-                            )}
-                        </section>
-
-                        <section className="bento-card upcoming-mini">
-                            <div className="card-header">
-                                <h2 className="card-title">Schedule</h2>
-                                <Link to="/booking" className="text-link">Book Now</Link>
-                            </div>
+                    <div className="profile-sidebar-card mt-4">
+                        <div className="sidebar-card-header">
+                            <span className="icon">📅</span>
+                            <h3>Schedule</h3>
+                        </div>
+                        <div className="sidebar-card-body">
                             {upcoming.length === 0 ? (
                                 <p className="empty-text">No meetings.</p>
                             ) : (
                                 <div className="session-list-mini">
-                                    {upcoming.slice(0, 1).map(s => (
-                                        <div key={s.id} className="session-item-mini">
-                                            <div className="session-dot"></div>
+                                    {upcoming.slice(0, 2).map(s => (
+                                        <div key={s.id} className="session-item-mini mb-3">
                                             <div className="session-info">
-                                                <div className="session-label-group">
-                                                    <strong>{s.session_label}</strong>
-                                                    {isJoinable(s.scheduled_at) && (
-                                                        <Link
-                                                            to={`/session/${s.id}?role=user`}
-                                                            className="join-glow-link"
-                                                        >
-                                                            Join Now
-                                                        </Link>
-                                                    )}
-                                                </div>
+                                                <strong>{s.session_label}</strong>
                                                 <span>{new Date(s.scheduled_at).toLocaleDateString()}</span>
+                                                {isJoinable(s.scheduled_at) && (
+                                                    <Link to={`/session/${s.id}?role=user`} className="text-link mt-1 d-block">Join Now</Link>
+                                                )}
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             )}
-                        </section>
-                    </div>
-                </div>
-            ) : (
-                <div className="analytics-view fade-in">
-                    <section className="bento-card progress-report">
-                        <h2 className="card-title text-center">Your Growth Path</h2>
-                        <div className="progress-summary mt-4">
-                            <div className="p-item">
-                                <span className="p-label">Sessions Completed</span>
-                                <span className="p-value">{stats.sessions} / 12</span>
-                                <div className="p-bar"><div className="p-fill" style={{ width: `${(stats.sessions / 12) * 100}%` }} /></div>
-                            </div>
+                            <Link to="/booking" className="btn btn-vibration-outline btn-sm w-100 mt-2">Book Session</Link>
                         </div>
+                    </div>
+                </aside>
+
+                <main className="profile-data-col">
+                    <section className="bento-card reflection-highlight mb-4">
+                        <div className="card-header">
+                            <h2 className="card-title">Daily Reflection</h2>
+                            <span className="card-label">Focus</span>
+                        </div>
+                        {activeReflectionSession ? (
+                            <div className="reflection-form compact">
+                                <p className="subtitle mb-3">Reflecting on: {activeReflectionSession.session_label}</p>
+                                <textarea
+                                    value={reflectionForm.notes}
+                                    onChange={e => setReflectionForm(f => ({ ...f, notes: e.target.value }))}
+                                    placeholder="Key takeaways from your last session..."
+                                />
+                                <button className="btn btn-primary btn-block" onClick={handleSaveReflection}>
+                                    Save Reflection
+                                </button>
+                            </div>
+                        ) : (
+                            <div className="empty-state-p">
+                                <p className="empty-text">Maintain momentum by recording your growth insights daily.</p>
+                                <button className="btn btn-vibration-outline btn-sm mt-3">Start New Post</button>
+                            </div>
+                        )}
                     </section>
-                </div>
-            )}
+
+                    <div className="profile-main-content">
+                        <img src="/profile/illustration.png" alt="" className="empty-state-illustration" />
+                        <h3 className="card-title">Adventure Awaits</h3>
+                        <p className="empty-text">Your growth journey is being architected. Keep pushing.</p>
+                    </div>
+                </main>
+            </div>
         </div>
     )
 
@@ -452,6 +535,7 @@ export default function Dashboard() {
         </div>
     )
 
+
     return (
         <div className={`dashboard-wrapper ${theme === 'bo' ? 'theme-bo' : ''} ${theme === 'pink' ? 'theme-pink' : ''} workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
             <div className="workspace-container">
@@ -508,7 +592,9 @@ export default function Dashboard() {
                                     <span className="notification-badge"></span>
                                 </button>
                             </div>
-                            <span className="welcome-text">Account: <span className="user-name">{profile?.full_name || user?.email}</span></span>
+                            <button className="topbar-user-link" onClick={() => setActiveView('overview')}>
+                                <span className="welcome-text">Account: <span className="user-name">{profile?.full_name || user?.email}</span></span>
+                            </button>
                         </div>
                     </header>
 

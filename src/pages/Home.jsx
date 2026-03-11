@@ -11,74 +11,61 @@ export default function Home() {
 
     return (
         <div className={`home-container ${theme === 'pink' ? 'theme-pink' : ''}`}>
-            {/* ─── Background Decor ─── */}
-            <div className="bg-decor" aria-hidden="true">
-                <div className="decor-orb orb-1"></div>
-                <div className="decor-orb orb-2"></div>
-                <div className="decor-orb orb-3"></div>
-            </div>
-
-            {/* ─── Hero Section (Mindloop Inspired) ─── */}
+            {/* ─── Hero Section ─── */}
             <section className="hero-mindloop">
                 <div className="mindloop-bg">
-                    <img src="/586f4cee95c5f0ab5f547fa626a04d8b.jpg" alt="Ethereal Landscape" className="mindloop-hero-img" />
+                    <img src="/586f4cee95c5f0ab5f547fa626a04d8b.jpg" alt="Landscape" className="mindloop-hero-img" />
                     <div className="mindloop-overlay"></div>
                 </div>
 
-                <div className="mindloop-content-wrapper fade-in">
-                    <div className="mindloop-hero-main">
+                <div className="mindloop-content-wrapper container">
+                    <div className="mindloop-hero-main fade-in">
                         <div className="mindloop-glass-card">
                             <div className="mindloop-top-pill">
                                 <span>✨ Your Mental Health Journey Starts Here</span>
                             </div>
 
                             <div className="mindloop-hero-content-flex">
+                                <div className="mindloop-text-side">
+                                    <h1 className="mindloop-display">
+                                        Find Peace, <br />
+                                        <span className="text-highlight">Grow Stronger</span>
+                                    </h1>
+                                    <p className="mindloop-subtitle">
+                                        Professional mental health support tailored to your journey.
+                                        Safe, confidential, and compassionate.
+                                    </p>
+
+                                    <div className="mindloop-hero-btns">
+                                        <Link to="/booking" className="mindloop-btn primary">BOOK SESSION</Link>
+                                    </div>
+
+                                    <div className="mindloop-stats">
+                                        <div className="stat-box">
+                                            <strong>500+</strong>
+                                            <span>Sessions</span>
+                                        </div>
+                                        <div className="stat-divider"></div>
+                                        <div className="stat-box">
+                                            <strong>4.9/5</strong>
+                                            <span>Rating</span>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div className="mindloop-image-side">
                                     <div className="portrait-container">
                                         <img src="/hero.jpg" alt="Guide" className="portrait-img" />
                                         <div className="portrait-glow"></div>
                                     </div>
                                 </div>
-
-                                <div className="mindloop-text-side">
-                                    <h1 className="mindloop-display">
-                                        Find Peace, <br />
-                                        <span className="text-highlight">Grow Stronger</span>
-                                    </h1>
-
-                                    <p className="mindloop-subtitle">
-                                        Professional mental health support tailored to your needs.
-                                        Compassionate therapy in a safe, welcoming space.
-                                    </p>
-
-                                    <div className="mindloop-hero-btns">
-                                        <Link to="/booking" className="mindloop-btn primary">Book Session Now</Link>
-                                    </div>
-
-                                    <div className="mindloop-stats">
-                                        <div className="stat-box">
-                                            <strong>500+</strong>
-                                            <span>Happy Clients</span>
-                                        </div>
-                                        <div className="stat-divider"></div>
-                                        <div className="stat-box">
-                                            <strong>10k+</strong>
-                                            <span>Sessions</span>
-                                        </div>
-                                        <div className="stat-divider"></div>
-                                        <div className="stat-box">
-                                            <strong>98%</strong>
-                                            <span>Satisfaction</span>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
 
-                        <div className="mindloop-social-float">
-                            <span className="social-icon"></span>
-                            <span className="social-icon"></span>
-                            <span className="social-icon">𝕏</span>
+                            <div className="mindloop-social-float">
+                                <span className="social-icon"></span>
+                                <span className="social-icon"></span>
+                                <span className="social-icon">𝕏</span>
+                            </div>
                         </div>
                     </div>
                 </div>

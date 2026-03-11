@@ -102,6 +102,31 @@
     }
 }
 
+/* ─── Pink Theme Overrides ─── */
+.reflections-page.theme-pink {
+    background: linear-gradient(135deg, #fff1f2 0%, #faf8f6 100%);
+}
+
+.reflections-page.theme-pink .display-title {
+    color: var(--color-primary);
+}
+
+.reflections-page.theme-pink .back-btn {
+    color: var(--color-primary);
+    background: white;
+    border: 1px solid #ffe4e6;
+}
+
+.reflections-page.theme-pink .tool-card,
+.reflections-page.theme-pink .reflection-card {
+    background: white;
+    border-color: #ffe4e6;
+}
+
+.reflections-page.theme-pink .date-tag {
+    background: #fdf2f8;
+}
+
 @media (max-width: 768px) {
     .reflections-grid {
         grid-template-columns: 1fr;

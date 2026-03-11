@@ -24,3 +24,71 @@
     background: #e0f2f1;
     border-color: #b2eee0;
 }
+
+[data-theme='pink'] .btn-theme-toggle {
+    background: #fff1f2;
+    border-color: #fbcfe8;
+}
+
+/* ─── Pink Mode Floating Navbar ─── */
+[data-theme='pink'] .navbar {
+    background: transparent;
+    padding-top: 1.5rem;
+}
+
+[data-theme='pink'] .navbar__inner {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 99px;
+    padding: 0.8rem 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    max-width: fit-content;
+    margin: 0 auto;
+}
+
+[data-theme='pink'] .navbar__brand {
+    font-family: 'Dancing Script', cursive;
+    font-size: 1.5rem;
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.navbar__logo-icon-pink, .navbar__logo-icon-bo {
+    font-size: 1.5rem;
+    margin-right: 0.5rem;
+}
+
+[data-theme='pink'] .navbar__logo-svg {
+    display: none;
+}
+
+[data-theme='pink'] .btn-book {
+    border-radius: 99px;
+    padding: 0.6rem 2rem;
+    font-size: 0.85rem;
+    background: var(--figma-gradient-btn);
+    border: none;
+    text-transform: lowercase;
+}
+
+[data-theme='pink'] .navbar__link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0 1rem;
+    color: var(--color-text-mid);
+    position: relative;
+}
+
+[data-theme='pink'] .navbar__link::after {
+    content: '•';
+    position: absolute;
+    right: -1.2rem;
+    color: var(--color-primary-soft);
+    opacity: 0.5;
+}
+
+[data-theme='pink'] .navbar__link:last-of-type::after {
+    display: none;
+}
