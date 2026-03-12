@@ -135,6 +135,10 @@
 }
 
 @media (max-width: 768px) {
+    .reflections-container-inner {
+        padding: 6.5rem 1.75rem 120px !important; 
+    }
+
     .reflections-grid {
         grid-template-columns: 1fr;
     }

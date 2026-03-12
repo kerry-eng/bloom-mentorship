@@ -286,6 +286,17 @@
         grid-template-columns: 1fr;
         text-align: center;
         gap: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-hero-replica__content {
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
     
     .mentor-mission,

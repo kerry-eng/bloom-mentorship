@@ -35,7 +35,7 @@ function App() {
         <ThemeProvider>
             <MusicProvider>
                 {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
-                {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <MobileNavbar />}
+                {['/dashboard', '/', '/about', '/reflections', '/blogs'].includes(location.pathname) && <MobileNavbar />}
                 <Routes>
                     <Route path="/" element={<HomeLoader />} />
                     <Route path="/auth" element={<Auth />} />

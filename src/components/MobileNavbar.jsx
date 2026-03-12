@@ -9,9 +9,15 @@ export default function MobileNavbar() {
     const { theme, toggleTheme } = useTheme();
     const location = useLocation();
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+    
+    const isDashboardBase = location.pathname.startsWith('/dashboard') || location.pathname.startsWith('/reflections');
+    const searchParams = new URLSearchParams(location.search);
+    const activeView = searchParams.get('view') || 'overview';
+
     const isHome = location.pathname === '/';
     const isAbout = location.pathname === '/about';
     const isBlogs = location.pathname === '/blogs';
+    const isReflections = location.pathname === '/reflections';
 
     // Scroll to section helper
     const scrollToSection = (id) => {
@@ -31,12 +37,42 @@ export default function MobileNavbar() {
                     </div>
                     
                     <div className="menu-sections">
-                        <Link to="/booking" className={`menu-link ${location.pathname === '/booking' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
-                            <span className="link-icon">📅</span> Book Session
-                        </Link>
-                        <Link to="/reflections" className="menu-link" onClick={() => setIsMenuOpen(false)}>
-                            <span className="link-icon">🧠</span> Reflections
-                        </Link>
+                        {!isDashboardBase && (
+                            <Link to="/booking" className={`menu-link ${location.pathname === '/booking' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                <span className="link-icon">📅</span> Book Session
+                            </Link>
+                        )}
+                        
+                        {isDashboardBase ? (
+                            <>
+                                <Link to="/reflections" className={`menu-link ${isReflections ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">🧠</span> Reflections
+                                </Link>
+                                <Link to="/dashboard?view=messages" className={`menu-link ${activeView === 'messages' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">💬</span> Messages
+                                </Link>
+                                <Link to="/dashboard?view=write-blog" className={`menu-link ${activeView === 'write-blog' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">✍️</span> Studio
+                                </Link>
+                                <Link to="/blogs" className={`menu-link ${isBlogs ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">📰</span> Blogs
+                                </Link>
+                                <Link to="/booking" className={`menu-link ${location.pathname === '/booking' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">📅</span> Book Session
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                {user && (
+                                    <Link to="/dashboard" className="menu-link" onClick={() => setIsMenuOpen(false)}>
+                                        <span className="link-icon">📊</span> Dashboard
+                                    </Link>
+                                )}
+                                <Link to="/reflections" className={`menu-link ${isReflections ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">🧠</span> Reflections
+                                </Link>
+                            </>
+                        )}
                         
                         <div className="menu-divider"></div>
                         
@@ -66,18 +102,37 @@ export default function MobileNavbar() {
             </div>
 
             <nav className="mobile-bottom-nav">
-                <Link to="/" className={`mobile-nav-item ${isHome ? 'active' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-                    <div className="mobile-nav-icon">🏠</div>
-                    <span className="mobile-nav-label">Home</span>
-                </Link>
-                <Link to="/about" className={`mobile-nav-item ${isAbout ? 'active' : ''}`}>
-                    <div className="mobile-nav-icon">🕊️</div>
-                    <span className="mobile-nav-label">About</span>
-                </Link>
-                <Link to="/blogs" className={`mobile-nav-item ${isBlogs ? 'active' : ''}`}>
-                    <div className="mobile-nav-icon">✍️</div>
-                    <span className="mobile-nav-label">Blogs</span>
-                </Link>
+                {isDashboardBase ? (
+                    <>
+                        <Link to="/dashboard?view=overview" className={`mobile-nav-item ${activeView === 'overview' && !isReflections ? 'active' : ''}`}>
+                            <div className="mobile-nav-icon">📊</div>
+                            <span className="mobile-nav-label">Overview</span>
+                        </Link>
+                        <Link to="/dashboard?view=assignments" className={`mobile-nav-item ${activeView === 'assignments' ? 'active' : ''}`}>
+                            <div className="mobile-nav-icon">📅</div>
+                            <span className="mobile-nav-label">Sessions</span>
+                        </Link>
+                        <Link to="/dashboard?view=community" className={`mobile-nav-item ${activeView === 'community' ? 'active' : ''}`}>
+                            <div className="mobile-nav-icon">🤝</div>
+                            <span className="mobile-nav-label">Groups</span>
+                        </Link>
+                    </>
+                ) : (
+                    <>
+                        <Link to="/" className={`mobile-nav-item ${isHome ? 'active' : ''}`} onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+                            <div className="mobile-nav-icon">🏠</div>
+                            <span className="mobile-nav-label">Home</span>
+                        </Link>
+                        <Link to="/about" className={`mobile-nav-item ${isAbout ? 'active' : ''}`}>
+                            <div className="mobile-nav-icon">🕊️</div>
+                            <span className="mobile-nav-label">About</span>
+                        </Link>
+                        <Link to="/blogs" className={`mobile-nav-item ${isBlogs ? 'active' : ''}`}>
+                            <div className="mobile-nav-icon">✍️</div>
+                            <span className="mobile-nav-label">Blogs</span>
+                        </Link>
+                    </>
+                )}
                 <button className={`mobile-nav-item ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(true)}>
                     <div className="mobile-nav-icon">≡</div>
                     <span className="mobile-nav-label">More</span>

@@ -7,14 +7,7 @@ export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen,
     return (
         <header className="workspace-topbar-arch">
             <div className="topbar-left-arch">
-                <button 
-                    className="mobile-toggle-btn" 
-                    onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                    aria-label="Toggle Menu"
-                >
-                    <span className="hamburger"></span>
-                </button>
-                <div className="topbar-search-arch">
+                <div className="topbar-search-arch hide-mobile">
                     <span className="search-icon">🔍</span>
                     <input type="text" placeholder="Search for mentors, sessions..." />
                 </div>
@@ -33,7 +26,7 @@ export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen,
                     <div className="avatar-circle">
                         {profile?.full_name ? profile.full_name.charAt(0).toUpperCase() : (user?.email?.charAt(0).toUpperCase() || 'N')}
                     </div>
-                    <div className="user-info-arch">
+                    <div className="user-info-arch hide-mobile">
                         <span className="user-name-arch">{profile?.full_name || 'User Name'}</span>
                         <span className="user-role-arch">ACCOUNT</span>
                     </div>
