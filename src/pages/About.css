@@ -208,7 +208,7 @@
     max-height: 100vh;
     display: flex;
     align-items: center;
-    background: #ffffff;
+    background: #000000;
     padding-top: 40px; /* Reduced space for fixed navbar */
     overflow: hidden;
     position: relative;
@@ -232,7 +232,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
     font-weight: 600;
-    color: #444444;
+    color: rgba(255, 255, 255, 0.7);
     margin-bottom: 1.5rem; /* Reduced margin */
     display: block;
 }
@@ -242,7 +242,7 @@
     font-size: clamp(3rem, 7vw, 5.5rem); /* Slightly smaller max size */
     font-weight: 800;
     line-height: 0.95;
-    color: #000000;
+    color: #ffffff;
     margin-bottom: 2rem; /* Reduced margin */
     letter-spacing: -0.02em;
     text-transform: uppercase;
@@ -252,7 +252,7 @@
     font-family: 'Inter', sans-serif;
     font-size: 1.1rem; /* Slightly smaller */
     line-height: 1.5;
-    color: #555555;
+    color: rgba(255, 255, 255, 0.8);
     max-width: 480px;
 }
 
