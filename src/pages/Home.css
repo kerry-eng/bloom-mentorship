@@ -930,11 +930,12 @@
 
 .transformation-title {
     font-family: var(--font-display);
-    font-size: clamp(2.5rem, 5vw, 3.5rem);
+    font-size: clamp(1.6rem, 5vw, 3.5rem);
     font-weight: 800;
     letter-spacing: -0.03em;
     margin-bottom: 1.5rem;
     color: #1e293b;
+    line-height: 1.2;
 }
 
 .transformation-desc {
