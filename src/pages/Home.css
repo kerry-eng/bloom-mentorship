@@ -136,10 +136,20 @@
         padding-bottom: 20px;
     }
 
+    .hero-replica-v2__image-side {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex: none;
+        margin-bottom: 20px;
+    }
+
     .replica-v2-image-wrapper {
-        width: 290px; /* Slightly bigger than original, but refined */
-        margin: 20px auto 0;
+        width: 330px; /* Increased size as requested */
+        margin: 0 auto;
         position: relative;
+        right: auto; /* Reset desktop offset */
+        left: auto;
     }
 }
 
