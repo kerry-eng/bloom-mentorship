@@ -291,16 +291,16 @@
 
 @media (max-width: 900px) {
     .hero-replica {
-        padding-top: var(--space-10);
+        padding-top: var(--space-12); /* Increased top padding for better clearance */
         height: auto;
         min-height: auto;
-        padding-bottom: var(--space-8);
+        padding-bottom: var(--space-10); /* More space at bottom for nav clearance */
     }
     .hero-replica__inner {
         display: flex;
         flex-direction: column-reverse;
         padding: 0 var(--space-2);
-        gap: var(--space-4);
+        gap: var(--space-6); /* Increased gap to prevent overlap */
     }
     .hero-replica__content {
         text-align: center;
@@ -308,29 +308,47 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        padding: 0 var(--space-1);
+    }
+    .hero-philosophy {
+        margin-bottom: var(--space-3);
     }
     .hero-replica__title {
         margin-bottom: var(--space-3);
+        gap: 0;
     }
-    .title-serif, .title-sans {
-        font-size: clamp(2.5rem, 10vw, 3.5rem);
+    .title-serif {
+        font-size: clamp(2rem, 9vw, 2.5rem); /* Slightly more compact for small screens */
+        display: block;
+        margin-bottom: 0.2rem;
+    }
+    .title-sans {
+        font-size: clamp(2.2rem, 10vw, 3rem);
+        margin-top: 0; /* Removed negative margin on mobile to fix overflow */
     }
     .hero-replica__subtitle {
-        font-size: 1.1rem;
-        margin-bottom: var(--space-4);
+        font-size: 1.05rem;
+        margin-bottom: var(--space-5);
+        color: #64748b;
+        max-width: 400px;
     }
     .hero-replica__actions {
         width: 100%;
+        display: flex;
+        justify-content: center;
+        margin-bottom: var(--space-6);
     }
     .btn-modern-hero {
         width: 100%;
+        max-width: 320px;
         justify-content: center;
         padding: var(--space-2) var(--space-4);
     }
     .replica-image-wrapper {
-        border-radius: var(--space-4);
-        max-height: 380px;
-        aspect-ratio: 16/10;
+        border-radius: var(--space-3);
+        max-height: 280px; /* Reduced to leave more room for text */
+        width: 100%;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.1);
         margin-bottom: 0;
     }
 }
