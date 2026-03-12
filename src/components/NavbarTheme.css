@@ -79,21 +79,3 @@
 [data-theme='pink'] .navbar__link::after {
     display: none; /* Remove the dots from previous iteration */
 }
-
-/* Mobile Hamburger Polish */
-.navbar__hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 8px;
-    z-index: 1002;
-}
-
-@media (max-width: 900px) {
-    .navbar__hamburger {
-        display: flex;
-    }
-}
