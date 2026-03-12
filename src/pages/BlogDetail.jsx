@@ -19,7 +19,7 @@ export default function BlogDetail() {
                 .from('blogs')
                 .select(`
                     *,
-                    author:profiles!blogs_author_id_fkey(full_name, avatar_url, bio)
+                    author:profiles(full_name, avatar_url, bio)
                 `)
                 .eq('id', blogId)
                 .single()

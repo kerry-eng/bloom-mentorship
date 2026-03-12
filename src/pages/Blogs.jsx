@@ -22,7 +22,7 @@ export default function Blogs() {
                 .from('blogs')
                 .select(`
                     *,
-                    author:profiles!blogs_author_id_fkey(full_name, avatar_url)
+                    author:profiles(full_name, avatar_url)
                 `)
                 .order('created_at', { ascending: false })
                 .range(pageNum * POSTS_PER_PAGE, (pageNum + 1) * POSTS_PER_PAGE - 1)
