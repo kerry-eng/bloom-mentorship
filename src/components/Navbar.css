@@ -93,11 +93,12 @@
 .auth-link-stacked {
     display: flex;
     flex-direction: column;
-    line-height: 1;
-    font-size: 0.85rem !important;
+    line-height: 1.1;
+    font-size: 0.95rem !important;
     text-align: left;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
     min-width: fit-content;
+    letter-spacing: -0.01em;
 }
 
 .auth-link-stacked span {

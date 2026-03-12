@@ -8,16 +8,26 @@ export default function About() {
 
     return (
         <div className="about-page">
-            <section className="about-hero">
-                <div className="container">
-                    <div className="about-hero-content fade-in">
-                        <span className="section-label-vibe">Our Mission 🌿</span>
-                        <h1 className="display-title">GUIDING YOUR PATH TO <span className="text-accent-meta">BLOOM</span></h1>
-                        <p className="about-subtitle">
-                            Bloom is more than a platform; it's a dedicated community where professional
-                            mentorship meets compassionate support. We seek to empower individuals
-                            through transparency, commitment, and growth.
+            <section className="about-hero-replica">
+                <div className="container about-hero-replica__inner">
+                    <div className="about-hero-replica__content fade-in">
+                        <span className="about-hero-replica__label">Our Mission 🌿</span>
+                        <h1 className="about-hero-replica__title">
+                            GUIDING <br />
+                            YOUR PATH <br />
+                            TO BLOOM
+                        </h1>
+                        <p className="about-hero-replica__subtitle">
+                            Bloom is more than a platform; it's a dedicated community 
+                            where professional mentorship meets compassionate 
+                            support. We seek to empower individuals through 
+                            transparency, commitment, and growth.
                         </p>
+                    </div>
+                    <div className="about-hero-replica__image-side fade-in">
+                        <div className="about-replica-image-wrapper">
+                            <img src="/Ellipse 1.png" alt="Bloom Illustration" className="about-replica-hero-img" />
+                        </div>
                     </div>
                 </div>
             </section>

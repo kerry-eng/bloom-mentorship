@@ -58,7 +58,7 @@ export default function Navbar() {
                                 className="btn-theme-toggle"
                                 title={`Switch Theme (Current: ${theme})`}
                             >
-                                <span className="theme-toggle-icon">{theme === 'bloom' ? '🌸' : '💗'}</span>
+                                <span className="theme-toggle-icon">{theme === 'bloom' ? '🌿' : '💗'}</span>
                             </button>
                             <Link to="/booking" className="btn btn-nav-book">
                                 Book Session
@@ -76,7 +76,7 @@ export default function Navbar() {
                                 className="btn-theme-toggle"
                                 title={`Switch Theme (Current: ${theme})`}
                             >
-                                <span className="theme-toggle-icon">{theme === 'bloom' ? '🌸' : '💗'}</span>
+                                <span className="theme-toggle-icon">{theme === 'bloom' ? '🌿' : '💗'}</span>
                             </button>
                             <Link to="/auth" className="navbar__link auth-link-stacked">
                                 <span>Sign</span>
