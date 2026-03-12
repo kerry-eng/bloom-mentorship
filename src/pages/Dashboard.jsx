@@ -65,6 +65,7 @@ export default function Dashboard() {
     const [uploading, setUploading] = useState({ banner: false, avatar: false })
     const [votd, setVotd] = useState({ text: 'The Lord is my shepherd; I shall not want.', reference: 'Psalm 23:1' })
     const [selectedMood, setSelectedMood] = useState('Balanced')
+    const [showBookingSuccess, setShowBookingSuccess] = useState(false)
 
     useEffect(() => {
         if (!user) return
@@ -79,6 +80,19 @@ export default function Dashboard() {
             setActiveView(viewParam);
         }
     }, [searchParams, navigate]);
+
+    useEffect(() => {
+        if (searchParams.get('booked') === '1') {
+            setShowBookingSuccess(true)
+            // Clean up the URL after 4 seconds
+            setTimeout(() => {
+                setShowBookingSuccess(false)
+                const newParams = new URLSearchParams(searchParams)
+                newParams.delete('booked')
+                navigate(`/dashboard?${newParams.toString()}`, { replace: true })
+            }, 4000)
+        }
+    }, [searchParams, navigate])
 
     useEffect(() => {
         fetchVotd()
@@ -325,7 +339,7 @@ export default function Dashboard() {
                     <div className="schedule-header">
                         <div className="date-badge-arch">
                             <span className="month">
-                                {upcoming[0] ? new Date(upcoming[0].scheduled_at).toLocaleString('default', { month: 'SHORT' }).toUpperCase() : '---'}
+                                {upcoming[0] ? new Date(upcoming[0].scheduled_at).toLocaleString('default', { month: 'short' }).toUpperCase() : '---'}
                             </span>
                             <span className="day">
                                 {upcoming[0] ? new Date(upcoming[0].scheduled_at).getDate() : '--'}
@@ -576,6 +590,15 @@ export default function Dashboard() {
             setActiveView={setActiveView}
             onProfileClick={() => setActiveView('overview')}
         >
+            {showBookingSuccess && (
+                <div className="booking-success-toast fade-in">
+                    <div className="toast-icon">✨</div>
+                    <div className="toast-content">
+                        <strong>Booking Successful!</strong>
+                        <span>Your mentorship session has been scheduled.</span>
+                    </div>
+                </div>
+            )}
             {(() => {
                 switch (activeView) {
                     case 'overview':
