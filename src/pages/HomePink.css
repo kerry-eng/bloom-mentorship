@@ -139,10 +139,11 @@
 }
 
 /* Floating Blob Portrait (Ellipse 2) */
+/* Floating Blob Portrait (Ellipse 2) */
 .floating-blob-portrait {
     position: absolute;
     top: 50%;
-    right: -100px; /* Moved further right */
+    right: -100px;
     transform: translateY(-95%);
     width: 240px; 
     z-index: 20;
@@ -210,11 +211,10 @@
     justify-content: center;
 }
 
-/* Polaroids Specifics */
 .polaroid-sm-lavender {
     width: 170px;
     top: 120px;
-    left: -60px; /* Moved further left to clear main card if needed */
+    left: -60px;
     transform: rotate(-12deg);
     z-index: 10;
 }
@@ -265,14 +265,13 @@
     aspect-ratio: 1/1;
 }
 
-/* Circle Image Wrapper (Ellipse 3) */
 .floating-circle-portrait {
     position: absolute;
     top: 45%;
-    right: -80px; /* Moved further right to clear YOU MATTER */
+    right: -80px;
     transform: translateY(-50%);
     width: 220px;
-    z-index: 20; /* Keep on top but out of the way */
+    z-index: 20;
 }
 
 .circle-mask {
@@ -284,7 +283,6 @@
     border: 5px solid white;
 }
 
-/* Decorations */
 .sparkle-emoji { font-size: 2rem; }
 .flower-emoji { font-size: 1.5rem; }
 .polaroid-label { text-align: center; font-family: 'Dancing Script', cursive; margin-top: 0.8rem; font-size: 0.95rem; color: #666; }
@@ -306,35 +304,8 @@
     z-index: 10;
 }
 
-.star-top { top: 15%; right: 10%; }
 .star-bottom { bottom: 20%; left: 0%; }
 
-/* ─── Audio Toggle ─── */
-.pink-audio-toggle {
-    position: fixed;
-    bottom: 30px;
-    right: 30px;
-    width: 45px;
-    height: 45px;
-    background: var(--color-bg-alt);
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--color-primary);
-    cursor: pointer;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
-    z-index: 100;
-    transition: all 0.3s ease;
-}
-
-.pink-audio-toggle:hover {
-    transform: scale(1.1);
-    background: white;
-}
-
-/* Responsive */
 
 /* ─── Coaching Programs Section ─── */
 .pink-programs-section {
@@ -361,14 +332,14 @@
     font-size: 2.8rem;
     letter-spacing: 0.1em;
     font-weight: 700;
-    color: var(--color-text-dark);
+    color: #1a1a1a;
     margin-bottom: 1rem;
 }
 
 .pink-section-subtitle {
     font-family: 'Inter', sans-serif;
     font-size: 1.1rem;
-    color: var(--color-text-mid);
+    color: #555;
     max-width: 600px;
     margin: 0 auto;
 }
@@ -425,21 +396,19 @@
 .blue-icon { background: #e0f2fe; }
 .deep-purple-icon { background: #ede9fe; }
 
-.program-icon {
-    font-size: 1.8rem;
-}
+.program-icon { font-size: 1.8rem; }
 
 .pink-program-card h3 {
     font-family: 'Oswald', sans-serif;
     font-size: 1.6rem;
     margin-bottom: 1rem;
-    color: var(--color-text-dark);
+    color: #1a1a1a;
     letter-spacing: 0.05em;
 }
 
 .pink-program-card p {
     font-size: 1rem;
-    color: var(--color-text-mid);
+    color: #666;
     line-height: 1.5;
     margin-bottom: 2rem;
 }
@@ -448,14 +417,14 @@
     font-size: 0.85rem;
     font-weight: 700;
     text-transform: uppercase;
-    color: var(--color-primary-soft);
+    color: #f472b6;
     letter-spacing: 0.05em;
     text-decoration: none;
     transition: color 0.2s ease;
 }
 
 .pink-learn-link:hover {
-    color: var(--color-primary);
+    color: #db2777;
 }
 
 .pink-help-pill-container {
@@ -471,7 +440,7 @@
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.04);
     font-family: 'Inter', sans-serif;
     font-weight: 500;
-    color: var(--color-text-mid);
+    color: #555;
     border: 1px solid rgba(0, 0, 0, 0.02);
     font-size: 1rem;
     text-align: center;
@@ -480,7 +449,7 @@
 /* ─── What Makes Us Different Section ─── */
 .pink-different-section {
     padding: 8rem 2rem;
-    background: #fafaf9; /* Extremely light beige/white */
+    background: #fafaf9;
     position: relative;
     z-index: 5;
 }
@@ -504,7 +473,7 @@
 }
 
 .pink-section-title-alt {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 3rem;
     color: #1a1a1a;
     margin-bottom: 1.5rem;
@@ -536,9 +505,7 @@
     border: 2px solid transparent;
 }
 
-.different-card:hover {
-    transform: translateY(-5px);
-}
+.different-card:hover { transform: translateY(-5px); }
 
 .card-purple-border { border-color: #ddd6fe; }
 .card-pink-border { border-color: #fce7f3; }
@@ -571,12 +538,10 @@
 .icon-peach { background: #fff1f2; }
 .icon-violet { background: #faf5ff; }
 
-.different-icon {
-    font-size: 1.4rem;
-}
+.different-icon { font-size: 1.4rem; }
 
 .different-card h3 {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
     margin-bottom: 0.8rem;
     color: #1a1a1a;
@@ -620,13 +585,10 @@
     background: rgba(245, 243, 255, 0.8);
 }
 
-.cta-icon {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
+.cta-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
 
 .cta-title {
-    font-family: 'Dancing Script', cursive;
+    font-family: 'Playfair Display', serif;
     font-size: 2.2rem;
     margin-bottom: 1rem;
     color: #1a1a1a;
@@ -657,8 +619,44 @@
     box-shadow: 0 15px 30px rgba(244, 114, 182, 0.3);
 }
 
-/* Responsive */
+/* ─── Responsive Media Queries ─── */
 @media (max-width: 1024px) {
+    .replica-hero-content {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 4rem;
+        padding-top: 100px;
+    }
+
+    .replica-hero-left, .replica-hero-right {
+        width: 100%;
+        height: auto;
+    }
+
+    .replica-main-card {
+        width: 90%;
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 2.5rem 2rem;
+    }
+
+    .floating-blob-portrait {
+        right: 0;
+        top: -40px;
+        transform: translate(10%, -50%);
+        width: 180px;
+    }
+
+    .replica-hero-right {
+        height: 600px;
+        margin-top: 2rem;
+    }
+
+    .polaroid-main-lg {
+        width: 280px;
+    }
+
     .home-pink-layout {
         grid-template-columns: 1fr;
         gap: 6rem;
@@ -679,6 +677,70 @@
 }
 
 @media (max-width: 768px) {
+    .home-pink-replica-hero {
+        height: auto;
+        min-height: 100vh;
+        padding-bottom: 5rem;
+    }
+
+    .hero-title-serif {
+        font-size: 2.2rem;
+    }
+
+    .floating-blob-portrait {
+        position: relative;
+        top: 0;
+        right: 0;
+        transform: none;
+        margin: 0 auto 1.5rem; /* Positive margin for spacing */
+        width: 200px;
+        order: -1;
+    }
+
+    .replica-hero-left {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .replica-main-card {
+        padding: 2rem 1.5rem;
+    }
+
+    .floating-quote-bottom {
+        position: relative;
+        bottom: 0;
+        left: 0;
+        margin: 2rem auto;
+        transform: none;
+    }
+
+    .replica-hero-right {
+        height: 500px;
+        transform: scale(0.9);
+    }
+
+    .polaroid-sm-lavender {
+        left: 0;
+        top: 0;
+    }
+
+    .polaroid-main-lg {
+        position: relative;
+        margin: 0 auto;
+        transform: none;
+    }
+
+    .floating-circle-portrait {
+        right: 0;
+        top: 60%;
+        width: 160px;
+    }
+
+    .polaroid-sm-blue {
+        bottom: 0;
+        right: 0;
+    }
+
     .pink-programs-grid {
         grid-template-columns: 1fr;
         max-width: 100%;
@@ -711,5 +773,28 @@
 
     .cta-title {
         font-size: 1.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title-serif {
+        font-size: 1.8rem;
+    }
+
+    .replica-main-card {
+        padding: 1.5rem 1rem;
+    }
+
+    .floating-blob-portrait {
+        width: 160px;
+    }
+
+    .replica-hero-right {
+        height: 400px;
+        transform: scale(0.8);
+    }
+
+    .floating-circle-portrait {
+        width: 130px;
     }
 }
