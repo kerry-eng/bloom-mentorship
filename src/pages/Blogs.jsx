@@ -1,38 +1,49 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { supabase } from '../supabase'
 import './Blogs.css'
 
 export default function Blogs() {
+    const [blogPosts, setBlogPosts] = React.useState([])
+    const [loading, setLoading] = React.useState(true)
+
     useEffect(() => {
         window.scrollTo(0, 0)
+        fetchBlogs()
     }, [])
 
-    const blogPosts = [
+    async function fetchBlogs() {
+        try {
+            const { data, error } = await supabase
+                .from('blogs')
+                .select(`
+                    *,
+                    author:profiles!blogs_author_id_fkey(full_name, avatar_url)
+                `)
+                .order('created_at', { ascending: false })
+
+            if (error) throw error
+            setBlogPosts(data || [])
+        } catch (e) {
+            console.error('Error fetching blogs:', e)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const staticPosts = [
         {
-            id: 1,
+            id: 's1',
             title: "Finding Balance in a High-Performance World",
             category: "Mental Health",
-            date: "March 8, 2026",
-            excerpt: "Learn how to manage stress and maintain peak performance without burning out. Our expert mentors share their top 5 strategies.",
-            author: "Gloria S."
+            created_at: "2026-03-08",
+            excerpt: "Learn how to manage stress and maintain peak performance without burning out.",
+            author: { full_name: "Gloria S." }
         },
-        {
-            id: 2,
-            title: "The Power of Regular Reflection",
-            category: "Growth",
-            date: "March 5, 2026",
-            excerpt: "Discover why spending just 10 minutes a day reflecting on your journey can accelerate your progress by 40% based on recent studies.",
-            author: "Team Bloom"
-        },
-        {
-            id: 3,
-            title: "Navigating Career Transitions with Confidence",
-            category: "Career",
-            date: "March 1, 2026",
-            excerpt: "Moving from one role to another can be daunting. Here's a step-by-step guide to making your next big move with a clear mindset.",
-            author: "Alex M."
-        }
+        // ... other static posts if needed as fallback
     ]
+
+    const displayPosts = blogPosts.length > 0 ? blogPosts : (loading ? [] : staticPosts)
 
     return (
         <div className="blogs-page">
@@ -58,28 +69,38 @@ export default function Blogs() {
                     </div>
 
                     <div className="blogs-grid">
-                        {blogPosts.map((post, i) => (
-                            <div key={post.id} className={`blog-card fade-in-delay-${i}`}>
-                                <div className="blog-card-header">
-                                    <span className="blog-category">{post.category}</span>
-                                    <span className="blog-date">{post.date}</span>
-                                </div>
-                                <h2 className="blog-title">{post.title}</h2>
-                                <p className="blog-excerpt">{post.excerpt}</p>
-                                <div className="blog-footer">
-                                    <div className="blog-author">
-                                        <div className="author-avatar">{post.author[0]}</div>
-                                        <span>By {post.author}</span>
+                        {displayPosts.map((post, i) => {
+                            const dateStr = post.created_at ? new Date(post.created_at).toLocaleDateString(undefined, {
+                                month: 'long',
+                                day: 'numeric',
+                                year: 'numeric'
+                            }) : post.date;
+
+                            const authorName = post.author?.full_name || post.author || "Team Bloom";
+
+                            return (
+                                <div key={post.id} className={`blog-card fade-in-delay-${i % 3}`}>
+                                    <div className="blog-card-header">
+                                        <span className="blog-category">{post.category}</span>
+                                        <span className="blog-date">{dateStr}</span>
                                     </div>
-                                    <Link to={`/blogs/${post.id}`} className="read-more">
-                                        Read Article
-                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </Link>
+                                    <h2 className="blog-title">{post.title}</h2>
+                                    <p className="blog-excerpt">{post.excerpt}</p>
+                                    <div className="blog-footer">
+                                        <div className="blog-author">
+                                            <div className="author-avatar">{authorName[0]}</div>
+                                            <span>By {authorName}</span>
+                                        </div>
+                                        <Link to={`/blogs/${post.id}`} className="read-more">
+                                            Read Article
+                                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                                <path d="M5 12h14M12 5l7 7-7 7" />
+                                            </svg>
+                                        </Link>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
                     </div>
 
                     <div className="blogs-pagination">

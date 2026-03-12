@@ -66,6 +66,8 @@ export default function Dashboard() {
     const [votd, setVotd] = useState({ text: 'The Lord is my shepherd; I shall not want.', reference: 'Psalm 23:1' })
     const [selectedMood, setSelectedMood] = useState('Balanced')
     const [showBookingSuccess, setShowBookingSuccess] = useState(false)
+    const [blogForm, setBlogForm] = useState({ title: '', category: 'Growth & Mindset', content: '' })
+    const [publishing, setPublishing] = useState(false)
 
     useEffect(() => {
         if (!user) return
@@ -246,6 +248,38 @@ export default function Dashboard() {
             console.error(`Upload error for ${type}:`, err)
             alert(`Failed to upload ${type}. Details: ${err.message || 'Unknown error'}`)
             setUploading(prev => ({ ...prev, [type]: false }))
+        }
+    }
+
+    async function handlePublishBlog() {
+        if (!blogForm.title || !blogForm.content) {
+            alert('Please provide both a title and content.')
+            return
+        }
+
+        setPublishing(true)
+        try {
+            const excerpt = blogForm.content.substring(0, 150) + (blogForm.content.length > 150 ? '...' : '')
+            const { error } = await supabase
+                .from('blogs')
+                .insert([{
+                    title: blogForm.title,
+                    category: blogForm.category,
+                    content: blogForm.content,
+                    excerpt: excerpt,
+                    author_id: user.id
+                }])
+
+            if (error) throw error
+            
+            alert('Blog published to community successfully! ✨')
+            setBlogForm({ title: '', category: 'Growth & Mindset', content: '' })
+            navigate('/blogs') // Optional: route to blogs to see result
+        } catch (e) {
+            console.error('Publish error:', e)
+            alert('Failed to publish. Check console.')
+        } finally {
+            setPublishing(false)
         }
     }
 
@@ -550,13 +584,23 @@ export default function Dashboard() {
             <div className="blog-editor-container mt-5 glass-card-vibe p-5">
                 <div className="editor-group mb-4">
                     <label className="editor-label">Blog Title</label>
-                    <input type="text" placeholder="Something high-energy..." className="editor-input-main" />
+                    <input 
+                        type="text" 
+                        placeholder="Something high-energy..." 
+                        className="editor-input-main" 
+                        value={blogForm.title}
+                        onChange={e => setBlogForm(prev => ({ ...prev, title: e.target.value }))}
+                    />
                 </div>
 
                 <div className="editor-row mb-4">
                     <div className="editor-group flex-1">
                         <label className="editor-label">Category</label>
-                        <select className="editor-select">
+                        <select 
+                            className="editor-select"
+                            value={blogForm.category}
+                            onChange={e => setBlogForm(prev => ({ ...prev, category: e.target.value }))}
+                        >
                             <option>Growth & Mindset</option>
                             <option>Career Vibes</option>
                             <option>Spiritual Health</option>
@@ -570,12 +614,20 @@ export default function Dashboard() {
                     <textarea
                         className="editor-textarea"
                         placeholder="Write from the heart. Share the breakthrough..."
+                        value={blogForm.content}
+                        onChange={e => setBlogForm(prev => ({ ...prev, content: e.target.value }))}
                     ></textarea>
                 </div>
 
                 <div className="editor-actions mt-5">
-                    <button className="btn btn-vibration-outline">Save Draft</button>
-                    <button className="btn btn-primary btn-vibration px-5">Publish to Community</button>
+                    <button className="btn btn-vibration-outline" onClick={() => alert('Draft feature coming soon!')}>Save Draft</button>
+                    <button 
+                        className="btn btn-primary btn-vibration px-5"
+                        onClick={handlePublishBlog}
+                        disabled={publishing}
+                    >
+                        {publishing ? 'Publishing...' : 'Publish to Community'}
+                    </button>
                 </div>
             </div>
         </div>
