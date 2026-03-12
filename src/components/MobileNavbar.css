@@ -39,15 +39,20 @@
 }
 
 .mobile-nav-icon {
-    font-size: 1.4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #94a3b8; /* Polished slate gray */
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .mobile-nav-label {
     font-size: 0.65rem;
     font-weight: 700;
-    color: #64748b;
+    color: #94a3b8;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    transition: all 0.3s ease;
 }
 
 .mobile-nav-item.active .mobile-nav-label {
@@ -55,10 +60,8 @@
 }
 
 .mobile-nav-item.active .mobile-nav-icon {
-    transform: scale(1.1);
-    background: rgba(0,0,0,0.03);
-    border-radius: 12px;
-    padding: 2px 8px;
+    color: #1a1a1a;
+    transform: translateY(-2px);
 }
 
 /* More Menu Drawer */
