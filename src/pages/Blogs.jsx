@@ -18,7 +18,8 @@ export default function Blogs() {
     async function fetchBlogs(pageNum) {
         setLoading(true)
         try {
-            const { data, error } = await supabase
+            // Attempt with profile join first
+            let { data, error } = await supabase
                 .from('blogs')
                 .select(`
                     *,
@@ -27,17 +28,32 @@ export default function Blogs() {
                 .order('created_at', { ascending: false })
                 .range(pageNum * POSTS_PER_PAGE, (pageNum + 1) * POSTS_PER_PAGE - 1)
 
-            if (error) throw error
-            
-            if (pageNum === 0) {
-                setBlogPosts(data || [])
-            } else {
-                setBlogPosts(prev => [...prev, ...data])
+            // Fallback: If join fails, try fetching without profile join
+            if (error) {
+                console.warn('Profile join failed, falling back to simple fetch:', error)
+                const fallback = await supabase
+                    .from('blogs')
+                    .select('*')
+                    .order('created_at', { ascending: false })
+                    .range(pageNum * POSTS_PER_PAGE, (pageNum + 1) * POSTS_PER_PAGE - 1)
+                
+                if (fallback.error) throw fallback.error
+                data = fallback.data
             }
             
-            setHasMore(data.length === POSTS_PER_PAGE)
+            if (data) {
+                if (pageNum === 0) {
+                    setBlogPosts(data)
+                } else {
+                    setBlogPosts(prev => [...prev, ...data])
+                }
+                setHasMore(data.length === POSTS_PER_PAGE)
+            } else {
+                setHasMore(false)
+            }
         } catch (e) {
             console.error('Error fetching blogs:', e)
+            setHasMore(false) // Disable button on hard error to prevent stuck state
         } finally {
             setLoading(false)
         }

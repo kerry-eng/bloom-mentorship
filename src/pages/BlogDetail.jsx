@@ -15,7 +15,7 @@ export default function BlogDetail() {
 
     async function fetchPost() {
         try {
-            const { data, error } = await supabase
+            let { data, error } = await supabase
                 .from('blogs')
                 .select(`
                     *,
@@ -24,7 +24,18 @@ export default function BlogDetail() {
                 .eq('id', blogId)
                 .single()
 
-            if (error) throw error
+            if (error) {
+                console.warn('Profile join failed on detail, falling back:', error)
+                const fallback = await supabase
+                    .from('blogs')
+                    .select('*')
+                    .eq('id', blogId)
+                    .single()
+                
+                if (fallback.error) throw fallback.error
+                data = fallback.data
+            }
+            
             setPost(data)
         } catch (e) {
             console.error('Error fetching blog post:', e)
