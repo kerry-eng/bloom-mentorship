@@ -1,17 +1,7 @@
 .btn-theme-toggle {
-    background: var(--color-bg-alt);
-    border: 1px solid var(--color-slate-light);
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 1.2rem;
-    transition: all 0.2s ease;
-    margin-right: 1rem;
-    padding: 0;
+    background: var(--color-bg-alt, #f8fafc);
+    border: 1px solid var(--color-slate-light, #e2e8f0);
+    /* Base styles handled in Navbar.css */
 }
 
 .btn-theme-toggle:hover {
@@ -27,27 +17,16 @@
 
 [data-theme='pink'] .btn-theme-toggle {
     background: #ffffff;
-    border: 1px solid #111111;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    margin-right: 0;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0;
-    transition: all 0.2s ease;
+    border: 1px solid #000000;
+    padding: 0.6rem 1.4rem;
 }
 
 [data-theme='pink'] .btn-theme-toggle:hover {
-    transform: scale(1.05);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
 }
 
-[data-theme='pink'] .btn-theme-toggle::after {
-    content: '😻';
-    font-size: 1.2rem;
-}
+/* Removed duplicated pseudo-element icon */
 
 /* ─── Pink Mode Refinement ─── */
 [data-theme='pink'] .navbar__inner {
