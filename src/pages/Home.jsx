@@ -62,7 +62,6 @@ export default function Home() {
             <section className="section-coaching" id="services">
                 <div className="container">
                     <div className="section-header-centered">
-                        <div className="accent-icon-top"></div>
                         <h2 className="display-title">COACHING PROGRAMS</h2>
                         <p className="subtitle">Select the program that matches your goals and commitment level</p>
                     </div>

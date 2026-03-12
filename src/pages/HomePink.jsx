@@ -107,14 +107,12 @@ const HomePink = () => {
             <div className="pink-programs-section">
                 <div className="pink-programs-container">
                     <div className="pink-section-header">
-                        <span className="sticker-lightning"></span>
                         <h2 className="pink-section-title">COACHING PROGRAMS</h2>
                         <p className="pink-section-subtitle">Select the program that matches your goals and commitment level</p>
                     </div>
 
                     <div className="pink-programs-grid">
                         <div className="pink-program-card">
-                            <div className="sticker-muscle muscle-tr"></div>
                             <div className="program-icon-wrapper purple-icon">
                                 <span className="program-icon">💜</span>
                             </div>
@@ -124,7 +122,6 @@ const HomePink = () => {
                         </div>
 
                         <div className="pink-program-card">
-                            <div className="sticker-muscle muscle-tl"></div>
                             <div className="program-icon-wrapper pink-icon">
                                 <span className="program-icon">🌸</span>
                             </div>
@@ -134,7 +131,6 @@ const HomePink = () => {
                         </div>
 
                         <div className="pink-program-card">
-                            <div className="sticker-muscle muscle-br"></div>
                             <div className="program-icon-wrapper blue-icon">
                                 <span className="program-icon">📹</span>
                             </div>
@@ -144,7 +140,6 @@ const HomePink = () => {
                         </div>
 
                         <div className="pink-program-card">
-                            <div className="sticker-muscle muscle-bl"></div>
                             <div className="program-icon-wrapper deep-purple-icon">
                                 <span className="program-icon">💬</span>
                             </div>
