@@ -11,61 +11,39 @@ export default function Home() {
 
     return (
         <div className={`home-container ${theme === 'pink' ? 'theme-pink' : ''}`}>
-            {/* ─── Hero Section ─── */}
-            <section className="hero-mindloop">
-                <div className="mindloop-bg">
-                    <img src="/586f4cee95c5f0ab5f547fa626a04d8b.jpg" alt="Landscape" className="mindloop-hero-img" />
-                    <div className="mindloop-overlay"></div>
-                </div>
+            {/* ─── Hero Section Replica ─── */}
+            <section className="hero-replica">
+                <div className="container hero-replica__inner">
+                    <div className="hero-replica__content fade-in">
+                        <h1 className="hero-replica__title">
+                            Find Peace,<br />
+                            <span className="text-green">Grow Stronger</span>
+                        </h1>
+                        <p className="hero-replica__subtitle">
+                            Professional mental health support tailored to your journey.<br />
+                            Safe, confidential, and compassionate.
+                        </p>
+                        
+                        <div className="hero-replica__actions">
+                            <Link to="/booking" className="btn-replica-book">Book Session</Link>
+                        </div>
 
-                <div className="mindloop-content-wrapper container">
-                    <div className="mindloop-hero-main fade-in">
-                        <div className="mindloop-glass-card">
-                            <div className="mindloop-top-pill">
-                                <span>✨ Your Mental Health Journey Starts Here</span>
+                        <div className="hero-replica__stats">
+                            <div className="replica-stat">
+                                <span className="stat-value">500+</span>
+                                <span className="stat-label">Sessions</span>
                             </div>
-
-                            <div className="mindloop-hero-content-flex">
-                                <div className="mindloop-text-side">
-                                    <h1 className="mindloop-display">
-                                        Find Peace, <br />
-                                        <span className="text-highlight">Grow Stronger</span>
-                                    </h1>
-                                    <p className="mindloop-subtitle">
-                                        Professional mental health support tailored to your journey.
-                                        Safe, confidential, and compassionate.
-                                    </p>
-
-                                    <div className="mindloop-hero-btns">
-                                        <Link to="/booking" className="mindloop-btn primary">BOOK SESSION</Link>
-                                    </div>
-
-                                    <div className="mindloop-stats">
-                                        <div className="stat-box">
-                                            <strong>500+</strong>
-                                            <span>Sessions</span>
-                                        </div>
-                                        <div className="stat-divider"></div>
-                                        <div className="stat-box">
-                                            <strong>4.9/5</strong>
-                                            <span>Rating</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div className="mindloop-image-side">
-                                    <div className="portrait-container">
-                                        <img src="/hero.jpg" alt="Guide" className="portrait-img" />
-                                        <div className="portrait-glow"></div>
-                                    </div>
-                                </div>
+                            <div className="replica-divider"></div>
+                            <div className="replica-stat">
+                                <span className="stat-value">4.9/5</span>
+                                <span className="stat-label">Rating</span>
                             </div>
+                        </div>
+                    </div>
 
-                            <div className="mindloop-social-float">
-                                <span className="social-icon"></span>
-                                <span className="social-icon"></span>
-                                <span className="social-icon">𝕏</span>
-                            </div>
+                    <div className="hero-replica__image-side fade-in">
+                        <div className="replica-image-wrapper">
+                            <img src="/Stylish Woman in Urban Setting.png" alt="Stylish Woman" className="replica-hero-img" />
                         </div>
                     </div>
                 </div>

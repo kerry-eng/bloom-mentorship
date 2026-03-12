@@ -1,334 +1,203 @@
-/* ─── Hero Mindloop (Ethereal Aesthetic) ─── */
-.hero-mindloop {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    height: auto;
-    background-color: #94b9ff;
-    overflow-x: hidden;
-    color: var(--mindloop-text);
+/* ─── Hero Replica (Clean Minimalist) ─── */
+.hero-replica {
+    background: #ffffff;
+    height: 100vh;
+    max-height: 100vh;
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    padding-top: 100px;
+    overflow: hidden;
+    position: relative;
 }
 
-.mindloop-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
+.hero-replica__inner {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 4rem;
+    align-items: center;
     width: 100%;
-    height: 100%;
-    z-index: 1;
 }
 
 .mindloop-hero-img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    object-position: center bottom;
 }
 
-.mindloop-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: radial-gradient(circle at center, rgba(148, 185, 255, 0.1) 0%, rgba(10, 20, 40, 0.5) 100%);
-    z-index: 2;
-}
-
-.mindloop-content-wrapper {
-    position: relative;
-    z-index: 10;
-    height: 100%;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 2rem;
-    padding-top: 85px;
-    /* Fixed navbar height clearance */
-}
-
-.mindloop-hero-main {
-    width: 100%;
-    max-width: 1000px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.mindloop-glass-card {
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(40px) saturate(180%);
-    -webkit-backdrop-filter: blur(40px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 2.5rem 3rem;
-    border-radius: 32px;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-}
-
-.mindloop-top-pill {
-    background: rgba(255, 255, 255, 0.1);
-    padding: 0.4rem 1rem;
-    border-radius: 99px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    display: inline-block;
-    color: #ffffff;
-    align-self: flex-start;
-}
-
-.mindloop-hero-content-flex {
-    display: grid;
-    grid-template-columns: 0.7fr 1.3fr;
-    gap: 3rem;
-    align-items: center;
+.hero-replica__content {
     text-align: left;
+    max-width: 600px;
 }
 
-.text-highlight {
-    color: #000000;
-    text-shadow: none;
-}
-
-.mindloop-display {
-    font-size: clamp(1.8rem, 3.5vw, 2.75rem);
-    font-weight: 800;
-    letter-spacing: -0.02em;
+.hero-replica__title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5.5vw, 4.2rem);
+    font-weight: 850;
     line-height: 1.1;
-    margin-bottom: 0.75rem;
+    color: #000000;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+}
+
+.text-green {
+    color: #00E676 !important; /* Force vibrant green from replica */
+}
+
+.hero-replica__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.5;
+    color: #2D3436;
+    margin-bottom: 2rem;
+    max-width: 480px;
+}
+
+.btn-replica-book {
+    display: inline-block;
+    padding: 0.8rem 2.2rem;
+    border: 1px solid #000000;
+    border-radius: 12px;
+    background: #ffffff;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    margin-bottom: 2.5rem;
+}
+
+.btn-replica-book:hover {
+    background: #000000;
     color: #ffffff;
 }
 
-.mindloop-subtitle {
-    font-size: 0.95rem;
-    max-width: 440px;
-    line-height: 1.5;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 2rem;
-}
-
-.mindloop-hero-btns {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 2rem;
-}
-
-.mindloop-btn {
-    padding: 0.8rem 1.8rem;
-    border-radius: 10px;
-    font-weight: 700;
-    font-size: 0.9rem;
-    transition: all 0.3s;
-    text-align: center;
-}
-
-.mindloop-btn.primary {
-    background: #4ade80;
-    color: #064e3b;
-    box-shadow: 0 10px 30px rgba(74, 222, 128, 0.3);
-}
-
-.mindloop-btn.primary:hover {
-    background: #22c55e;
-    transform: translateY(-4px);
-    box-shadow: 0 15px 40px rgba(74, 222, 128, 0.4);
-}
-
-.mindloop-btn.secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(10px);
-}
-
-.mindloop-btn.secondary:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-4px);
-}
-
-.mindloop-stats {
+.hero-replica__stats {
     display: flex;
     align-items: center;
     gap: 2rem;
 }
 
-.stat-box strong {
-    font-size: 1.4rem;
-    font-weight: 800;
-    color: white;
+.replica-stat {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }
 
-.stat-box span {
-    font-size: 0.75rem;
-    color: rgba(255, 255, 255, 0.6);
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: #D1D1D1;
+    line-height: 1;
 }
 
-.stat-divider {
-    width: 1px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.15);
+.stat-label {
+    font-size: 2rem;
+    font-weight: 300;
+    color: #D1D1D1;
+    line-height: 1;
 }
 
-/* Portrait Side */
-.portrait-container {
+.replica-divider {
+    width: 1.5px;
+    height: 100px;
+    background: #000000;
+    opacity: 0.8;
+}
+
+.hero-replica__image-side {
+    position: relative;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.replica-image-wrapper {
     position: relative;
     width: 100%;
-    max-width: 320px;
-    /* Capped to save vertical space */
-    aspect-ratio: 1;
-    border-radius: 24px;
+    max-width: 580px;
+    height: 80vh; /* Controlled height */
+    max-height: 550px; /* Cap for smaller screens */
+    border-radius: 60px 0 60px 60px;
     overflow: hidden;
-    border: 3px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
-    margin: 0 auto;
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
 }
 
-.portrait-img {
+.replica-hero-img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    filter: brightness(1.1);
+    object-position: center top; /* Ensure the head/hat isn't cut off */
+    display: block;
 }
 
-.portrait-glow {
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at center, transparent 30%, rgba(148, 185, 255, 0.1) 100%);
-    pointer-events: none;
+@media (max-width: 1100px) {
+    .hero-replica__inner {
+        gap: 2rem;
+    }
+    .hero-replica__title {
+        font-size: 3.5rem;
+    }
 }
 
-.mindloop-social-float {
-    display: flex;
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.social-icon {
-    width: 50px;
-    height: 50px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.15);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.4rem;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-}
-
-.social-icon:hover {
-    background: rgba(255, 255, 255, 0.25);
-    transform: translateY(-5px);
-    border-color: rgba(255, 255, 255, 0.4);
-}
-
-@media (max-width: 1024px) {
-    .mindloop-hero-content-flex {
-        grid-template-columns: 1fr;
+@media (max-width: 900px) {
+    .hero-replica {
+        padding-top: 120px; /* Stronger clearance */
+        height: auto;
+        min-height: 100vh;
+        overflow: visible;
+        display: block;
+    }
+    .hero-replica__inner {
+        display: block; /* Ensure straightforward stacking */
+        width: 100%;
+        padding: 0 1.5rem 4rem;
         text-align: center;
-        gap: 2.5rem;
     }
-
-    .mindloop-text-side {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        order: 1; /* Move text below image */
-    }
-
-    .mindloop-top-pill {
-        align-self: center;
-    }
-
-    .mindloop-hero-btns {
-        justify-content: center;
-    }
-
-    .mindloop-stats {
-        justify-content: center;
-    }
-
-    .mindloop-image-side {
-        max-width: 400px;
-        margin: 0 auto;
-        order: -1; /* Move image to top */
-    }
-}
-
-@media (max-width: 768px) {
-    .hero-mindloop {
-        min-height: auto;
-        padding-bottom: 2rem;
-    }
-
-    .mindloop-content-wrapper {
-        padding: 1.5rem;
-        padding-top: 100px;
-    }
-
-    .mindloop-glass-card {
-        padding: 2.5rem 1.5rem;
-        border-radius: 24px;
-    }
-
-    .mindloop-display {
-        font-size: 2.1rem;
-    }
-
-    .mindloop-hero-btns {
-        flex-direction: column;
+    .hero-replica__content {
+        display: block;
+        text-align: center;
         width: 100%;
-        gap: 0.8rem;
+        margin-bottom: 2rem;
     }
-
-    .mindloop-btn {
-        width: 100%;
+    .hero-replica__title {
+        display: block;
+        font-size: 2.8rem !important; /* Force readability */
+        margin-bottom: 1.5rem;
+        line-height: 1.1;
+        color: #000000 !important;
     }
-
-    .mindloop-stats {
-        flex-direction: column;
-        gap: 1.25rem;
-        margin-top: 1rem;
+    .hero-replica__subtitle {
+        display: block;
+        font-size: 1.1rem;
+        margin-bottom: 2.5rem;
+        color: #2D3436;
+        line-height: 1.5;
     }
-
-    .stat-divider {
-        display: none;
+    .btn-replica-book {
+        display: inline-block;
+        margin-bottom: 4rem;
+        width: auto;
+        padding: 0.9rem 2.5rem;
     }
-
-    .stat-box {
+    .hero-replica__stats {
         display: flex;
-        flex-direction: column;
-        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        margin-bottom: 4rem;
     }
-
-    .mindloop-social-float {
-        margin-top: 2rem;
-        gap: 1.5rem;
-    }
-
-    .social-icon {
-        width: 44px;
-        height: 44px;
-        font-size: 1.2rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .mindloop-display {
+    .stat-value {
         font-size: 2.2rem;
     }
-
-    .portrait-container {
-        max-width: 280px;
+    .stat-label {
+        font-size: 1.5rem;
+    }
+    .replica-divider {
+        height: 80px;
+    }
+    .replica-image-wrapper {
+        border-radius: 40px;
+        max-height: 450px;
+        width: 90%;
+        margin: 0 auto;
     }
 }
 

@@ -78,7 +78,10 @@ export default function Navbar() {
                             >
                                 <span className="theme-toggle-icon">{theme === 'bloom' ? '🌸' : '💗'}</span>
                             </button>
-                            <Link to="/auth" className="navbar__link">Sign In</Link>
+                            <Link to="/auth" className="navbar__link auth-link-stacked">
+                                <span>Sign</span>
+                                <span>In</span>
+                            </Link>
                             <Link to="/booking" className="btn btn-nav-book">
                                 Book Session
                             </Link>
