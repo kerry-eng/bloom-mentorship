@@ -724,9 +724,9 @@
     }
 
     .replica-hero-right {
-        height: 380px;
-        transform: scale(0.9);
-        margin-top: 1rem;
+        height: 460px; /* Increased from 380px to de-clump */
+        transform: scale(0.95);
+        margin: 2rem 0; /* More vertical separation */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -734,16 +734,17 @@
     }
 
     .polaroid-sm-lavender {
-        width: 120px;
-        left: 0;
-        top: 10px;
+        width: 130px;
+        left: -10px;
+        top: 0;
         z-index: 15;
+        transform: rotate(-15deg);
     }
 
     .polaroid-main-lg {
-        width: 220px;
+        width: 260px;
         position: absolute;
-        top: 45%;
+        top: 50%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(2deg);
         z-index: 5;
@@ -751,30 +752,31 @@
 
     .floating-circle-portrait {
         position: absolute;
-        right: 10px;
-        top: 35%;
-        width: 110px;
+        right: -5px;
+        top: 30%;
+        width: 130px;
         z-index: 20;
     }
 
     .polaroid-sm-blue {
-        width: 110px;
+        width: 120px;
         position: absolute;
-        bottom: 10px;
-        right: 15px;
+        bottom: 0;
+        right: 10px;
         z-index: 12;
+        transform: rotate(8deg);
     }
     
     .floating-quote-bottom {
         position: relative;
-        margin: 1.5rem auto 0;
-        font-size: 0.95rem;
-        padding: 0.6rem 1.2rem;
+        margin: 2rem auto 0;
+        font-size: 1rem;
+        padding: 0.8rem 1.6rem;
     }
 
     .pink-programs-section {
-        padding: 4rem 1rem 8rem;
-        margin-top: -2rem; /* Pull up to reduce space */
+        padding: 6rem 1rem 8rem; /* Relaxed padding slightly */
+        margin-top: 0; /* Removed negative margin to de-clump */
         border-top-left-radius: 40px;
         border-top-right-radius: 40px;
         background: #fafaf9;
