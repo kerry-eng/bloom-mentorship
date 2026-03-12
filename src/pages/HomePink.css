@@ -777,7 +777,7 @@
     }
 
     .pink-programs-section {
-        padding: 2rem 1rem 6rem; /* Tighter vertical flow */
+        padding: 2rem 0.75rem 6rem; /* Reduced horizontal padding */
         margin-top: -1rem;
         border-top-left-radius: 40px;
         border-top-right-radius: 40px;
@@ -786,7 +786,8 @@
     }
 
     .pink-section-header {
-        margin-bottom: 1.5rem; /* Reduced from 2.5rem */
+        margin-bottom: 1.5rem;
+        padding: 0 1rem;
     }
     
     .sticker-lightning {
@@ -806,8 +807,9 @@
     }
 
     .pink-program-card {
-        padding: 2.5rem 1.5rem;
-        max-width: 100%;
+        padding: 2rem 1.25rem; /* More compact padding for wider content area */
+        max-width: none;
+        width: 100%;
     }
 
     .pink-different-section {

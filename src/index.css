@@ -427,4 +427,7 @@ p {
   .mobile-only-nav {
     display: block !important;
   }
+  .container {
+    padding: 0 1.5rem; /* Reduced from 3rem */
+  }
 }
