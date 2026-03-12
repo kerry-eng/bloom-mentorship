@@ -19,15 +19,15 @@
 }
 
 .navbar__inner {
-    background: rgba(255, 255, 255, 0.65); /* Reduced opacity for glassy look */
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    background: rgba(255, 255, 255, 0.45); /* High transparency iOS style */
+    backdrop-filter: blur(40px) saturate(180%) contrast(90%);
+    -webkit-backdrop-filter: blur(40px) saturate(180%) contrast(90%);
     padding: 0.75rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    border: 0.5px solid rgba(255, 255, 255, 0.5); /* Hairline iOS border */
+    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
     border-radius: 100px;
     transition: all 0.3s ease;
 }
@@ -93,6 +93,19 @@
 
 .navbar__link:hover {
     opacity: 0.6;
+}
+
+[data-theme='pink'] .navbar__link:hover {
+    color: #f472b6;
+    opacity: 1;
+}
+
+[data-theme='pink'] .navbar__logo-text {
+    color: #db2777;
+}
+
+[data-theme='pink'] .navbar__logo-svg {
+    color: #db2777;
 }
 
 .navbar__separator {
@@ -219,12 +232,12 @@
 
     .navbar__inner {
         padding: 0.8rem 1.5rem;
-        background: rgba(255, 255, 255, 0.75);
-        backdrop-filter: blur(25px) saturate(180%);
-        -webkit-backdrop-filter: blur(25px) saturate(180%);
+        background: rgba(255, 255, 255, 0.6); /* iOS Mobile style */
+        backdrop-filter: blur(30px) saturate(180%) contrast(95%);
+        -webkit-backdrop-filter: blur(30px) saturate(180%) contrast(95%);
         border-radius: 0;
         border: none;
-        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        border-bottom: 0.5px solid rgba(255, 255, 255, 0.4);
     }
 
     .navbar__hamburger, 
