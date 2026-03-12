@@ -574,6 +574,42 @@ export default function Dashboard() {
         </div>
     )
 
+    const renderNotifications = () => (
+        <div className="workspace-module fade-in">
+            <div className="module-header">
+                <h2 className="display-title sm">Notifications</h2>
+                <p className="subtitle">Stay updated with your latest alerts and activities.</p>
+            </div>
+
+            <div className="notifications-list-arch mt-5 glass-card-vibe">
+                <div className="notif-item-arch p-4 active">
+                    <div className="notif-icon-arch">📅</div>
+                    <div className="notif-content-arch">
+                        <strong>New Session Booked</strong>
+                        <p>Your session with Mentor Njeri is confirmed for tomorrow at 10:00 AM.</p>
+                        <span className="notif-time-arch">Just now</span>
+                    </div>
+                </div>
+                <div className="notif-item-arch p-4">
+                    <div className="notif-icon-arch">📝</div>
+                    <div className="notif-content-arch">
+                        <strong>Reflection Reminder</strong>
+                        <p>Don't forget to record your reflections for yesterday's session.</p>
+                        <span className="notif-time-arch">2 hours ago</span>
+                    </div>
+                </div>
+                <div className="notif-item-arch p-4">
+                    <div className="notif-icon-arch">🌸</div>
+                    <div className="notif-content-arch">
+                        <strong>Welcome to Bloom</strong>
+                        <p>Explore the dashboard to start your journey.</p>
+                        <span className="notif-time-arch">1 day ago</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+
     const renderBlogStudio = () => (
         <div className="workspace-module fade-in">
             <div className="module-header">
@@ -661,6 +697,8 @@ export default function Dashboard() {
                         return renderAssignments();
                     case 'messages':
                         return renderMessages();
+                    case 'notifications':
+                        return renderNotifications();
                     case 'write-blog':
                         return renderBlogStudio();
                     default:

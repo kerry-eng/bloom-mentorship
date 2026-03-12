@@ -21,6 +21,7 @@ export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobil
                         isMobileMenuOpen={isMobileMenuOpen} 
                         setIsMobileMenuOpen={setIsMobileMenuOpen}
                         onProfileClick={onProfileClick}
+                        setActiveView={setActiveView}
                     />
 
                     <div className="workspace-content">

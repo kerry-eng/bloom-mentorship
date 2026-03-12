@@ -1,7 +1,7 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
 
-export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen, onProfileClick }) {
+export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen, onProfileClick, setActiveView }) {
     const { user, profile } = useAuth();
 
     return (
@@ -14,10 +14,11 @@ export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen,
             </div>
             <div className="topbar-right-arch">
                 <div className="action-items-arch">
-                    <button className="topbar-btn-circle" title="Messages">
+                    <button className="topbar-btn-circle" title="Messages" onClick={() => setActiveView('messages')}>
                         <span className="action-icon">💬</span>
+                        <span className="notification-dot"></span>
                     </button>
-                    <button className="topbar-btn-circle" title="Notifications">
+                    <button className="topbar-btn-circle" title="Notifications" onClick={() => setActiveView('notifications')}>
                         <span className="action-icon">🔔</span>
                         <span className="notification-dot"></span>
                     </button>
