@@ -223,7 +223,6 @@ export default function Home() {
                             "For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."
                         </blockquote>
                         <cite className="verse-reference">— Jeremiah 29:11</cite>
-                        <div className="verse-decor">✨</div>
                     </div>
                 </div>
             </section>
@@ -236,8 +235,8 @@ export default function Home() {
                         <div className="transformation-inner-glow" aria-hidden="true"></div>
 
                         {/* Floating Decorators */}
-                        <div className="float-decor decor-top-right" style={{ '--rot': '10deg' }}>💪</div>
-                        <div className="float-decor decor-bottom-left" style={{ '--rot': '-15deg' }}>⚡</div>
+                        <div className="float-decor decor-top-right" style={{ '--rot': '10deg' }}></div>
+                        <div className="float-decor decor-bottom-left" style={{ '--rot': '-15deg' }}></div>
 
                         <div className="card-header-icon">
                             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -251,7 +250,7 @@ export default function Home() {
                         <p className="transformation-desc">
                             Take the first step toward real change. Book a free 30-minute
                             consultation to discuss your goals and create an action plan. No
-                            commitment, just results. 💪
+                            commitment, just results.
                         </p>
 
                         <div className="transformation-pills">
@@ -270,7 +269,7 @@ export default function Home() {
                         </div>
 
                         <div className="transformation-footer">
-                            ⚡ Join 200+ clients who've transformed their lives ⚡
+                            Join 200+ clients who've transformed their lives
                         </div>
                     </div>
                 </div>

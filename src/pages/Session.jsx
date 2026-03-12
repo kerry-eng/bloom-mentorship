@@ -97,7 +97,6 @@ export default function Session() {
 
     if (loading) return (
         <div className="session-loading">
-            <div style={{ fontSize: '2.5rem' }}>🌸</div>
             <p>Preparing your safe space...</p>
         </div>
     )
@@ -105,7 +104,6 @@ export default function Session() {
     if (error) return (
         <div className="session-error">
             <div className="figma-panel" style={{ maxWidth: 480, textAlign: 'center', margin: 'auto' }}>
-                <div style={{ fontSize: '3rem', margin: '1rem 0' }}>🔒</div>
                 <h2 className="figma-script-title" style={{ fontSize: '2rem' }}>Session Unavailable</h2>
                 <p style={{ marginBottom: '1.5rem', color: 'var(--color-text-mid)' }}>{error}</p>
                 <Link to="/dashboard" className="btn figma-btn-primary">Back to Dashboard</Link>
@@ -118,7 +116,7 @@ export default function Session() {
             {/* Topbar */}
             <div className="session__topbar">
                 <div className="session__topbar-left">
-                    <span className="session__logo figma-script-title" style={{ fontSize: '1.8rem', margin: 0 }}>Bloom ✿</span>
+                    <span className="session__logo figma-script-title" style={{ fontSize: '1.8rem', margin: 0 }}>Bloom</span>
                     <div className="session__info">
                         <span className="session__name">{session?.session_label || 'Mentorship Session'}</span>
                         <div className="session__live">
@@ -151,12 +149,11 @@ export default function Session() {
                     /* Lobby */
                     <div className="session__lobby figma-panel" style={{ maxWidth: '500px', margin: 'auto', textAlign: 'center', padding: '3rem 2rem', position: 'relative' }}>
                         <div className="washi-tape tape-pink" style={{ top: '-15px', right: '30%', transform: 'rotate(2deg)' }}></div>
-                        <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>🌿</div>
                         <h2 className="figma-script-title" style={{ fontSize: '2.5rem', marginBottom: '0.5rem' }}>Ready to Begin?</h2>
                         <p style={{ color: 'var(--color-text-mid)', marginBottom: '2rem', maxWidth: '380px', margin: '0 auto 2rem', lineHeight: 1.6 }}>
                             {session?.mentor && !isMentor ? (
                                 <span style={{ display: 'block', marginBottom: '1rem', color: 'var(--color-primary)', fontWeight: 600 }}>
-                                    Assigned Mentor: {session.mentor.full_name} 🌸
+                                    Assigned Mentor: {session.mentor.full_name}
                                 </span>
                             ) : null}
                             Click below to turn on your camera and connect.

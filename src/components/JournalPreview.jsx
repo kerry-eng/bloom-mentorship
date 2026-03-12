@@ -65,7 +65,7 @@ const JournalPreview = ({ onEntrySaved }) => {
                 <div className="notebook-content">
                     <div className="notebook-header">
                         <span className="notebook-date">{new Date().toLocaleDateString(undefined, { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric' })}</span>
-                        <span className="notebook-icon">✨</span>
+                        <span className="notebook-icon"></span>
                     </div>
                     <hr className="notebook-divider" />
                     <div className="notebook-lines">

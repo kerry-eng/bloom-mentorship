@@ -11,7 +11,7 @@ export default function About() {
             <section className="about-hero-replica">
                 <div className="container about-hero-replica__inner">
                     <div className="about-hero-replica__content fade-in">
-                        <span className="about-hero-replica__label">Our Mission 🌿</span>
+                        <span className="about-hero-replica__label">Our Mission</span>
                         <h1 className="about-hero-replica__title">
                             GUIDING <br />
                             YOUR PATH <br />
@@ -45,14 +45,14 @@ export default function About() {
                             </p>
                             <div className="mission-features">
                                 <div className="m-feat">
-                                    <div className="m-feat-icon">🎯</div>
+                                    <div className="m-feat-icon"></div>
                                     <div className="m-feat-txt">
                                         <strong>Goal-Oriented</strong>
                                         <span>Structured paths for real results</span>
                                     </div>
                                 </div>
                                 <div className="m-feat">
-                                    <div className="m-feat-icon">🤝</div>
+                                    <div className="m-feat-icon"></div>
                                     <div className="m-feat-txt">
                                         <strong>Partnership</strong>
                                         <span>Walking alongside you every step</span>
@@ -108,16 +108,16 @@ export default function About() {
             <section className="core-values">
                 <div className="container">
                     <div className="section-header-centered">
-                        <span className="section-label-vibe">Our Ethics 💎</span>
+                        <span className="section-label-vibe">Our Ethics</span>
                         <h2 className="display-title">OUR CORE VALUES</h2>
                         <p className="subtitle-vibe">The foundation of every interaction at Bloom.</p>
                     </div>
                     <div className="values-grid">
                         {[
-                            { title: 'Compassion', desc: 'Approaching every session with empathy and kindness.', icon: '🤍' },
-                            { title: 'Integrity', desc: 'Building trust through honesty and transparency.', icon: '💎' },
-                            { title: 'Excellence', desc: 'Striving for the highest standard in every interaction.', icon: '🌟' },
-                            { title: 'Inclusivity', desc: 'A safe space for everyone, regardless of their background.', icon: '🤝' }
+                            { title: 'Compassion', desc: 'Approaching every session with empathy and kindness.', icon: '' },
+                            { title: 'Integrity', desc: 'Building trust through honesty and transparency.', icon: '' },
+                            { title: 'Excellence', desc: 'Striving for the highest standard in every interaction.', icon: '' },
+                            { title: 'Inclusivity', desc: 'A safe space for everyone, regardless of their background.', icon: '' }
                         ].map((v, i) => (
                             <div key={i} className={`value-card fade-in-delay-${i}`}>
                                 <div className="v-icon">{v.icon}</div>
