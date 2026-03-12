@@ -84,7 +84,7 @@ export default function About() {
             <section className="mentor-spotlight">
                 <div className="container">
                     <div className="section-header-centered">
-                        <span className="pill-label-glow">Expert Guidance ⚡</span>
+                        <span className="pill-label-glow">Expert Guidance</span>
                         <h2 className="display-title">MEET OUR MENTORS</h2>
                         <p className="subtitle-vibe">Professional excellence rooted in Christian faith.</p>
                     </div>

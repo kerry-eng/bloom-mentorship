@@ -70,19 +70,19 @@ export default function Home() {
             <section className="section-coaching" id="services">
                 <div className="container">
                     <div className="section-header-centered">
-                        <div className="accent-icon-top">⚡</div>
+                        <div className="accent-icon-top"></div>
                         <h2 className="display-title">COACHING PROGRAMS</h2>
-                        <p className="subtitle">Select the program that matches your goals and commitment level 💪</p>
+                        <p className="subtitle">Select the program that matches your goals and commitment level</p>
                     </div>
 
                     <div className="programs-layout">
                         {/* Timeline Connector */}
                         <div className="programs-timeline" aria-hidden="true">
                             <div className="timeline-line"></div>
-                            <div className="timeline-node top">💪</div>
-                            <div className="timeline-node mid">💪</div>
-                            <div className="timeline-node low">💪</div>
-                            <div className="timeline-node bottom">💪</div>
+                            <div className="timeline-node top"></div>
+                            <div className="timeline-node mid"></div>
+                            <div className="timeline-node low"></div>
+                            <div className="timeline-node bottom"></div>
                         </div>
 
                         <div className="programs-grid">
