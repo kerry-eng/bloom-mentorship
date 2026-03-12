@@ -119,6 +119,7 @@
     .hero-replica-v2__inner {
         flex-direction: column-reverse; /* Image on top */
         text-align: center;
+        align-items: center; /* Ensure items are horizontally centered */
         gap: 24px;
     }
 
@@ -132,8 +133,8 @@
 
     .replica-v2-image-wrapper {
         width: 320px; /* Increased image size */
-        right: 0;
-        margin: 20px auto 0; /* Added margin-top */
+        margin: 20px auto 0; /* Centered with margin auto */
+        position: relative;
     }
 }
 
