@@ -87,6 +87,7 @@ export function useWebRTC(sessionId, isMentor = false) {
     const peerRef = useRef(null)
     const channelRef = useRef(null)
     const localStreamRef = useRef(null)
+    const iceCandidateQueue = useRef([])
 
     // Request Permissions explicitly before starting
     const requestPermissions = useCallback(async () => {
@@ -141,8 +142,12 @@ export function useWebRTC(sessionId, isMentor = false) {
             if (!result.isConfirmed) return  // user cancelled
 
             // Request camera and microphone (triggers browser permission dialog)
-            const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-            console.log('useWebRTC: Got stream:', stream.getTracks().map(t => t.kind))
+            const stream = await navigator.mediaDevices.getUserMedia({ 
+                video: { width: { ideal: 1280 }, height: { ideal: 720 }, frameRate: { ideal: 30 } }, 
+                audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true } 
+            })
+            
+            console.log('useWebRTC: Got stream:', stream.getTracks().map(t => `${t.kind}: ${t.label}`))
             localStreamRef.current = stream
             setLocalStream(stream)
             setPermissionsGranted(true)
@@ -153,21 +158,28 @@ export function useWebRTC(sessionId, isMentor = false) {
             // 2. Create WebRTC Peer Connection
             const pc = new RTCPeerConnection(ICE_SERVERS)
             peerRef.current = pc
+            iceCandidateQueue.current = []
 
             // 3. Add local tracks to the peer connection
-            stream.getTracks().forEach(track => pc.addTrack(track, stream))
+            stream.getTracks().forEach(track => {
+                console.log(`Adding track: ${track.kind}`)
+                pc.addTrack(track, stream)
+            })
 
             // 4. When remote track arrives, display it
             pc.ontrack = (event) => {
-                setRemoteStream(event.streams[0])
-                setCallStatus('connected')
+                console.log('Remote track received:', event.track.kind)
+                if (event.streams && event.streams[0]) {
+                    setRemoteStream(event.streams[0])
+                    setCallStatus('connected')
+                }
             }
 
-            // 5. Set up Supabase Realtime as our free signaling channel
+            // 5. Set up Supabase Realtime as our signaling channel
             const channel = supabase.channel(`session-room-${sessionId}`)
             channelRef.current = channel
 
-            // 6. Send ICE candidates to the other peer via Supabase
+            // 6. Send ICE candidates
             pc.onicecandidate = (event) => {
                 if (event.candidate) {
                     channel.send({
@@ -181,13 +193,36 @@ export function useWebRTC(sessionId, isMentor = false) {
                 }
             }
 
-            // 7. Listen for signaling messages (offer, answer, ICE candidates)
+            // 7. Signaling Listeners
+            channel.on('broadcast', { event: 'peer-joined' }, async ({ payload }) => {
+                console.log('Peer joined:', payload.from)
+                // If I am the client and the mentor just joined, I initiate the offer
+                if (!isMentor && payload.from === 'mentor') {
+                    const offer = await pc.createOffer()
+                    await pc.setLocalDescription(offer)
+                    channel.send({
+                        type: 'broadcast',
+                        event: 'offer',
+                        payload: { sdp: offer }
+                    })
+                }
+                // If I am the mentor and the client just joined, I can also initiate or wait for offer
+                // Let's stick to Client-initiates for simplicity, but mentor BROADCASTS ready
+            })
+
             channel.on('broadcast', { event: 'offer' }, async ({ payload }) => {
                 if (isMentor) {
-                    // Mentor receives the client's offer, creates answer
+                    console.log('Mentor received offer')
                     await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp))
                     const answer = await pc.createAnswer()
                     await pc.setLocalDescription(answer)
+                    
+                    // Process queued ICE candidates
+                    while (iceCandidateQueue.current.length > 0) {
+                        const cand = iceCandidateQueue.current.shift()
+                        await pc.addIceCandidate(new RTCIceCandidate(cand))
+                    }
+
                     channel.send({
                         type: 'broadcast',
                         event: 'answer',
@@ -198,37 +233,52 @@ export function useWebRTC(sessionId, isMentor = false) {
 
             channel.on('broadcast', { event: 'answer' }, async ({ payload }) => {
                 if (!isMentor) {
-                    // Client receives the mentor's answer
+                    console.log('Client received answer')
                     await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp))
-                }
-            })
-
-            channel.on('broadcast', { event: 'ice-candidate' }, async ({ payload }) => {
-                // Accept ICE candidates from the other party
-                const fromOtherParty = isMentor
-                    ? payload.from === 'client'
-                    : payload.from === 'mentor'
-                if (fromOtherParty && payload.candidate) {
-                    try {
-                        await pc.addIceCandidate(new RTCIceCandidate(payload.candidate))
-                    } catch (e) {
-                        console.error('Error adding ICE candidate:', e)
+                    
+                    // Process queued ICE candidates
+                    while (iceCandidateQueue.current.length > 0) {
+                        const cand = iceCandidateQueue.current.shift()
+                        await pc.addIceCandidate(new RTCIceCandidate(cand))
                     }
                 }
             })
 
-            // 8. Subscribe to the channel, then if client — create the initial offer
+            channel.on('broadcast', { event: 'ice-candidate' }, async ({ payload }) => {
+                const fromOtherParty = isMentor ? payload.from === 'client' : payload.from === 'mentor'
+                if (fromOtherParty && payload.candidate) {
+                    if (pc.remoteDescription) {
+                        await pc.addIceCandidate(new RTCIceCandidate(payload.candidate))
+                    } else {
+                        iceCandidateQueue.current.push(payload.candidate)
+                    }
+                }
+            })
+
+            // 8. Subscribe and Announce
             await channel.subscribe(async (status) => {
                 if (status === 'SUBSCRIBED') {
+                    console.log('Signaling channel subscribed. Announcing presence...')
+                    channel.send({
+                        type: 'broadcast',
+                        event: 'peer-joined',
+                        payload: { from: isMentor ? 'mentor' : 'client' }
+                    })
+                    
+                    // Fallback: If client, just send an offer anyway after a short delay in case mentor is already there
                     if (!isMentor) {
-                        // Client initiates the call by sending an offer
-                        const offer = await pc.createOffer()
-                        await pc.setLocalDescription(offer)
-                        channel.send({
-                            type: 'broadcast',
-                            event: 'offer',
-                            payload: { sdp: offer }
-                        })
+                        setTimeout(async () => {
+                            if (pc.signalingState === 'stable') {
+                                console.log('Client sending initial offer (fallback)')
+                                const offer = await pc.createOffer()
+                                await pc.setLocalDescription(offer)
+                                channel.send({
+                                    type: 'broadcast',
+                                    event: 'offer',
+                                    payload: { sdp: offer }
+                                })
+                            }
+                        }, 1000)
                     }
                 }
             })
