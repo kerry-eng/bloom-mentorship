@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { supabase } from '../supabase'
 import MusivePlayer from '../components/MusivePlayer'
 import { useRef } from 'react'
 import './Dashboard.css'
-import './ProfileView.css'
 import DashboardLayout from '../components/DashboardLayout'
 
 function timeUntil(dateStr) {
@@ -35,6 +34,7 @@ function getGreeting() {
 export default function Dashboard() {
     const { user, profile, refreshProfile } = useAuth()
     const { theme } = useTheme()
+    const navigate = useNavigate()
     const [sessions, setSessions] = useState([])
     const [stats, setStats] = useState({
         sessions: 0,
@@ -63,6 +63,8 @@ export default function Dashboard() {
     const bannerInputRef = useRef(null)
     const avatarInputRef = useRef(null)
     const [uploading, setUploading] = useState({ banner: false, avatar: false })
+    const [votd, setVotd] = useState({ text: 'The Lord is my shepherd; I shall not want.', reference: 'Psalm 23:1' })
+    const [selectedMood, setSelectedMood] = useState('Balanced')
 
     useEffect(() => {
         if (!user) return
@@ -71,10 +73,41 @@ export default function Dashboard() {
 
     useEffect(() => {
         const viewParam = searchParams.get('view');
-        if (viewParam) {
+        if (viewParam === 'reflections') {
+            navigate('/reflections');
+        } else if (viewParam) {
             setActiveView(viewParam);
         }
-    }, [searchParams]);
+    }, [searchParams, navigate]);
+
+    useEffect(() => {
+        fetchVotd()
+    }, [])
+
+    async function fetchVotd() {
+        try {
+            const resp = await fetch('https://labs.bible.org/api/?passage=votd&type=json')
+            const data = await resp.json()
+            if (data && data[0]) {
+                setVotd({ text: data[0].text, reference: `${data[0].bookname} ${data[0].chapter}:${data[0].verse}` })
+            }
+        } catch (e) {
+            console.error('Failed to fetch VOTD:', e)
+        }
+    }
+
+    async function handleMoodUpdate(mood) {
+        setSelectedMood(mood)
+        try {
+            const { error } = await supabase
+                .from('mood_logs')
+                .insert([{ user_id: user.id, mood, created_at: new Date().toISOString() }])
+            if (error) throw error
+            fetchAllData() // Refresh stats/history
+        } catch (e) {
+            console.error('Error logging mood:', e)
+        }
+    }
 
     useEffect(() => {
         if (showMusicPlayer) {
@@ -173,23 +206,31 @@ export default function Dashboard() {
         if (!file) return
 
         setUploading(prev => ({ ...prev, [type]: true }))
+        
         try {
-            const reader = new FileReader()
-            reader.readAsDataURL(file)
-            reader.onloadend = async () => {
-                const base64data = reader.result
-                const { error } = await supabase
-                    .from('profiles')
-                    .update({ [`${type}_url`]: base64data })
-                    .eq('id', user.id)
-                
-                if (error) throw error
-                await refreshProfile(user.id)
-                setUploading(prev => ({ ...prev, [type]: false }))
-            }
+            const base64data = await new Promise((resolve, reject) => {
+                const reader = new FileReader()
+                reader.onload = () => resolve(reader.result)
+                reader.onerror = (e) => reject(e)
+                reader.readAsDataURL(file)
+            })
+
+            const { error } = await supabase
+                .from('profiles')
+                .update({ [`${type}_url`]: base64data })
+                .eq('id', user.id)
+            
+            if (error) throw error
+            
+            // Refresh Both AuthContext profile and local Page data
+            await refreshProfile(user.id)
+            await fetchAllData() 
+            
+            setUploading(prev => ({ ...prev, [type]: false }))
+            event.target.value = ''
         } catch (err) {
             console.error(`Upload error for ${type}:`, err)
-            alert(`Failed to upload ${type}.`)
+            alert(`Failed to upload ${type}. Details: ${err.message || 'Unknown error'}`)
             setUploading(prev => ({ ...prev, [type]: false }))
         }
     }
@@ -198,155 +239,130 @@ export default function Dashboard() {
     const past = sessions.filter(s => new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at))
 
     const renderOverview = () => (
-        <div className="profile-view-container fade-in">
-            <div className="profile-banner-wrapper" onClick={() => bannerInputRef.current.click()}>
-                <img src={profile?.banner_url || "/profile/banner.png"} alt="Profile Banner" className="profile-banner-img" />
-                <div className="media-edit-overlay banner">
-                    <span className="icon">📷</span>
-                    <span>Change Banner</span>
+        <div className="overview-container-arch fade-in">
+            {/* Banner & Profile Section */}
+            <div className="profile-header-arch">
+                <div className="hero-banner-arch" onClick={() => bannerInputRef.current?.click()}>
+                    <img src={profile?.banner_url || "/profile/banner.png"} alt="Banner" className="arch-banner-img" />
+                    {uploading.banner && <div className="upload-overlay-arch">Uploading...</div>}
                 </div>
-                <input 
-                    type="file" 
-                    ref={bannerInputRef} 
-                    style={{ display: 'none' }} 
-                    accept="image/*"
-                    onChange={(e) => handleMediaUpload(e, 'banner')}
-                />
-            </div>
-
-            <div className="profile-header-meta">
-                <div className="profile-avatar-large" onClick={() => avatarInputRef.current.click()}>
-                    <img src={profile?.avatar_url || "/hero.jpg"} alt="User Avatar" />
-                    <div className="media-edit-overlay avatar">
-                        <span className="icon">📷</span>
+                
+                <div className="profile-overlay-circle" onClick={(e) => { e.stopPropagation(); avatarInputRef.current?.click(); }}>
+                    <img src={profile?.avatar_url || "/hero.jpg"} alt="Avatar" className="arch-avatar-img" />
+                    <div className="avatar-edit-hint">
+                        <span>CHANGE</span>
                     </div>
-                    <input 
-                        type="file" 
-                        ref={avatarInputRef} 
-                        style={{ display: 'none' }} 
-                        accept="image/*"
-                        onChange={(e) => handleMediaUpload(e, 'avatar')}
-                    />
-                </div>
-                <div className="profile-main-info">
-                    <div className="profile-user-titles">
-                        <div className="greeting-row">
-                            <span className="pill-label-vibe">{getGreeting()}</span>
-                        </div>
-                        <h1>{profile?.full_name || user?.email?.split('@')[0]}</h1>
-                        <span className="location">📍 {profile?.location || 'Kenya'}</span>
-                        {profile?.bio && <p className="profile-bio-summary">{profile.bio}</p>}
-                    </div>
-                    <div className="profile-header-stats">
-                        <div className="mini-stat">
-                            <span className="value">{stats.streak}</span>
-                            <span className="label">Streak</span>
-                        </div>
-                        <div className="mini-stat">
-                            <span className="value">{stats.sessions}</span>
-                            <span className="label">Sessions</span>
-                        </div>
-                    </div>
-                    <Link to="/edit-profile" className="edit-profile-btn">Edit Profile</Link>
+                    {uploading.avatar && <div className="upload-overlay-arch">...</div>}
                 </div>
             </div>
 
-            <div className="profile-grid">
-                <aside className="profile-sidebar-col">
-                    <div className="profile-sidebar-card">
-                        <div className="sidebar-card-header">
-                            <span className="icon">😊</span>
-                            <h3>Profile</h3>
-                        </div>
-                        <div className="sidebar-card-body">
-                            <div className="info-item">
-                                <span className="label">Name</span>
-                                <span className="value">{profile?.full_name || 'Not set'}</span>
-                            </div>
-                            <div className="info-item">
-                                <span className="label">Date Joined</span>
-                                <div className="icon-text">
-                                    <span className="icon">🕒</span>
-                                    <span className="value">2 months ago</span>
-                                </div>
-                            </div>
-                            <div className="info-item">
-                                <span className="label">Phone number</span>
-                                <span className="value">{profile?.phone || 'Not provided'}</span>
-                            </div>
-                            {(profile?.instagram_url || profile?.linkedin_url || profile?.twitter_url) && (
-                                <div className="info-item mt-3">
-                                    <span className="label">Social Connections</span>
-                                    <div className="social-links-mini mt-2">
-                                        {profile?.instagram_url && <a href={profile.instagram_url} target="_blank" rel="noreferrer" className="social-icon">📸</a>}
-                                        {profile?.linkedin_url && <a href={profile.linkedin_url} target="_blank" rel="noreferrer" className="social-icon">🔗</a>}
-                                        {profile?.twitter_url && <a href={profile.twitter_url} target="_blank" rel="noreferrer" className="social-icon">📱</a>}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    </div>
+            {/* Hidden Inputs */}
+            <input type="file" ref={bannerInputRef} onChange={(e) => handleMediaUpload(e, 'banner')} style={{ display: 'none' }} accept="image/*" />
+            <input type="file" ref={avatarInputRef} onChange={(e) => handleMediaUpload(e, 'avatar')} style={{ display: 'none' }} accept="image/*" />
 
-                    <div className="profile-sidebar-card mt-4">
-                        <div className="sidebar-card-header">
-                            <span className="icon">📅</span>
-                            <h3>Schedule</h3>
-                        </div>
-                        <div className="sidebar-card-body">
-                            {upcoming.length === 0 ? (
-                                <p className="empty-text">No meetings.</p>
-                            ) : (
-                                <div className="session-list-mini">
-                                    {upcoming.slice(0, 2).map(s => (
-                                        <div key={s.id} className="session-item-mini mb-3">
-                                            <div className="session-info">
-                                                <strong>{s.session_label}</strong>
-                                                <span>{new Date(s.scheduled_at).toLocaleDateString()}</span>
-                                                {isJoinable(s.scheduled_at) && (
-                                                    <Link to={`/session/${s.id}?role=user`} className="text-link mt-1 d-block">Join Now</Link>
-                                                )}
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
-                            )}
-                            <Link to="/booking" className="btn btn-vibration-outline btn-sm w-100 mt-2">Book Session</Link>
-                        </div>
+            {/* Greeting & Bio Row */}
+            <div className="bio-row-arch">
+                <div className="bio-main-info">
+                    <h1>Good evening {profile?.full_name?.split(' ')[0] || 'User'},</h1>
+                    <p className="bio-p">{profile?.bio || 'Passionate about mental well-being and architectural design. Building a path with clarity.'}</p>
+                </div>
+                
+                <div className="bio-stats-group">
+                    <div className="stat-unit">
+                        <span className="stat-value">{stats.streak}</span>
+                        <span className="stat-label">Streak</span>
                     </div>
-                </aside>
+                    <div className="stat-unit">
+                        <span className="stat-value">{stats.sessions}</span>
+                        <span className="stat-label">Sessions</span>
+                    </div>
+                </div>
 
-                <main className="profile-data-col">
-                    <section className="bento-card reflection-highlight mb-4">
-                        <div className="card-header">
-                            <h2 className="card-title">Daily Reflection</h2>
-                            <span className="card-label">Focus</span>
+                <div className="bio-actions">
+                    <Link to="/edit-profile" className="edit-profile-btn-arch">EDIT PROFILE</Link>
+                </div>
+            </div>
+
+            {/* Info Cards Row (Date, Mood, Verse) */}
+            <div className="info-cards-row-arch">
+                <div className="arch-card info-card">
+                    <span className="card-label-arch">Date Joined:</span>
+                    <div className="card-content-arch">
+                        <span className="icon-arch">🕒</span>
+                        <span className="value-arch">
+                            {profile?.created_at ? 
+                                `${Math.floor((new Date() - new Date(profile.created_at))/(1000*60*60*24*30))} months ago` 
+                                : 'New Member'}
+                        </span>
+                    </div>
+                </div>
+                <div className="arch-card info-card text-center">
+                    <span className="card-label-arch">Mood Tracker:</span>
+                    <div className="card-content-arch mood-selector-arch">
+                        {['😊', '😌', '🤔', '😔'].map(m => (
+                            <button 
+                                key={m} 
+                                className={`mood-btn-arch ${selectedMood === m ? 'active' : ''}`}
+                                onClick={() => handleMoodUpdate(m)}
+                            >
+                                {m}
+                            </button>
+                        ))}
+                    </div>
+                </div>
+                <div className="arch-card info-card verse-card">
+                    <span className="card-label-arch">Verse of the Day:</span>
+                    <div className="verse-content-arch">
+                        <p className="verse-text">"{votd.text}"</p>
+                        <span className="verse-ref">— {votd.reference}</span>
+                    </div>
+                </div>
+            </div>
+
+            {/* Big Bento Row (Schedule & Reflection) */}
+            <div className="bento-row-arch">
+                <div className="arch-card schedule-card-arch">
+                    <div className="schedule-header">
+                        <div className="date-badge-arch">
+                            <span className="month">
+                                {upcoming[0] ? new Date(upcoming[0].scheduled_at).toLocaleString('default', { month: 'SHORT' }).toUpperCase() : '---'}
+                            </span>
+                            <span className="day">
+                                {upcoming[0] ? new Date(upcoming[0].scheduled_at).getDate() : '--'}
+                            </span>
                         </div>
-                        {activeReflectionSession ? (
-                            <div className="reflection-form compact">
-                                <p className="subtitle mb-3">Reflecting on: {activeReflectionSession.session_label}</p>
-                                <textarea
-                                    value={reflectionForm.notes}
-                                    onChange={e => setReflectionForm(f => ({ ...f, notes: e.target.value }))}
-                                    placeholder="Key takeaways from your last session..."
-                                />
-                                <button className="btn btn-primary btn-block" onClick={handleSaveReflection}>
-                                    Save Reflection
-                                </button>
-                            </div>
+                        <h3>Schedule</h3>
+                    </div>
+                    <div className="schedule-body">
+                        {upcoming.length === 0 ? (
+                            <p className="empty-msg-arch">No meetings.</p>
                         ) : (
-                            <div className="empty-state-p">
-                                <p className="empty-text">Maintain momentum by recording your growth insights daily.</p>
-                                <button className="btn btn-vibration-outline btn-sm mt-3">Start New Post</button>
+                            <div className="mini-session">
+                                <strong>{upcoming[0].session_label}</strong>
+                                <span>{new Date(upcoming[0].scheduled_at).toLocaleDateString()}</span>
                             </div>
                         )}
-                    </section>
-
-                    <div className="profile-main-content">
-                        <img src="/profile/illustration.png" alt="" className="empty-state-illustration" />
-                        <h3 className="card-title">Adventure Awaits</h3>
-                        <p className="empty-text">Your growth journey is being architected. Keep pushing.</p>
+                        <Link to="/booking" className="book-btn-arch">Book Meeting</Link>
                     </div>
-                </main>
+                </div>
+
+                <div className="arch-card reflection-card-arch">
+                    <div className="reflection-header">
+                        <h3>Daily Reflection</h3>
+                        <span className="subtitle-arch">Reflecting on: {activeReflectionSession?.session_label || 'Deep Dive Session'}</span>
+                    </div>
+                    <div className="reflection-body-arch">
+                        <textarea 
+                            className="reflection-textarea-arch"
+                            placeholder="Type your notes here..."
+                            value={reflectionForm.notes}
+                            onChange={(e) => setReflectionForm(prev => ({ ...prev, notes: e.target.value }))}
+                        />
+                        <button className="save-reflection-btn-arch" onClick={handleSaveReflection}>
+                            SAVE REFLECTION
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
@@ -560,11 +576,22 @@ export default function Dashboard() {
             setActiveView={setActiveView}
             onProfileClick={() => setActiveView('overview')}
         >
-            {activeView === 'overview' && renderOverview()}
-            {activeView === 'community' && renderCommunity()}
-            {activeView === 'assignments' && renderAssignments()}
-            {activeView === 'messages' && renderMessages()}
-            {activeView === 'write-blog' && renderBlogStudio()}
+            {(() => {
+                switch (activeView) {
+                    case 'overview':
+                        return renderOverview();
+                    case 'community':
+                        return renderCommunity();
+                    case 'assignments':
+                        return renderAssignments();
+                    case 'messages':
+                        return renderMessages();
+                    case 'write-blog':
+                        return renderBlogStudio();
+                    default:
+                        return renderOverview();
+                }
+            })()}
 
             {/* Modals */}
             {showMusicPlayer && (

@@ -44,6 +44,7 @@ export default function Reflections() {
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
             onProfileClick={() => {}}
+            activeView="reflections"
         >
             <div className="reflections-container-inner fade-in">
                 <header className="reflections-header-simple mb-5">

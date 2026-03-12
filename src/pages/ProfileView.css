@@ -112,12 +112,23 @@
 }
 
 .profile-user-titles h1 {
-    font-size: 2.2rem;
+    font-size: 2.8rem; /* Slightly larger for architectural elegance */
     font-weight: 800;
     color: #1a1a1a;
-    line-height: 1.3; /* Increased for better legibility and to avoid descender overlap */
+    line-height: 1.1;
     margin: 0;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.04em;
+    font-family: var(--font-header-classic, serif);
+}
+
+.greeting-text {
+    display: block; /* Break to new line for hierarchy if needed, or inline */
+    font-size: 1rem;
+    font-weight: 600;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.25rem;
 }
 
 .profile-user-titles .location {
@@ -130,9 +141,7 @@
     margin-top: 0.25rem;
 }
 
-.greeting-row {
-    margin-bottom: 0.5rem;
-}
+/* Greeting row removed in favor of integrated greeting-text */
 
 .profile-bio-summary {
     margin-top: 0.5rem;

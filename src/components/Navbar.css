@@ -19,14 +19,16 @@
 }
 
 .navbar__inner {
-    background: #ffffff;
-    padding: 0.8rem 2.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    padding: 0.75rem 3rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    border: 1px solid rgba(0,0,0,0.05);
-    box-shadow: 0 10px 40px rgba(0,0,0,0.03);
-    border-radius: 4px; /* Slight rounding matching inspo */
+    border: 1px solid rgba(0,0,0,0.03);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.02);
+    border-radius: 100px;
+    transition: all 0.3s ease;
 }
 
 .navbar--solid .navbar__inner {
@@ -54,9 +56,9 @@
 
 
 .navbar__logo-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 800;
+    font-family: 'Inter', sans-serif;
+    font-size: 1.4rem; /* Reduced from 1.8rem */
+    font-weight: 600; /* Reduced from 800 */
     color: #000000;
     letter-spacing: -0.02em;
 }
@@ -80,11 +82,12 @@
 
 .navbar__link {
     font-family: 'Inter', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
+    font-size: 0.85rem; /* Reduced from 0.95rem */
+    font-weight: 400; /* Thinner weight for elegance */
     color: #000000;
     text-decoration: none;
     transition: opacity 0.2s ease;
+    letter-spacing: 0.05em;
 }
 
 .navbar__link:hover {
@@ -92,10 +95,7 @@
 }
 
 .navbar__separator {
-    width: 1px;
-    height: 35px;
-    background: #DDDDDD;
-    margin: 0 1rem 0 3rem; /* Larger gap before separator */
+    display: none;
 }
 
 .navbar__actions {
@@ -157,7 +157,7 @@
     color: #ffffff;
     padding: 0.8rem 1.8rem;
     border-radius: 8px; /* Slightly rounded corners matching inspo */
-    font-weight: 700;
+    font-weight: 600; /* Reduced from 700 */
     font-size: 0.875rem;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -192,14 +192,14 @@
         position: fixed;
         top: 0;
         left: 0;
-        width: 100%;
+        width: 100vw;
         height: 100vh;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(0, 0, 0, 0.4);
         backdrop-filter: blur(4px);
         opacity: 0;
         visibility: hidden;
         transition: all 0.4s ease;
-        z-index: 1000;
+        z-index: 999; /* Just below the drawer */
     }
 
     .navbar__overlay.active {
@@ -209,8 +209,11 @@
 
     .navbar {
         top: 0;
+        left: 0;
+        transform: none; /* CRITICAL: Reset transform */
         width: 100%;
         max-width: 100%;
+        z-index: 1000;
     }
 
     .navbar__inner {

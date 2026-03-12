@@ -31,9 +31,10 @@ export default function Navbar() {
     const isHome = location.pathname === '/'
 
     return (
-        <nav className={`navbar ${scrolled || !isHome ? 'navbar--solid' : 'navbar--transparent'}`}>
+        <>
             <div className={`navbar__overlay ${menuOpen ? 'active' : ''}`} onClick={() => setMenuOpen(false)}></div>
-            <div className="navbar__inner container">
+            <nav className={`navbar ${scrolled || !isHome ? 'navbar--solid' : 'navbar--transparent'}`}>
+                <div className="navbar__inner container">
                 <Link to="/" className="navbar__brand">
                     <div className="navbar__logo-wrapper">
                         <svg className="navbar__logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -59,8 +60,6 @@ export default function Navbar() {
                         <Link to="/reflections" className="navbar__link">Reflections</Link>
                         <Link to="/blogs" className="navbar__link">Blogs</Link>
                     </div>
-
-                    <div className="navbar__separator"></div>
 
                     <div className="navbar__footer-actions">
                         {user ? (
@@ -93,7 +92,7 @@ export default function Navbar() {
                                     <span className="theme-toggle-icon">{theme === 'bloom' ? '🌿' : '🌸'}</span>
                                     <span className="theme-toggle-label">{theme === 'bloom' ? 'Bloom' : 'Pink'} Mode</span>
                                 </button>
-                                <Link to="/auth" className="navbar__link auth-link-stacked">
+                                <Link to="/auth" className="navbar__link">
                                     Sign In
                                 </Link>
                                 <Link to="/booking" className="btn btn-nav-book">
@@ -114,5 +113,6 @@ export default function Navbar() {
                 </button>
             </div>
         </nav>
+        </>
     )
 }

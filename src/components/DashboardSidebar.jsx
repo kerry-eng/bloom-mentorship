@@ -11,7 +11,9 @@ export default function DashboardSidebar({ isMobileMenuOpen, setIsMobileMenuOpen
     const isReflections = location.pathname === '/reflections';
 
     const handleNavClick = (view) => {
-        if (!isDashboard) {
+        if (view === 'reflections') {
+            navigate('/reflections');
+        } else if (!isDashboard) {
             navigate(`/dashboard?view=${view}`);
         } else if (setActiveView) {
             setActiveView(view);
@@ -25,60 +27,73 @@ export default function DashboardSidebar({ isMobileMenuOpen, setIsMobileMenuOpen
     return (
         <aside className={`workspace-sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
             <div className="sidebar-brand">
-                <Link to="/" className="brand-logo">
-                    <div className="logo-icon-v2">
-                        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 4C16 4 16 12 8 16C12 16 16 16 16 28C16 28 16 20 24 16C20 16 16 16 16 4Z" fill="#A3B18A"/>
-                            <path d="M16 12C18.2091 12 20 10.2091 20 8C20 5.79086 18.2091 4 16 4C13.7909 4 12 5.79086 12 8C12 10.2091 13.7909 12 16 12Z" fill="#588157"/>
+                <Link to="/" className="brand-logo" onClick={() => setIsMobileMenuOpen(false)}>
+                    <div className="logo-icon-arch">
+                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M20 5C20 5 20 15 10 20C15 20 20 20 20 35C20 35 20 25 30 20C25 20 20 20 20 5Z" fill="#588157"/>
+                            <circle cx="20" cy="12" r="3" fill="#A3B18A"/>
                         </svg>
                     </div>
-                    <span className="logo-text">Bloom</span>
+                    <span className="logo-text" style={{ fontFamily: "'Playfair Display', serif" }}>Bloom</span>
                 </Link>
             </div>
             
             <nav className="sidebar-nav">
-                <button 
-                    className={`nav-item ${activeView === 'overview' && isDashboard ? 'active' : ''}`} 
-                    onClick={() => handleNavClick('overview')}
-                >
-                    OVERVIEW
-                </button>
-                <button 
-                    className={`nav-item ${activeView === 'community' ? 'active' : ''}`} 
-                    onClick={() => handleNavClick('community')}
-                >
-                    COMMUNITY
-                </button>
-                <button 
-                    className={`nav-item ${activeView === 'assignments' ? 'active' : ''}`} 
-                    onClick={() => handleNavClick('assignments')}
-                >
-                    SESSIONS
-                </button>
-                <Link 
-                    to="/reflections" 
-                    className={`nav-item ${isReflections ? 'active' : ''}`}
-                    onClick={() => setIsMobileMenuOpen && setIsMobileMenuOpen(false)}
-                >
-                    REFLECTIONS
-                </Link>
-                <button 
-                    className={`nav-item ${activeView === 'messages' ? 'active' : ''}`} 
-                    onClick={() => handleNavClick('messages')}
-                >
-                    MESSAGES
-                </button>
-                <button 
-                    className={`nav-item ${activeView === 'write-blog' ? 'active' : ''}`} 
-                    onClick={() => handleNavClick('write-blog')}
-                >
-                    STUDIO
-                </button>
+                <div className="nav-group">
+                    <button 
+                        className={`nav-item-arch ${activeView === 'overview' ? 'active' : ''}`} 
+                        onClick={() => handleNavClick('overview')}
+                    >
+                        OVERVIEW
+                    </button>
+                    <button 
+                        className={`nav-item-arch ${activeView === 'community' ? 'active' : ''}`} 
+                        onClick={() => handleNavClick('community')}
+                    >
+                        COMMUNITY
+                    </button>
+                    <button 
+                        className={`nav-item-arch ${activeView === 'assignments' ? 'active' : ''}`} 
+                        onClick={() => handleNavClick('assignments')}
+                    >
+                        SESSIONS
+                    </button>
+                    <div className="nav-item-wrapper">
+                        <span className="nav-dot reflections-dot"></span>
+                        <button 
+                            className={`nav-item-arch ${activeView === 'reflections' ? 'active' : ''}`} 
+                            onClick={() => handleNavClick('reflections')}
+                        >
+                            REFLECTIONS
+                        </button>
+                    </div>
+                    <button 
+                        className={`nav-item-arch ${activeView === 'messages' ? 'active' : ''}`} 
+                        onClick={() => handleNavClick('messages')}
+                    >
+                        MESSAGES
+                    </button>
+                    <button 
+                        className={`nav-item-arch ${activeView === 'write-blog' ? 'active' : ''}`} 
+                        onClick={() => handleNavClick('write-blog')}
+                    >
+                        STUDIO
+                    </button>
+                </div>
             </nav>
 
             <div className="sidebar-footer">
-                <button className="logout-btn" onClick={() => supabase.auth.signOut()}>
-                    <span className="logout-icon">🚪</span>
+                <button className="logout-btn-arch" onClick={() => supabase.auth.signOut()}>
+                    <div className="logout-icon-group">
+                        <span className="logout-accent"></span>
+                        <div className="logout-icon-box">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                                <polyline points="16 17 21 12 16 7"></polyline>
+                                <line x1="21" y1="12" x2="9" y2="12"></line>
+                            </svg>
+                        </div>
+                    </div>
                     <span className="logout-text">SIGN OUT</span>
                 </button>
             </div>
