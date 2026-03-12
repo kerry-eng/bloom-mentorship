@@ -682,8 +682,8 @@
     .home-pink-replica-hero {
         height: auto;
         min-height: auto;
-        padding-top: 80px;
-        padding-bottom: 3rem;
+        padding-top: 60px; /* Reduced from 80px */
+        padding-bottom: 1rem; /* Reduced from 3rem */
         background: #ffffff;
     }
 
@@ -724,9 +724,9 @@
     }
 
     .replica-hero-right {
-        height: 460px; /* Increased from 380px to de-clump */
-        transform: scale(0.95);
-        margin: 2rem 0; /* More vertical separation */
+        height: 340px; /* Reduced from 460px to cut dead space */
+        transform: scale(0.9);
+        margin: 0.5rem 0; /* Minimal vertical separation */
         display: flex;
         justify-content: center;
         align-items: center;
@@ -734,17 +734,17 @@
     }
 
     .polaroid-sm-lavender {
-        width: 130px;
-        left: -10px;
-        top: 0;
+        width: 120px;
+        left: 0;
+        top: -10px;
         z-index: 15;
-        transform: rotate(-15deg);
+        transform: rotate(-10deg);
     }
 
     .polaroid-main-lg {
-        width: 260px;
+        width: 200px; /* More compact */
         position: absolute;
-        top: 50%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(2deg);
         z-index: 5;
@@ -752,38 +752,45 @@
 
     .floating-circle-portrait {
         position: absolute;
-        right: -5px;
-        top: 30%;
-        width: 130px;
+        right: 15px;
+        top: 25%;
+        width: 110px;
         z-index: 20;
     }
 
     .polaroid-sm-blue {
-        width: 120px;
+        width: 110px;
         position: absolute;
-        bottom: 0;
-        right: 10px;
+        bottom: 0px;
+        right: 20px;
         z-index: 12;
-        transform: rotate(8deg);
+        transform: rotate(6deg);
     }
     
     .floating-quote-bottom {
         position: relative;
-        margin: 2rem auto 0;
-        font-size: 1rem;
-        padding: 0.8rem 1.6rem;
+        margin: 0.5rem auto 0;
+        font-size: 0.9rem;
+        padding: 0.4rem 1rem;
+        background: rgba(255,255,255,0.8);
+        border: 1px solid rgba(0,0,0,0.05);
     }
 
     .pink-programs-section {
-        padding: 6rem 1rem 8rem; /* Relaxed padding slightly */
-        margin-top: 0; /* Removed negative margin to de-clump */
+        padding: 2rem 1rem 6rem; /* Tighter vertical flow */
+        margin-top: -1rem;
         border-top-left-radius: 40px;
         border-top-right-radius: 40px;
         background: #fafaf9;
+        box-shadow: 0 -10px 30px rgba(0,0,0,0.02);
     }
 
     .pink-section-header {
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.5rem; /* Reduced from 2.5rem */
+    }
+    
+    .sticker-lightning {
+        margin-bottom: 0.5rem;
     }
 
     .pink-programs-grid {
