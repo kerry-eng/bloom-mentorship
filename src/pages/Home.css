@@ -92,8 +92,8 @@
 
 .replica-v2-image-wrapper {
     position: relative;
-    width: 130%;
-    right: -15%;
+    width: 160%; /* Increased from 130% for bigger impact */
+    right: -25%; /* Adjusted offset for the larger width */
 }
 
 .replica-v2-hero-img {
