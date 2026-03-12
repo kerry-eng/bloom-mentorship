@@ -298,7 +298,7 @@
         text-align: center;
         gap: 1.5rem;
         display: flex;
-        flex-direction: column;
+        flex-direction: column-reverse; /* Image on top */
         justify-content: center;
         align-items: center;
     }
