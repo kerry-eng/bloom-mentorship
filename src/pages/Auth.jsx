@@ -46,18 +46,10 @@ export default function Auth() {
                 <div className="transformation-inner-glow" aria-hidden="true"></div>
 
                 <nav className="auth-card-nav">
-                    <Link to="/" className="auth-card-brand">
-                        <svg className="auth-logo-svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 22C12 22 12 18 12 12C12 6 12 2 12 2M12 12C12 12 16 10 19 12C22 14 20 18 17 17C14 16 12 12 12 12ZM12 12C12 12 8 10 5 12C2 14 4 18 7 17C10 16 12 12 12 12ZM12 8C12 8 14 5 12 2C10 5 12 8 12 8Z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
-                        <span className="auth-logo-text">Bloom</span>
+                    <Link to="/" className="auth-back-link">
+                        <span className="back-icon">←</span>
+                        <span className="back-text">Back to Home</span>
                     </Link>
-                    <div className="card-nav-links">
-                        <Link to="/">Home</Link>
-                        <Link to="/about">About</Link>
-                        <Link to="/blogs">Blogs</Link>
-                        <button className="card-nav-search">Search</button>
-                    </div>
                 </nav>
 
                 <div className="auth-card-main">
