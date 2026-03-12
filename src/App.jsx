@@ -9,6 +9,7 @@ import Personalization from './pages/Personalization'
 import Session from './pages/Session'
 import Reflections from './pages/Reflections'
 import Navbar from './components/Navbar'
+import MobileNavbar from './components/MobileNavbar'
 import ProtectedRoute from './components/ProtectedRoute'
 import MusivePlayer from './components/MusivePlayer'
 import About from './pages/About'
@@ -34,7 +35,7 @@ function App() {
         <ThemeProvider>
             <MusicProvider>
                 {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
-                {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <MusivePlayer />}
+                {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <MobileNavbar />}
                 <Routes>
                     <Route path="/" element={<HomeLoader />} />
                     <Route path="/auth" element={<Auth />} />

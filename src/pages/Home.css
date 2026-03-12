@@ -147,15 +147,16 @@
         display: block;
     }
     .hero-replica__inner {
-        display: flex; /* Changed from block to allow flex-direction */
-        flex-direction: column-reverse; /* Swap image and text order */
+    .hero-replica__inner {
+        display: flex;
+        flex-direction: column-reverse;
         width: 100%;
         padding: 0 1.5rem 4rem;
         text-align: center;
-        gap: 0; /* Let margins handle spacing */
+        gap: 0;
     }
     .hero-replica__content {
-        display: flex; /* Added flex to allow child reordering */
+        display: flex;
         flex-direction: column;
         align-items: center;
         text-align: center;
@@ -163,56 +164,91 @@
         margin-bottom: 2rem;
     }
     .hero-replica__title {
-        order: 1; /* Title first */
+        order: 1;
         display: block;
-        font-size: 2.8rem !important;
+        font-size: 2.5rem !important;
         margin-bottom: 1.5rem;
         line-height: 1.1;
         color: #000000 !important;
     }
     .hero-replica__subtitle {
-        order: 2; /* Subtitle second */
+        order: 2;
         display: block;
-        font-size: 1.05rem; /* Slightly smaller for space */
+        font-size: 1rem;
         margin-bottom: 1.5rem;
-        color: #2D3436;
+        color: #64748b;
         line-height: 1.5;
     }
-    .hero-replica__actions {
-        order: 3; /* Pull button higher */
-        display: inline-block;
-        margin-bottom: 2rem; /* Reduced margin */
-        width: auto;
-    }
-    .btn-replica-book {
-        display: inline-block;
-        padding: 0.9rem 2.5rem;
-        font-size: 1rem;
-    }
-    .hero-replica__stats {
-        order: 4; /* Move stats below button */
-        display: flex;
-        justify-content: center;
-        gap: 2.5rem;
-        margin: 1rem 0 2rem;
-    }
-    .stat-value {
-        font-size: 2rem; /* Slighly smaller */
-        color: #2D3436;
-    }
-    .stat-label {
-        font-size: 1.3rem; /* Slighly smaller */
-        color: #2D3436;
-    }
-    .replica-divider {
-        height: 60px; /* Shorter divider */
-        background: #000000;
-    }
     .replica-image-wrapper {
-        border-radius: 40px;
-        max-height: 380px; /* Reduced from 450px to save vertical space */
-        width: 90%;
-        margin: 0 auto;
+        border-radius: 30px;
+        max-height: 340px;
+        width: 100%;
+        margin: 0 auto 3rem;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+    }
+}
+
+/* ─── Mobile App Transformation ─── */
+@media (max-width: 768px) {
+    .home-container {
+        background: #f8fafc; /* Lighter background for app feel */
+        padding-bottom: 100px; /* Buffer for bottom nav */
+    }
+
+    .hero-replica {
+        padding-top: 100px;
+        background: white;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    section:not(.hero-replica) {
+        padding: 3rem 1.5rem !important; /* Reduced from 4rem */
+        margin: 1.25rem !important;
+        background: white;
+        border-radius: 32px; /* Smoother app corners */
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+        border: 1px solid rgba(0,0,0,0.02);
+        display: block !important;
+    }
+
+    .section-header-centered {
+        margin-bottom: 3rem !important;
+    }
+
+    .display-title {
+        font-size: 1.5rem !important;
+        letter-spacing: -0.01em;
+    }
+
+    .subtitle {
+        font-size: 0.95rem !important;
+    }
+
+    .apart-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .programs-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+
+    .program-card {
+        padding: 2.5rem 1.5rem !important;
+        background: #f8fafc !important;
+        border-radius: 24px !important;
+    }
+
+    /* Floating CTA section fix */
+    .transformation-card {
+        padding: 4rem 1.5rem !important;
+        border-radius: 28px !important;
+        margin: 0 !important;
+        width: 100% !important;
     }
 }
 
@@ -1090,4 +1126,5 @@
     .cta-glass-banner {
         padding: 4rem 2rem;
     }
+}
 }
