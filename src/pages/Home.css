@@ -111,6 +111,11 @@
         background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.5)), #000000;
     }
 
+    .hero-replica-v2 .container {
+        padding-left: 1rem; /* Reduced margin left/right specifically for hero */
+        padding-right: 1rem;
+    }
+
     .hero-atmosphere-v2 {
         background: rgba(0,0,0,0.4); /* Darken bg quality on mobile */
         z-index: 1;
