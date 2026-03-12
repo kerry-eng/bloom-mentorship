@@ -108,7 +108,7 @@ export default function Booking() {
                 stripe_payment_id: 'DEMO_' + Date.now()
             })
             if (err) throw err
-            navigate('/dashboard?booked=1')
+            navigate('/dashboard?view=assignments&booked=1')
         } catch (e) {
             setError(e.message)
         } finally {
@@ -131,7 +131,7 @@ export default function Booking() {
                 stripe_payment_id: paymentRef
             })
             if (err) throw err
-            navigate('/dashboard?booked=1')
+            navigate('/dashboard?view=assignments&booked=1')
         } catch (e) {
             setError(e.message)
         } finally {

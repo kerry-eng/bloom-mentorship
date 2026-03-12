@@ -37,7 +37,7 @@ const HomePink = () => {
                                 Let's grow together, one session at a time.
                             </p>
                             <Link to="/booking" className="btn-start-journey">
-                                start your journey
+                                start your journey 🌸
                             </Link>
                         </div>
                         
@@ -60,9 +60,8 @@ const HomePink = () => {
                         <div className="replica-polaroid polaroid-sm-lavender">
                             <div className="polaroid-inner">
                                 <div className="polaroid-image-area lavender-tint">
-                                    <div className="sparkle-emoji">✨</div>
                                 </div>
-                                <span className="polaroid-label">safe space</span>
+                                <span className="polaroid-label">safe space 🌸</span>
                             </div>
                             <div className="red-dot-accent"></div>
                         </div>
@@ -89,9 +88,8 @@ const HomePink = () => {
                         <div className="replica-polaroid polaroid-sm-blue">
                             <div className="polaroid-inner">
                                 <div className="polaroid-image-area blue-tint">
-                                    <div className="flower-emoji">🌸</div>
                                 </div>
-                                <span className="polaroid-label">grow & bloom</span>
+                                <span className="polaroid-label">grow & bloom 💜</span>
                             </div>
                         </div>
 
@@ -106,14 +104,14 @@ const HomePink = () => {
             <div className="pink-programs-section">
                 <div className="pink-programs-container">
                     <div className="pink-section-header">
-                        <h2 className="pink-section-title">COACHING PROGRAMS</h2>
+                        <h2 className="pink-section-title">COACHING PROGRAMS 🌸</h2>
                         <p className="pink-section-subtitle">Select the program that matches your goals and commitment level</p>
                     </div>
 
                     <div className="pink-programs-grid">
                         <div className="pink-program-card">
                             <div className="program-icon-wrapper purple-icon">
-                                <span className="program-icon"></span>
+                                <span className="program-icon">🌸</span>
                             </div>
                             <h3>INDIVIDUAL COACHING</h3>
                             <p>One-on-one sessions focused on building mental strength and achieving your personal goals.</p>
@@ -122,7 +120,7 @@ const HomePink = () => {
 
                         <div className="pink-program-card">
                             <div className="program-icon-wrapper pink-icon">
-                                <span className="program-icon"></span>
+                                <span className="program-icon">💜</span>
                             </div>
                             <h3>GROUP SESSIONS</h3>
                             <p>Join others on the same path. Build accountability, share experiences, and grow stronger together.</p>
@@ -131,7 +129,7 @@ const HomePink = () => {
 
                         <div className="pink-program-card">
                             <div className="program-icon-wrapper blue-icon">
-                                <span className="program-icon"></span>
+                                <span className="program-icon">🌙</span>
                             </div>
                             <h3>ONLINE COACHING</h3>
                             <p>Flexible virtual sessions that fit your schedule. Get the support you need, anywhere you are.</p>
@@ -140,7 +138,7 @@ const HomePink = () => {
 
                         <div className="pink-program-card">
                             <div className="program-icon-wrapper deep-purple-icon">
-                                <span className="program-icon"></span>
+                                <span className="program-icon">🤍</span>
                             </div>
                             <h3>MESSAGE SUPPORT</h3>
                             <p>Stay on track between sessions with direct message support and accountability check-ins.</p>
@@ -150,7 +148,7 @@ const HomePink = () => {
 
                     <div className="pink-help-pill-container">
                         <div className="pink-help-pill">
-                            Need help choosing? Let's discuss your goals and find the right fit
+                            Need help choosing? Let's discuss your goals and find the right fit 🌸
                         </div>
                     </div>
                 </div>
@@ -239,7 +237,7 @@ const HomePink = () => {
                     <div className="pink-cta-card-container">
                         <div className="pink-cta-card">
                             <div className="card-washi-tape"></div>
-                            <div className="cta-icon"></div>
+                                <div className="p-prog-icon">💖</div>
                             <h3 className="cta-title">you deserve support that truly gets you</h3>
                             <p>no judgment, no pressure - just a safe space to be yourself and grow</p>
                             <Link to="/booking" className="btn-meet-therapists">

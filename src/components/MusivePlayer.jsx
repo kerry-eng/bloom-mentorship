@@ -29,7 +29,7 @@ const MusivePlayer = ({ inline = false }) => {
         <div className={`musive-popup ${inline ? 'inline' : 'fade-in'}`}>
             <div className="musive-popup-header">
                 <h3 className="musive-title">Calming Sounds</h3>
-                <p className="musive-subtitle">Choose what soothes your soul</p>
+                <p className="musive-subtitle">Choose what soothes your soul ✿</p>
             </div>
 
             <div className="musive-tracks">

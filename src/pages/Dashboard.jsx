@@ -336,7 +336,7 @@ export default function Dashboard() {
                 <div className="arch-card info-card">
                     <span className="card-label-arch">Date Joined:</span>
                     <div className="card-content-arch">
-                        <span className="icon-arch"></span>
+                        <span className="icon-arch">🕒</span>
                         <span className="value-arch">
                             {profile?.created_at ? 
                                 `${Math.floor((new Date() - new Date(profile.created_at))/(1000*60*60*24*30))} months ago` 
@@ -430,7 +430,7 @@ export default function Dashboard() {
                 <div className="glass-card-vibe group-card">
                     <div className="group-badge">ACTIVE NOW</div>
                     <div className="group-content">
-                        <div className="group-icon"></div>
+                        <div className="group-icon">🙏</div>
                         <h3>Faith & Focus</h3>
                         <p>Daily morning prayers and intentional living discussions.</p>
                         <div className="group-stats">
@@ -443,7 +443,7 @@ export default function Dashboard() {
 
                 <div className="glass-card-vibe group-card">
                     <div className="group-content">
-                        <div className="group-icon"></div>
+                        <div className="group-icon">🌱</div>
                         <h3>Growth Hive</h3>
                         <p>Sharing breakthroughs in career and personal development.</p>
                         <div className="group-stats">
@@ -456,7 +456,7 @@ export default function Dashboard() {
 
                 <div className="glass-card-vibe group-card">
                     <div className="group-content">
-                        <div className="group-icon"></div>
+                        <div className="group-icon">🎭</div>
                         <h3>Creative Bloom</h3>
                         <p>Support for artists, writers, and digital creators.</p>
                         <div className="group-stats">
@@ -511,9 +511,9 @@ export default function Dashboard() {
                                 <div>
                                     <h3 className="mb-2">{s.session_label || s.session_type}</h3>
                                     <p className="session-meta">
-                                    {new Date(s.scheduled_at).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                        📅 {new Date(s.scheduled_at).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
                                         <br />
-                                        {new Date(s.scheduled_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+                                        ⏰ {new Date(s.scheduled_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
                                     </p>
                                     {s.mentor && (
                                         <p className="mentor-name-tag mt-2">
@@ -558,7 +558,7 @@ export default function Dashboard() {
             <div className="messaging-container mt-5 glass-card-vibe">
                 <div className="chat-window p-5">
                     <div className="message mentor">
-                        <div className="msg-bubble">Hey there! Loved your insights in today's session. Keep that energy!</div>
+                        <div className="msg-bubble">Hey there! Loved your insights in today's session. Keep that energy! 🚀</div>
                         <span className="msg-time">2:30 PM</span>
                     </div>
                     <div className="message user">
@@ -568,7 +568,7 @@ export default function Dashboard() {
                 </div>
                 <div className="chat-input-area p-4">
                     <input type="text" placeholder="Type a message..." className="chat-input" />
-                    <button className="btn btn-primary btn-icon"><span></span></button>
+                    <button className="btn btn-primary btn-icon"><span>✈️</span></button>
                 </div>
             </div>
         </div>
@@ -583,7 +583,7 @@ export default function Dashboard() {
 
             <div className="notifications-list-arch mt-5 glass-card-vibe">
                 <div className="notif-item-arch p-4 active">
-                    <div className="notif-icon-arch"></div>
+                    <div className="notif-icon-arch">📅</div>
                     <div className="notif-content-arch">
                         <strong>New Session Booked</strong>
                         <p>Your session with Mentor Njeri is confirmed for tomorrow at 10:00 AM.</p>
@@ -591,7 +591,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="notif-item-arch p-4">
-                    <div className="notif-icon-arch"></div>
+                    <div className="notif-icon-arch">📝</div>
                     <div className="notif-content-arch">
                         <strong>Reflection Reminder</strong>
                         <p>Don't forget to record your reflections for yesterday's session.</p>
@@ -599,7 +599,7 @@ export default function Dashboard() {
                     </div>
                 </div>
                 <div className="notif-item-arch p-4">
-                    <div className="notif-icon-arch"></div>
+                    <div className="notif-icon-arch">🌸</div>
                     <div className="notif-content-arch">
                         <strong>Welcome to Bloom</strong>
                         <p>Explore the dashboard to start your journey.</p>

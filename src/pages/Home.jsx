@@ -12,47 +12,34 @@ export default function Home() {
     return (
         <div className={`home-container ${theme === 'pink' ? 'theme-pink' : ''}`}>
             {/* ─── Hero Section Replica ─── */}
-            <section className="hero-replica">
-                <div className="container hero-replica__inner">
-                    <div className="hero-replica__content fade-in">
-                        <div className="hero-tagline">
-                            <span className="tagline-dot"></span>
-                            <span className="tagline-text">Professional Mentorship & Support</span>
-                        </div>
+            <section className="hero-replica-v2">
+                <div className="hero-atmosphere-v2" aria-hidden="true">
+                    <div className="geometric-pattern"></div>
+                </div>
 
-                        <h1 className="hero-replica__title">
-                            Find Peace, <br />
-                            <span className="text-accent">Grow Stronger</span>
+                <div className="container hero-replica-v2__inner">
+                    <div className="hero-replica-v2__content fade-in">
+                        <h1 className="hero-replica-v2__title">
+                            Find <br />
+                            Peace, <span className="grow-text-neon">Grow</span> <br />
+                            Stronger
                         </h1>
                         
-                        <p className="hero-replica__subtitle">
-                            Compassionate mental health support tailored to your journey. 
-                            Build resilience and achieve your goals with expert guidance.
+                        <p className="hero-replica-v2__subtitle">
+                            Professional mental health support tailored to your journey. 
+                            Safe, confidential, and compassionate.
                         </p>
                         
-                        <div className="hero-replica__actions">
-                            <Link to="/booking" className="btn-modern-primary">
-                                Book Your Session
-                                <span className="btn-icon">→</span>
+                        <div className="hero-replica-v2__actions">
+                            <Link to="/booking" className="btn-replica-black">
+                                Book Session
                             </Link>
-                        </div>
-
-                        <div className="hero-replica__trust">
-                            <div className="trust-item">
-                                <span className="trust-val">500+</span>
-                                <span className="trust-label">Sessions</span>
-                            </div>
-                            <div className="trust-divider"></div>
-                            <div className="trust-item">
-                                <span className="trust-val">4.9/5</span>
-                                <span className="trust-label">Rating</span>
-                            </div>
                         </div>
                     </div>
 
-                    <div className="hero-replica__image-side fade-in">
-                        <div className="replica-image-wrapper">
-                            <img src="/Stylish Woman in Urban Setting.png" alt="Mentorship Support" className="replica-hero-img" />
+                    <div className="hero-replica-v2__image-side fade-in">
+                        <div className="replica-v2-image-wrapper">
+                            <img src="/Ellipse 4.png" alt="Find Peace" className="replica-v2-hero-img" />
                         </div>
                     </div>
                 </div>
@@ -218,7 +205,7 @@ export default function Home() {
                 <div className="container">
                     <div className="verse-card fade-in">
                         <div className="verse-icon">📖</div>
-                        <span className="verse-label">Verse of the Day</span>
+                            <h3 className="verse-title">Verse of the Day 🌿</h3>
                         <blockquote className="verse-text">
                             "For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."
                         </blockquote>
@@ -245,7 +232,7 @@ export default function Home() {
                             </svg>
                         </div>
 
-                        <h2 className="transformation-title">START YOUR TRANSFORMATION</h2>
+                        <h2 className="transformation-title">START YOUR TRANSFORMATION ⚡</h2>
 
                         <p className="transformation-desc">
                             Take the first step toward real change. Book a free 30-minute
