@@ -57,7 +57,6 @@ export default function Navbar() {
                     <div className="navbar__main-links">
                         <Link to="/" className="navbar__link">Home</Link>
                         <Link to="/about" className="navbar__link">About</Link>
-                        <Link to="/reflections" className="navbar__link">Reflections</Link>
                         <Link to="/blogs" className="navbar__link">Blogs</Link>
                     </div>
 
