@@ -15,17 +15,26 @@ export default function Home() {
             <section className="hero-replica">
                 <div className="container hero-replica__inner">
                     <div className="hero-replica__content fade-in">
+                        <div className="hero-replica__badge">
+                            <span className="badge-spark">✨</span>
+                            <span className="badge-text">500+ LIVES TRANSFORMED</span>
+                        </div>
                         <h1 className="hero-replica__title">
-                            Find Peace,<br />
-                            <span className="text-green">Grow Stronger</span>
+                            Find Peace,
+                            <span className="hero-replica__title-accent">Grow Stronger</span>
                         </h1>
                         <p className="hero-replica__subtitle">
-                            Professional mental health support tailored to your journey.<br />
+                            Professional mental health support tailored to your journey.
                             Safe, confidential, and compassionate.
                         </p>
                         
                         <div className="hero-replica__actions">
-                            <Link to="/booking" className="btn-replica-book">Book Session</Link>
+                            <Link to="/booking" className="btn-replica-book">
+                                Book Your Session
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                    <path d="M5 12h14M12 5l7 7-7 7" />
+                                </svg>
+                            </Link>
                         </div>
 
                         <div className="hero-replica__stats">
