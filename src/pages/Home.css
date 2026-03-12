@@ -44,7 +44,7 @@
     font-family: 'Outfit', sans-serif;
     font-size: clamp(3rem, 8vw, 5.5rem);
     line-height: 1.0;
-    color: #111827;
+    color: #ffffff;
     margin-bottom: var(--space-4);
     font-weight: 800;
 }
@@ -57,7 +57,7 @@
 .hero-replica-v2__subtitle {
     font-size: clamp(1.1rem, 2vw, 1.4rem);
     line-height: 1.5;
-    color: #4b5563;
+    color: rgba(255, 255, 255, 0.8);
     margin-bottom: var(--space-8);
     max-width: 500px;
     font-weight: 500;
