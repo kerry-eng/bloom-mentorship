@@ -238,3 +238,142 @@
         padding: 2rem;
     }
 }
+
+/* Blog Detail Styles */
+.blog-detail-hero {
+    padding: 2rem 0 4rem 0;
+    background: transparent;
+}
+
+.narrow {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-weight: 700;
+    color: var(--color-text-mid);
+    text-decoration: none;
+    transition: all 0.3s;
+}
+
+.back-link:hover {
+    color: var(--color-accent-deep);
+    transform: translateX(-5px);
+}
+
+.blog-category-label {
+    display: inline-block;
+    font-size: 0.8rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent-deep);
+    margin-bottom: 1.5rem;
+}
+
+.blog-detail-title {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 2.5rem;
+    color: var(--color-text-dark);
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.author-avatar-large {
+    width: 60px;
+    height: 60px;
+    background: white;
+    border: 2px solid var(--color-accent-light);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--color-accent-deep);
+}
+
+.author-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.author-name {
+    font-weight: 700;
+    color: var(--color-text-dark);
+}
+
+.post-date {
+    font-size: 0.9rem;
+    color: var(--color-text-soft);
+}
+
+.blog-detail-content {
+    padding-bottom: 8rem;
+}
+
+.article-body {
+    font-size: 1.15rem;
+    line-height: 1.9;
+    color: #444;
+}
+
+.article-body p {
+    margin-bottom: 2rem;
+}
+
+.author-bio-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    padding: 3rem;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.author-avatar-bio {
+    width: 80px;
+    height: 80px;
+    background: var(--color-accent-deep);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 800;
+    color: white;
+    flex-shrink: 0;
+}
+
+.author-bio-text h4 {
+    margin-bottom: 0.5rem;
+    font-size: 1.25rem;
+}
+
+.author-bio-text p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--color-text-mid);
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .author-bio-card {
+        flex-direction: column;
+        text-align: center;
+        padding: 2rem;
+    }
+}

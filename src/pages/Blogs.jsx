@@ -6,13 +6,17 @@ import './Blogs.css'
 export default function Blogs() {
     const [blogPosts, setBlogPosts] = React.useState([])
     const [loading, setLoading] = React.useState(true)
+    const [page, setPage] = React.useState(0)
+    const [hasMore, setHasMore] = React.useState(true)
+    const POSTS_PER_PAGE = 6
 
     useEffect(() => {
         window.scrollTo(0, 0)
-        fetchBlogs()
+        fetchBlogs(0)
     }, [])
 
-    async function fetchBlogs() {
+    async function fetchBlogs(pageNum) {
+        setLoading(true)
         try {
             const { data, error } = await supabase
                 .from('blogs')
@@ -21,14 +25,28 @@ export default function Blogs() {
                     author:profiles!blogs_author_id_fkey(full_name, avatar_url)
                 `)
                 .order('created_at', { ascending: false })
+                .range(pageNum * POSTS_PER_PAGE, (pageNum + 1) * POSTS_PER_PAGE - 1)
 
             if (error) throw error
-            setBlogPosts(data || [])
+            
+            if (pageNum === 0) {
+                setBlogPosts(data || [])
+            } else {
+                setBlogPosts(prev => [...prev, ...data])
+            }
+            
+            setHasMore(data.length === POSTS_PER_PAGE)
         } catch (e) {
             console.error('Error fetching blogs:', e)
         } finally {
             setLoading(false)
         }
+    }
+
+    const handleNextPage = () => {
+        const nextPg = page + 1
+        setPage(nextPg)
+        fetchBlogs(nextPg)
     }
 
     const staticPosts = [
@@ -39,11 +57,10 @@ export default function Blogs() {
             created_at: "2026-03-08",
             excerpt: "Learn how to manage stress and maintain peak performance without burning out.",
             author: { full_name: "Gloria S." }
-        },
-        // ... other static posts if needed as fallback
+        }
     ]
 
-    const displayPosts = blogPosts.length > 0 ? blogPosts : (loading ? [] : staticPosts)
+    const displayPosts = blogPosts.length > 0 ? blogPosts : (loading && page === 0 ? [] : staticPosts)
 
     return (
         <div className="blogs-page">
@@ -74,7 +91,7 @@ export default function Blogs() {
                                 month: 'long',
                                 day: 'numeric',
                                 year: 'numeric'
-                            }) : post.date;
+                            }) : "Recent Post";
 
                             const authorName = post.author?.full_name || post.author || "Team Bloom";
 
@@ -103,9 +120,13 @@ export default function Blogs() {
                         })}
                     </div>
 
-                    <div className="blogs-pagination">
-                        <button className="btn btn-secondary" disabled>Next Page —</button>
-                    </div>
+                    {hasMore && (
+                        <div className="blogs-pagination">
+                            <button className="btn btn-secondary" onClick={handleNextPage}>
+                                {loading ? 'Loading...' : 'Load More Insights —'}
+                            </button>
+                        </div>
+                    )}
                 </div>
             </section>
         </div>

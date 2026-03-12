@@ -14,6 +14,7 @@ import ProtectedRoute from './components/ProtectedRoute'
 import MusivePlayer from './components/MusivePlayer'
 import About from './pages/About'
 import Blogs from './pages/Blogs'
+import BlogDetail from './pages/BlogDetail'
 import EditProfile from './pages/EditProfile'
 import Footer from './components/Footer'
 import { MusicProvider } from './context/MusicContext'
@@ -53,6 +54,7 @@ function App() {
                     } />
                     <Route path="/about" element={<About />} />
                     <Route path="/blogs" element={<Blogs />} />
+                    <Route path="/blogs/:blogId" element={<BlogDetail />} />
                     <Route path="/edit-profile" element={
                         <ProtectedRoute><EditProfile /></ProtectedRoute>
                     } />
