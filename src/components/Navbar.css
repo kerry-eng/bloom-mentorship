@@ -1,9 +1,11 @@
 .navbar {
     position: fixed;
-    top: 0;
-    left: 0;
+    top: 15px; /* Added margin top for floating effect */
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
-    width: 100%;
+    width: 95%; /* Slightly narrower for floating look */
+    max-width: 1400px;
     padding: 0;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -28,7 +30,7 @@
     border: none;
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
-    border-radius: 0;
+    border-radius: 16px; /* Added rounded corners for floating bar */
     transition: all 0.3s ease;
 }
 
