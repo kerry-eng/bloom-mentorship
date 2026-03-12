@@ -13,39 +13,45 @@ export default function Home() {
         <div className={`home-container ${theme === 'pink' ? 'theme-pink' : ''}`}>
             {/* ─── Hero Section Replica ─── */}
             <section className="hero-replica">
+                {/* ─── Atmosphere Layer ─── */}
+                <div className="hero-atmosphere">
+                    <div className="atmosphere-orb atmosphere-orb-1"></div>
+                    <div className="atmosphere-orb atmosphere-orb-2"></div>
+                </div>
+
                 <div className="container hero-replica__inner">
                     <div className="hero-replica__content fade-in">
-                        <div className="hero-replica__badge">
-                            <span className="badge-spark">✨</span>
-                            <span className="badge-text">500+ LIVES TRANSFORMED</span>
+                        {/* Premium Philosophical Badge */}
+                        <div className="hero-philosophy">
+                            <span className="philosophy-icon">🌿</span>
+                            <span className="philosophy-text">A journey of intentional growth.</span>
                         </div>
+
                         <h1 className="hero-replica__title">
-                            Find Peace,
-                            <span className="hero-replica__title-accent">Grow Stronger</span>
+                            <span className="title-serif">Find Peace,</span>
+                            <span className="title-sans">Grow Stronger</span>
                         </h1>
+                        
                         <p className="hero-replica__subtitle">
-                            Professional mental health support tailored to your journey.
-                            Safe, confidential, and compassionate.
+                            Professional mental health support tailored to your unique journey. 
+                            Safe, confidential, and compassionate care for the modern mind.
                         </p>
                         
                         <div className="hero-replica__actions">
-                            <Link to="/booking" className="btn-replica-book">
-                                Book Your Session
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
+                            <Link to="/booking" className="btn-modern-hero">
+                                START YOUR JOURNEY
+                                <span className="btn-arrow">→</span>
                             </Link>
                         </div>
 
-                        <div className="hero-replica__stats">
-                            <div className="replica-stat">
-                                <span className="stat-value">500+</span>
-                                <span className="stat-label">Sessions</span>
+                        <div className="hero-replica__stats-modern">
+                            <div className="glass-stat-chip">
+                                <span className="chip-val">500+</span>
+                                <span className="chip-label">SESSIONS</span>
                             </div>
-                            <div className="replica-divider"></div>
-                            <div className="replica-stat">
-                                <span className="stat-value">4.9/5</span>
-                                <span className="stat-label">Rating</span>
+                            <div className="glass-stat-chip">
+                                <span className="chip-val">4.9/5</span>
+                                <span className="chip-label">RATING</span>
                             </div>
                         </div>
                     </div>
@@ -53,6 +59,8 @@ export default function Home() {
                     <div className="hero-replica__image-side fade-in">
                         <div className="replica-image-wrapper">
                             <img src="/Stylish Woman in Urban Setting.png" alt="Stylish Woman" className="replica-hero-img" />
+                            {/* Decorative Glass Overlay */}
+                            <div className="image-glass-accent"></div>
                         </div>
                     </div>
                 </div>
