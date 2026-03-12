@@ -31,8 +31,8 @@ export default function MobileNavbar() {
                     </div>
                     
                     <div className="menu-sections">
-                        <Link to="/blogs" className={`menu-link ${isBlogs ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
-                            <span className="link-icon">✍️</span> Blogs
+                        <Link to="/booking" className={`menu-link ${location.pathname === '/booking' ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                            <span className="link-icon">📅</span> Book Session
                         </Link>
                         <Link to="/reflections" className="menu-link" onClick={() => setIsMenuOpen(false)}>
                             <span className="link-icon">🧠</span> Reflections
@@ -74,9 +74,9 @@ export default function MobileNavbar() {
                     <div className="mobile-nav-icon">🕊️</div>
                     <span className="mobile-nav-label">About</span>
                 </Link>
-                <Link to="/booking" className="mobile-nav-item">
-                    <div className="mobile-nav-icon">📅</div>
-                    <span className="mobile-nav-label">Book</span>
+                <Link to="/blogs" className={`mobile-nav-item ${isBlogs ? 'active' : ''}`}>
+                    <div className="mobile-nav-icon">✍️</div>
+                    <span className="mobile-nav-label">Blogs</span>
                 </Link>
                 <button className={`mobile-nav-item ${isMenuOpen ? 'active' : ''}`} onClick={() => setIsMenuOpen(true)}>
                     <div className="mobile-nav-icon">≡</div>

@@ -147,7 +147,6 @@
         display: block;
     }
     .hero-replica__inner {
-    .hero-replica__inner {
         display: flex;
         flex-direction: column-reverse;
         width: 100%;
@@ -1126,5 +1125,4 @@
     .cta-glass-banner {
         padding: 4rem 2rem;
     }
-}
 }

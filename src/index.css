@@ -410,3 +410,21 @@ p {
     transform: rotate(360deg);
   }
 }
+
+/* ─── Navbar Visibility Helpers ─── */
+.desktop-only-nav {
+  display: block;
+}
+
+.mobile-only-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .desktop-only-nav {
+    display: none !important;
+  }
+  .mobile-only-nav {
+    display: block !important;
+  }
+}
