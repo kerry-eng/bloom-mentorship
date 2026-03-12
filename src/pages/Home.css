@@ -147,51 +147,66 @@
         display: block;
     }
     .hero-replica__inner {
-        display: block; /* Ensure straightforward stacking */
+        display: flex; /* Changed from block to allow flex-direction */
+        flex-direction: column-reverse; /* Swap image and text order */
         width: 100%;
         padding: 0 1.5rem 4rem;
         text-align: center;
+        gap: 0; /* Let margins handle spacing */
     }
     .hero-replica__content {
-        display: block;
+        display: flex; /* Added flex to allow child reordering */
+        flex-direction: column;
+        align-items: center;
         text-align: center;
         width: 100%;
         margin-bottom: 2rem;
     }
     .hero-replica__title {
+        order: 1; /* Title first */
         display: block;
-        font-size: 2.8rem !important; /* Force readability */
+        font-size: 2.8rem !important;
         margin-bottom: 1.5rem;
         line-height: 1.1;
         color: #000000 !important;
     }
     .hero-replica__subtitle {
+        order: 2; /* Subtitle second */
         display: block;
         font-size: 1.1rem;
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.5rem; /* Reduced to pull stats closer */
         color: #2D3436;
         line-height: 1.5;
     }
-    .btn-replica-book {
-        display: inline-block;
-        margin-bottom: 4rem;
-        width: auto;
-        padding: 0.9rem 2.5rem;
-    }
     .hero-replica__stats {
+        order: 3; /* Stats third (above button) */
         display: flex;
         justify-content: center;
-        gap: 2rem;
-        margin-bottom: 4rem;
+        gap: 2.5rem;
+        margin: 1rem 0 3rem;
     }
     .stat-value {
         font-size: 2.2rem;
+        color: #2D3436; /* Darkened ONLY for mobile */
     }
     .stat-label {
         font-size: 1.5rem;
+        color: #2D3436; /* Darkened ONLY for mobile */
     }
     .replica-divider {
         height: 80px;
+        background: #000000;
+    }
+    .hero-replica__actions {
+        order: 4; /* Button last */
+        display: inline-block;
+        margin-bottom: 4rem;
+        width: auto;
+    }
+    .btn-replica-book {
+        display: inline-block;
+        padding: 0.9rem 2.5rem;
+        margin-bottom: 0; /* Reset global margin */
     }
     .replica-image-wrapper {
         border-radius: 40px;

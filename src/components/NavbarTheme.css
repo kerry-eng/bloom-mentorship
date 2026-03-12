@@ -45,7 +45,7 @@
 }
 
 [data-theme='pink'] .btn-theme-toggle::after {
-    content: '💗';
+    content: '😻';
     font-size: 1.2rem;
 }
 
