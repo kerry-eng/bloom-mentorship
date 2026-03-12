@@ -173,44 +173,44 @@
     .hero-replica__subtitle {
         order: 2; /* Subtitle second */
         display: block;
-        font-size: 1.1rem;
-        margin-bottom: 1.5rem; /* Reduced to pull stats closer */
+        font-size: 1.05rem; /* Slightly smaller for space */
+        margin-bottom: 1.5rem;
         color: #2D3436;
         line-height: 1.5;
     }
-    .hero-replica__stats {
-        order: 3; /* Stats third (above button) */
-        display: flex;
-        justify-content: center;
-        gap: 2.5rem;
-        margin: 1rem 0 3rem;
-    }
-    .stat-value {
-        font-size: 2.2rem;
-        color: #2D3436; /* Darkened ONLY for mobile */
-    }
-    .stat-label {
-        font-size: 1.5rem;
-        color: #2D3436; /* Darkened ONLY for mobile */
-    }
-    .replica-divider {
-        height: 80px;
-        background: #000000;
-    }
     .hero-replica__actions {
-        order: 4; /* Button last */
+        order: 3; /* Pull button higher */
         display: inline-block;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem; /* Reduced margin */
         width: auto;
     }
     .btn-replica-book {
         display: inline-block;
         padding: 0.9rem 2.5rem;
-        margin-bottom: 0; /* Reset global margin */
+        font-size: 1rem;
+    }
+    .hero-replica__stats {
+        order: 4; /* Move stats below button */
+        display: flex;
+        justify-content: center;
+        gap: 2.5rem;
+        margin: 1rem 0 2rem;
+    }
+    .stat-value {
+        font-size: 2rem; /* Slighly smaller */
+        color: #2D3436;
+    }
+    .stat-label {
+        font-size: 1.3rem; /* Slighly smaller */
+        color: #2D3436;
+    }
+    .replica-divider {
+        height: 60px; /* Shorter divider */
+        background: #000000;
     }
     .replica-image-wrapper {
         border-radius: 40px;
-        max-height: 450px;
+        max-height: 380px; /* Reduced from 450px to save vertical space */
         width: 90%;
         margin: 0 auto;
     }
