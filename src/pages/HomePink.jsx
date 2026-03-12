@@ -16,70 +16,89 @@ const HomePink = () => {
                 <div className="pink-orb orb-3"></div>
             </div>
 
-            <div className="home-pink-container">
-                <div className="home-pink-layout">
+            <div className="home-pink-replica-hero">
+                {/* ─── Background Elements ─── */}
+                <div className="replica-bg-decor">
+                    <div className="pink-gradient-orb"></div>
+                    <div className="red-dot-decor dot-1"></div>
+                </div>
 
-                    {/* LEFT: Safe Space Card */}
-                    <div className="pink-hero-card-container">
-                        <div className="pink-washi-tape tape-top"></div>
-                        <div className="pink-washi-tape tape-bottom"></div>
-
-                        <div className="pink-hero-card">
-                            <span className="card-welcome">welcome to your safe space 🌸</span>
-                            <h1 className="card-title">
+                <div className="replica-hero-content container">
+                    {/* LEFT AREA: The White Card & Blob Portrait */}
+                    <div className="replica-hero-left">
+                        <div className="replica-main-card">
+                            <div className="replica-washi-tape"></div>
+                            <span className="welcome-text-cursive">welcome to your safe space 🌸</span>
+                            <h1 className="hero-title-serif">
                                 Find peace, bloom into<br />your best self
                             </h1>
-                            <p className="card-desc">
-                                Professional therapy in a cozy, judgment-free space. Let's grow together, one session at a time. 💜
+                            <p className="hero-description">
+                                Professional therapy in a cozy, judgment-free space.<br />
+                                Let's grow together, one session at a time. 💜
                             </p>
-                            <Link to="/booking" className="btn-pink-hero">
+                            <Link to="/booking" className="btn-start-journey">
                                 <span className="sparkle-icon">✨</span> start your journey
                             </Link>
                         </div>
+                        
+                        {/* Ellipse 2 - Floating Blob Portrait */}
+                        <div className="floating-blob-portrait">
+                            <div className="blob-mask">
+                                <img src="/Ellipse 2.png" alt="Safe Space Portrait" className="replica-portrait-img" />
+                            </div>
+                        </div>
 
-                        {/* Floating Quote */}
-                        <div className="pink-floating-quote">
+                        {/* Floating Quote Below Card */}
+                        <div className="floating-quote-bottom">
                             "healing is not linear" 🌙
                         </div>
                     </div>
 
-                    {/* RIGHT: Polaroid Stack */}
-                    <div className="pink-visual-stack">
-                        {/* Smaller Polaroid Top */}
-                        <div className="pink-polaroid-sm polaroid-top">
+                    {/* RIGHT AREA: The Polaroid Collage & Circle Portrait */}
+                    <div className="replica-hero-right">
+                        {/* Polaroid 1: Small Lavender */}
+                        <div className="replica-polaroid polaroid-sm-lavender">
                             <div className="polaroid-inner">
-                                <div className="polaroid-img-placeholder purple-glow">
-                                    <span className="polaroid-icon">✨</span>
+                                <div className="polaroid-image-area lavender-tint">
+                                    <div className="sparkle-emoji">✨</div>
                                 </div>
                                 <span className="polaroid-label">safe space 💜</span>
                             </div>
+                            <div className="red-dot-accent"></div>
                         </div>
 
-                        {/* Large Main Polaroid */}
-                        <div className="pink-polaroid-lg">
+                        {/* Polaroid 2: Main Large (YOU MATTER) */}
+                        <div className="replica-polaroid polaroid-main-lg">
                             <div className="polaroid-inner">
-                                <div className="polaroid-img-main pink-gradient-bg">
-                                    <div className="main-heart">🤍</div>
-                                    <h2 className="main-polaroid-text">You matter</h2>
-                                    <p className="main-polaroid-sub">Your story is worth telling</p>
+                                <div className="polaroid-image-area pink-base">
+                                    <div className="white-heart">🤍</div>
+                                    <h2 className="matter-text">YOU MATTER</h2>
+                                    <p className="matter-subtext">Your story is worth telling</p>
                                 </div>
                                 <span className="polaroid-label-lg">your healing journey ✨</span>
                             </div>
                         </div>
 
-                        {/* Smaller Polaroid Bottom */}
-                        <div className="pink-polaroid-sm polaroid-bottom">
-                            <div className="polaroid-inner">
-                                <div className="polaroid-img-placeholder blue-glow">
-                                    <span className="polaroid-icon-sm">🌸</span>
-                                </div>
-                                <span className="polaroid-label">grow & bloom 🌺</span>
+                        {/* Ellipse 3 - Circle Portrait */}
+                        <div className="floating-circle-portrait">
+                            <div className="circle-mask">
+                                <img src="/Ellipse 3.png" alt="Healing Connection" className="replica-portrait-img" />
                             </div>
                         </div>
 
-                        {/* Floating Decorative Stars */}
-                        <div className="pink-star-decor star-1">⭐</div>
-                        <div className="pink-star-decor star-2">⭐</div>
+                        {/* Polaroid 3: Small Blue (Bottom) */}
+                        <div className="replica-polaroid polaroid-sm-blue">
+                            <div className="polaroid-inner">
+                                <div className="polaroid-image-area blue-tint">
+                                    <div className="flower-emoji">🌸</div>
+                                </div>
+                                <span className="polaroid-label">grow & bloom 🌸</span>
+                            </div>
+                        </div>
+
+                        {/* Decorative Assets */}
+                        <div className="floating-star-decor star-top">⭐</div>
+                        <div className="floating-star-decor star-bottom">⭐</div>
                     </div>
                 </div>
             </div>
