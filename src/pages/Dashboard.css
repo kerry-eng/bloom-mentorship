@@ -1489,6 +1489,10 @@
     padding-top: 1rem;
 }
 
+.blogs-page {
+    padding-top: 4rem; /* Reduced from 8rem */
+}
+
 .input-group label {
     display: block;
     font-size: 0.75rem;
@@ -1970,7 +1974,7 @@
     }
 
     .overview-container-arch {
-        padding: 6rem 1.75rem 100px !important; /* increased padding for breathing room */
+        padding: 4.5rem 1.75rem 80px !important; /* Reduced from 6rem and 100px */
     }
 
     .hero-banner-arch {
@@ -2032,7 +2036,7 @@
     }
 
     .workspace-module {
-        padding: 6.5rem 1.75rem 120px !important; 
+        padding: 4.5rem 1.75rem 80px !important; /* Reduced from 6.5rem and 120px */
     }
 
     .bio-actions {

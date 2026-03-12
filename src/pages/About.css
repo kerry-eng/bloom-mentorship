@@ -198,7 +198,7 @@
     display: flex;
     align-items: center;
     background: #ffffff;
-    padding-top: 60px; /* Reduced space for fixed navbar */
+    padding-top: 40px; /* Reduced space for fixed navbar */
     overflow: hidden;
     position: relative;
     box-sizing: border-box;
@@ -279,8 +279,8 @@
     .about-hero-replica {
         height: auto;
         max-height: none;
-        padding-top: 80px;
-        padding-bottom: 40px;
+        padding-top: 40px; /* Reduced from 80px */
+        padding-bottom: 20px; /* Reduced from 40px */
     }
     .about-hero-replica__inner {
         grid-template-columns: 1fr;
@@ -452,7 +452,7 @@
 
 @media (max-width: 600px) {
     .about-page {
-        padding-top: 6rem;
+        padding-top: 0; /* Removed redundant page padding */
     }
 
     .values-grid {
