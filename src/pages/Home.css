@@ -5,7 +5,7 @@
     max-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: 100px;
+    padding-top: var(--space-12); /* 96px top padding */
     overflow: hidden;
     position: relative;
 }
@@ -13,7 +13,7 @@
 .hero-replica__inner {
     display: grid;
     grid-template-columns: 1fr 1.1fr;
-    gap: 4rem;
+    gap: var(--space-8); /* 64px gap */
     align-items: center;
     width: 100%;
 }
@@ -204,10 +204,10 @@
     }
 
     section:not(.hero-replica) {
-        padding: 3rem 1.25rem !important;
-        margin: 1rem 0.75rem !important; /* Reduced margin to expand section width */
+        padding: var(--space-6) var(--space-2) !important; /* 48px, 16px */
+        margin: var(--space-2) var(--space-1-5) !important; /* 16px, 12px */
         background: white;
-        border-radius: 32px;
+        border-radius: var(--space-4); /* 32px radius */
         box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
         border: 1px solid rgba(0,0,0,0.02);
         display: block !important;
@@ -237,11 +237,11 @@
     }
 
     .program-card {
-        padding: 2rem 1.25rem !important; /* Slightly more compact padding */
+        padding: var(--space-4) var(--space-2-5, 20px) !important; 
         background: #f8fafc !important;
-        border-radius: 24px !important;
-        width: 100% !important; /* Ensure full width relative to grid */
-        max-width: none !important; /* Remove any width restrictions */
+        border-radius: var(--space-3); /* 24px */
+        width: 100% !important;
+        max-width: none !important;
     }
 
     /* Floating CTA section fix */

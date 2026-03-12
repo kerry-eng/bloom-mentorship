@@ -1,18 +1,18 @@
 .mobile-bottom-nav {
     position: fixed;
-    bottom: 20px;
-    left: 20px;
-    right: 20px;
-    height: 70px;
-    background: rgba(255, 255, 255, 0.45); /* High transparency iOS style */
+    bottom: var(--space-2); /* 16px from bottom */
+    left: var(--space-2); /* 16px from sides */
+    right: var(--space-2);
+    height: 72px; /* Multiple of 8 */
+    background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(40px) saturate(180%) contrast(90%);
     -webkit-backdrop-filter: blur(40px) saturate(180%) contrast(90%);
-    border: 0.5px solid rgba(255, 255, 255, 0.5); /* Hairline iOS border */
-    border-radius: 25px;
-    display: none; /* Hidden on desktop */
+    border: 0.5px solid rgba(255, 255, 255, 0.5);
+    border-radius: var(--space-3); /* 24px radius */
+    display: none;
     justify-content: space-around;
     align-items: center;
-    padding: 0 10px;
+    padding: 0 var(--space-1);
     box-shadow: 0 10px 40px rgba(0, 0, 0, 0.03);
     z-index: 1000;
 }

@@ -13,7 +13,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding-top: 80px; /* Offset for navbar */
+    padding-top: var(--space-10); /* 80px */
 }
 
 /* Background Decorations */
@@ -777,17 +777,17 @@
     }
 
     .pink-programs-section {
-        padding: 2rem 0.75rem 6rem; /* Reduced horizontal padding */
-        margin-top: -1rem;
-        border-top-left-radius: 40px;
-        border-top-right-radius: 40px;
+        padding: var(--space-3) var(--space-1) var(--space-8); /* 24px, 8px, 64px */
+        margin-top: calc(var(--space-1) * -1);
+        border-top-left-radius: var(--space-5);
+        border-top-right-radius: var(--space-5);
         background: #fafaf9;
         box-shadow: 0 -10px 30px rgba(0,0,0,0.02);
     }
 
     .pink-section-header {
-        margin-bottom: 1.5rem;
-        padding: 0 1rem;
+        margin-bottom: var(--space-2);
+        padding: 0 var(--space-2);
     }
     
     .sticker-lightning {
@@ -807,9 +807,10 @@
     }
 
     .pink-program-card {
-        padding: 2rem 1.25rem; /* More compact padding for wider content area */
+        padding: var(--space-4) var(--space-2); /* 32px, 16px */
         max-width: none;
         width: 100%;
+        border-radius: var(--space-3); /* 24px */
     }
 
     .pink-different-section {

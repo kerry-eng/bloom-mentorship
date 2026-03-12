@@ -17,17 +17,17 @@
 }
 
 .navbar__inner {
-    background: rgba(255, 255, 255, 0.45); /* High transparency iOS style */
+    background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(40px) saturate(180%) contrast(90%);
     -webkit-backdrop-filter: blur(40px) saturate(180%) contrast(90%);
-    padding: 1rem 3rem; /* Adjusted padding */
+    padding: var(--space-2) var(--space-6); /* 16px vertical, 48px horizontal */
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: none;
-    border-bottom: 0.5px solid rgba(255, 255, 255, 0.5); /* Hairline iOS bottom border only */
+    border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
     box-shadow: 0 4px 30px rgba(0,0,0,0.03);
-    border-radius: 0; /* Boxy full-width look */
+    border-radius: 0;
     transition: all 0.3s ease;
 }
 
@@ -67,7 +67,7 @@
 .navbar__links {
     display: flex;
     align-items: center;
-    gap: 3rem;
+    gap: var(--space-4); /* 32px gap */
     flex-grow: 1;
     justify-content: flex-end;
 }
@@ -115,7 +115,7 @@
 .navbar__actions {
     display: flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: var(--space-2); /* 16px gap */
 }
 
 .auth-link-stacked {
@@ -231,8 +231,8 @@
     }
 
     .navbar__inner {
-        padding: 0.8rem 1.5rem;
-        background: rgba(255, 255, 255, 0.6); /* iOS Mobile style */
+        padding: var(--space-1-5) var(--space-2); /* 12px vertical, 16px horizontal */
+        background: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(30px) saturate(180%) contrast(95%);
         -webkit-backdrop-filter: blur(30px) saturate(180%) contrast(95%);
         border-radius: 0;
