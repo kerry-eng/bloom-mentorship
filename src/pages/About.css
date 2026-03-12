@@ -1,4 +1,15 @@
 /* .about-page handles global layout, hero handles viewport alignment */
+.geometric-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.6;
+    background-image: url('/Background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 1;
+    pointer-events: none;
+}
 
 .section-label-vibe {
     display: inline-block;

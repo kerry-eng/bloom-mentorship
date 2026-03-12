@@ -9,6 +9,7 @@ export default function About() {
     return (
         <div className="about-page">
             <section className="about-hero-replica">
+                <div className="geometric-pattern"></div>
                 <div className="container about-hero-replica__inner">
                     <div className="about-hero-replica__content fade-in">
                         <span className="about-hero-replica__label">Our Mission 🌿</span>
