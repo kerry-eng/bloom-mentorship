@@ -20,21 +20,40 @@
     background: rgba(255, 255, 255, 0.45);
     backdrop-filter: blur(40px) saturate(180%) contrast(90%);
     -webkit-backdrop-filter: blur(40px) saturate(180%) contrast(90%);
-    padding: var(--space-2) var(--space-6); /* 16px vertical, 48px horizontal */
+    padding: var(--space-2) var(--space-6);
+    /* 16px vertical, 48px horizontal */
     display: flex;
     align-items: center;
     justify-content: space-between;
     border: none;
     border-bottom: 0.5px solid rgba(255, 255, 255, 0.5);
-    box-shadow: 0 4px 30px rgba(0,0,0,0.03);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.03);
     border-radius: 0;
     transition: all 0.3s ease;
 }
 
+/* Mobile responsive styles */
+@media (max-width: 900px) {
+    .navbar {
+        top: 20px; /* Margin top only on mobile */
+        left: 50%;
+        transform: translateX(-50%);
+        width: 92%;
+        max-width: 500px;
+    }
+    
+    .navbar__inner {
+        border-radius: 20px; /* Floating pill for mobile only */
+        background: rgba(255, 255, 255, 0.88);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    }
+}
+
 .navbar--solid .navbar__inner {
-    background: rgba(255, 255, 255, 0.85); /* Slightly more opaque when scrolled */
-    box-shadow: 0 4px 50px rgba(0,0,0,0.1);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
+    background: rgba(255, 255, 255, 0.85);
+    /* Slightly more opaque when scrolled */
+    box-shadow: 0 4px 50px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .navbar__brand {
@@ -58,8 +77,10 @@
 
 .navbar__logo-text {
     font-family: 'Inter', sans-serif;
-    font-size: 1.4rem; /* Reduced from 1.8rem */
-    font-weight: 600; /* Reduced from 800 */
+    font-size: 1.4rem;
+    /* Reduced from 1.8rem */
+    font-weight: 600;
+    /* Reduced from 800 */
     color: #000000;
     letter-spacing: -0.02em;
 }
@@ -67,7 +88,8 @@
 .navbar__links {
     display: flex;
     align-items: center;
-    gap: var(--space-4); /* 32px gap */
+    gap: var(--space-4);
+    /* 32px gap */
     flex-grow: 1;
     justify-content: flex-end;
 }
@@ -83,8 +105,10 @@
 
 .navbar__link {
     font-family: 'Inter', sans-serif;
-    font-size: 0.85rem; /* Reduced from 0.95rem */
-    font-weight: 400; /* Thinner weight for elegance */
+    font-size: 0.85rem;
+    /* Reduced from 0.95rem */
+    font-weight: 400;
+    /* Thinner weight for elegance */
     color: #000000;
     text-decoration: none;
     transition: opacity 0.2s ease;
@@ -115,7 +139,8 @@
 .navbar__actions {
     display: flex;
     align-items: center;
-    gap: var(--space-2); /* 16px gap */
+    gap: var(--space-2);
+    /* 16px gap */
 }
 
 .auth-link-stacked {
@@ -141,8 +166,9 @@
 .btn-theme-toggle {
     padding: 0.6rem 1.2rem;
     border-radius: var(--radius-full, 100px);
-    background: #FFF0F5; /* Soft pink background */
-    border: 1px solid rgba(0,0,0,0.05);
+    background: #FFF0F5;
+    /* Soft pink background */
+    border: 1px solid rgba(0, 0, 0, 0.05);
     display: flex;
     align-items: center;
     gap: 0.8rem;
@@ -152,7 +178,7 @@
 
 .btn-theme-toggle:hover {
     transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .theme-toggle-icon {
@@ -170,8 +196,10 @@
     background: #000000;
     color: #ffffff;
     padding: 0.8rem 1.8rem;
-    border-radius: 8px; /* Slightly rounded corners matching inspo */
-    font-weight: 600; /* Reduced from 700 */
+    border-radius: 8px;
+    /* Slightly rounded corners matching inspo */
+    font-weight: 600;
+    /* Reduced from 700 */
     font-size: 0.875rem;
     text-decoration: none;
     transition: all 0.2s ease;
@@ -182,7 +210,7 @@
 
 .btn-nav-book:hover {
     transform: translateY(-1px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .btn-logout-minimal {
@@ -213,7 +241,8 @@
         opacity: 0;
         visibility: hidden;
         transition: all 0.4s ease;
-        z-index: 999; /* Just below the drawer */
+        z-index: 999;
+        /* Just below the drawer */
     }
 
     .navbar__overlay.active {
@@ -224,14 +253,16 @@
     .navbar {
         top: 0;
         left: 0;
-        transform: none; /* CRITICAL: Reset transform */
+        transform: none;
+        /* CRITICAL: Reset transform */
         width: 100%;
         max-width: 100%;
         z-index: 1000;
     }
 
     .navbar__inner {
-        padding: var(--space-1-5) var(--space-2); /* 12px vertical, 16px horizontal */
+        padding: var(--space-1-5) var(--space-2);
+        /* 12px vertical, 16px horizontal */
         background: rgba(255, 255, 255, 0.6);
         backdrop-filter: blur(30px) saturate(180%) contrast(95%);
         -webkit-backdrop-filter: blur(30px) saturate(180%) contrast(95%);
@@ -240,7 +271,7 @@
         border-bottom: 0.5px solid rgba(255, 255, 255, 0.4);
     }
 
-    .navbar__hamburger, 
+    .navbar__hamburger,
     .navbar__links {
         display: none !important;
     }
@@ -248,4 +279,4 @@
     .btn-nav-book {
         display: none;
     }
-}
+}

@@ -5,7 +5,7 @@
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding-top: 80px; /* Navbar height */
+    padding-top: 80px; /* Restored for desktop */
 }
 
 .hero-atmosphere-v2 {
@@ -108,10 +108,13 @@
 }
 
 @media (max-width: 1024px) {
+    .hero-replica-v2 {
+        padding-top: 140px; /* Space for the mobile top bar margin */
+    }
     .hero-replica-v2__inner {
-        flex-direction: column;
+        flex-direction: column; /* Image (now top in DOM) will be above text */
         text-align: center;
-        gap: 40px;
+        gap: 20px;
     }
     .hero-replica-v2__content {
         max-width: 100%;
@@ -120,8 +123,9 @@
         align-items: center;
     }
     .replica-v2-image-wrapper {
-        width: 100%;
+        width: 280px;
         right: 0;
+        margin-bottom: 0;
     }
 }
 
