@@ -106,18 +106,15 @@
 @media (max-width: 1024px) {
     .hero-replica-v2 {
         padding-top: 100px;
-        /* Reduced from 140px */
-        padding-bottom: 20px;
-        /* Reduced bottom padding */
+        padding-bottom: 40px;
         min-height: auto;
-        /* Allow content to dictate height */
+        background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.4)), #000000; /* Darkened background */
     }
 
     .hero-replica-v2__inner {
-        flex-direction: column;
+        flex-direction: column-reverse; /* Image (bottom in DOM) now on TOP */
         text-align: center;
-        gap: 15px;
-        /* Reduced from 20px */
+        gap: 20px;
     }
 
     .hero-replica-v2__content {
