@@ -681,9 +681,10 @@
 @media (max-width: 768px) {
     .home-pink-replica-hero {
         height: auto;
-        min-height: 100vh;
-        padding-top: 120px;
-        padding-bottom: 2rem;
+        min-height: auto;
+        padding-top: 80px;
+        padding-bottom: 3rem;
+        background: #ffffff;
     }
 
     .hero-title-serif {
@@ -695,9 +696,14 @@
         top: 0;
         right: 0;
         transform: none;
-        margin: 0 auto 2.5rem; /* Increased margin */
-        width: 180px;
+        margin: 0 auto 1.5rem;
+        width: 160px;
         order: -1;
+    }
+    
+    .replica-hero-left {
+        width: 100%;
+        padding: 0 1.5rem;
     }
 
     .replica-hero-left {
@@ -718,23 +724,26 @@
     }
 
     .replica-hero-right {
-        height: 520px;
-        transform: scale(0.95);
-        margin-top: 2rem;
+        height: 380px;
+        transform: scale(0.9);
+        margin-top: 1rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        overflow: visible;
     }
 
     .polaroid-sm-lavender {
-        left: -20px;
-        top: 20px;
+        width: 120px;
+        left: 0;
+        top: 10px;
         z-index: 15;
     }
 
     .polaroid-main-lg {
+        width: 220px;
         position: absolute;
-        top: 50%;
+        top: 45%;
         left: 50%;
         transform: translate(-50%, -50%) rotate(2deg);
         z-index: 5;
@@ -742,24 +751,44 @@
 
     .floating-circle-portrait {
         position: absolute;
-        right: -10px;
-        top: 40%;
-        width: 140px;
+        right: 10px;
+        top: 35%;
+        width: 110px;
         z-index: 20;
     }
 
     .polaroid-sm-blue {
+        width: 110px;
         position: absolute;
-        bottom: 20px;
-        right: 20px;
+        bottom: 10px;
+        right: 15px;
         z-index: 12;
+    }
+    
+    .floating-quote-bottom {
+        position: relative;
+        margin: 1.5rem auto 0;
+        font-size: 0.95rem;
+        padding: 0.6rem 1.2rem;
+    }
+
+    .pink-programs-section {
+        padding: 4rem 1rem 8rem;
+        margin-top: -2rem; /* Pull up to reduce space */
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        background: #fafaf9;
+    }
+
+    .pink-section-header {
+        margin-bottom: 2.5rem;
     }
 
     .pink-programs-grid {
         grid-template-columns: 1fr;
         max-width: 100%;
-        padding: 0 1rem;
-        gap: 2rem;
+        padding: 0;
+        gap: 1.25rem;
     }
 
     .pink-section-title {
@@ -772,26 +801,48 @@
         max-width: 100%;
     }
 
+    .pink-different-section {
+        padding: 4rem 1rem 100px;
+        background: white;
+        margin-top: -3rem;
+        border-top-left-radius: 40px;
+        border-top-right-radius: 40px;
+        box-shadow: 0 -20px 40px rgba(0,0,0,0.02);
+    }
+
+    .pink-section-subtitle-alt {
+        margin-bottom: 3rem;
+    }
+
     .pink-different-grid {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.25rem;
     }
     
+    .different-card {
+        padding: 2rem 1.5rem;
+    }
+
     .pink-section-title-alt {
         font-size: 2.5rem;
     }
 
-    .pink-different-section {
-        padding: 5rem 1rem;
-    }
-
     .pink-cta-card {
-        padding: 3rem 1.5rem;
+        padding: 2.5rem 1.25rem;
         max-width: 100%;
     }
 
     .cta-title {
-        font-size: 1.8rem;
+        font-size: 1.6rem;
+    }
+    
+    .pink-help-pill-container {
+        margin-top: 3rem;
+    }
+    
+    .pink-help-pill {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
     }
 }
 
