@@ -11,8 +11,22 @@ export default function Auth() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState('')
-    const { signIn, signUp } = useAuth()
+    const { signIn, signUp, signInWithGoogle, signInWithFacebook } = useAuth()
     const navigate = useNavigate()
+
+    async function handleSocial(provider) {
+        setError('')
+        setLoading(true)
+        try {
+            if (provider === 'google') await signInWithGoogle()
+            if (provider === 'facebook') await signInWithFacebook()
+            // Note: OAuth redirects away, so navigation here is usually not needed immediately,
+            // but Supabase will redirect back to /dashboard based on our redirectTo config.
+        } catch (err) {
+            setError(err.message || 'Social login failed.')
+            setLoading(false)
+        }
+    }
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -111,8 +125,20 @@ export default function Auth() {
                             <span>or {mode === 'signin' ? 'sign in' : 'sign up'} with</span>
                         </div>
                         <div className="social-btns-row">
-                            <button className="social-btn face"><span className="icon">f</span></button>
-                            <button className="social-btn goog"><span className="icon">G</span></button>
+                            <button 
+                                className="social-btn face" 
+                                onClick={() => handleSocial('facebook')}
+                                disabled={loading}
+                            >
+                                <span className="icon">f</span>
+                            </button>
+                            <button 
+                                className="social-btn goog" 
+                                onClick={() => handleSocial('google')}
+                                disabled={loading}
+                            >
+                                <span className="icon">G</span>
+                            </button>
                         </div>
                     </div>
                 </div>

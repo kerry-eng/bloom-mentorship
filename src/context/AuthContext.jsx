@@ -76,10 +76,41 @@ export function AuthProvider({ children }) {
         await supabase.auth.signOut()
     }
 
+    async function signInWithGoogle() {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                redirectTo: `${window.location.origin}/dashboard`
+            }
+        })
+        if (error) throw error
+    }
+
+    async function signInWithFacebook() {
+        const { error } = await supabase.auth.signInWithOAuth({
+            provider: 'facebook',
+            options: {
+                redirectTo: `${window.location.origin}/dashboard`
+            }
+        })
+        if (error) throw error
+    }
+
     const isMentor = profile?.role === 'mentor'
 
     return (
-        <AuthContext.Provider value={{ user, profile, loading, signUp, signIn, signOut, isMentor, refreshProfile: fetchProfile }}>
+        <AuthContext.Provider value={{ 
+            user, 
+            profile, 
+            loading, 
+            signUp, 
+            signIn, 
+            signOut, 
+            signInWithGoogle,
+            signInWithFacebook,
+            isMentor, 
+            refreshProfile: fetchProfile 
+        }}>
             {children}
         </AuthContext.Provider>
     )
