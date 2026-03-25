@@ -5,6 +5,33 @@
     color: var(--color-text-dark);
 }
 
+.group-actions-arch {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-ghost-arch {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    padding: 0 12px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+}
+
+.btn-ghost-arch:hover {
+    background: rgba(255, 0, 0, 0.1);
+    border-color: rgba(255, 0, 0, 0.2);
+    color: #ff5555;
+}
+
 .workspace-container {
     display: grid;
     grid-template-columns: 280px 1fr;

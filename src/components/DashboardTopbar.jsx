@@ -1,8 +1,11 @@
 import React from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen, onProfileClick, setActiveView }) {
     const { user, profile } = useAuth();
+    const navigate = useNavigate();
+    const location = useLocation();
 
     return (
         <header className="workspace-topbar-arch">

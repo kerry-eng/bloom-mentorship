@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { useTheme } from '../context/ThemeContext'
 import { supabase } from '../supabase'
 import MusivePlayer from '../components/MusivePlayer'
+import GroupChat from '../components/GroupChat'
 import { useRef } from 'react'
 import './Dashboard.css'
 import DashboardLayout from '../components/DashboardLayout'
@@ -68,6 +69,10 @@ export default function Dashboard() {
     const [showBookingSuccess, setShowBookingSuccess] = useState(false)
     const [blogForm, setBlogForm] = useState({ title: '', category: 'Growth & Mindset', content: '' })
     const [publishing, setPublishing] = useState(false)
+    const [groups, setGroups] = useState([])
+    const [myGroups, setMyGroups] = useState(new Set())
+    const [joining, setJoining] = useState({})
+    const [activeGroup, setActiveGroup] = useState(null)
 
     useEffect(() => {
         if (!user) return
@@ -182,10 +187,46 @@ export default function Dashboard() {
                     next_steps: latestPast.next_steps || ''
                 })
             }
+
+            // Fetch Groups
+            const { data: groupData } = await supabase.from('groups').select('*')
+            setGroups(groupData || [])
+
+            // Fetch My Memberships
+            const { data: memberData } = await supabase
+                .from('group_memberships')
+                .select('group_id')
+                .eq('user_id', user.id)
+            setMyGroups(new Set(memberData?.map(m => m.group_id) || []))
+
         } catch (e) {
             console.error('Error fetching dashboard data:', e)
         } finally {
             setLoading(false)
+        }
+    }
+
+    async function handleToggleGroup(groupId) {
+        if (!user) return
+        const isJoined = myGroups.has(groupId)
+        setJoining(prev => ({ ...prev, [groupId]: true }))
+        
+        try {
+            if (isJoined) {
+                await supabase.from('group_memberships').delete().eq('group_id', groupId).eq('user_id', user.id)
+                setMyGroups(prev => {
+                    const next = new Set(prev)
+                    next.delete(groupId)
+                    return next
+                })
+            } else {
+                await supabase.from('group_memberships').insert({ group_id: groupId, user_id: user.id })
+                setMyGroups(prev => new Set(prev).add(groupId))
+            }
+        } catch (e) {
+            console.error('Error toggling group:', e)
+        } finally {
+            setJoining(prev => ({ ...prev, [groupId]: false }))
         }
     }
 
@@ -415,71 +456,94 @@ export default function Dashboard() {
         </div>
     )
 
-    const renderCommunity = () => (
-        <div className="workspace-module fade-in">
-            <div className="module-header mb-5">
-                <h2 className="display-title sm">Community Exchange</h2>
-                <p className="subtitle">Connect with the collective. Accelerate your growth.</p>
-            </div>
+    const renderCommunity = () => {
+        if (activeGroup) {
+            return (
+                <div className="workspace-module fade-in">
+                    <GroupChat 
+                        group={activeGroup} 
+                        onBack={() => setActiveGroup(null)} 
+                        onLeave={(id) => {
+                            handleToggleGroup(id)
+                            setActiveGroup(null)
+                        }}
+                    />
+                </div>
+            )
+        }
 
-            <div className="section-label mb-4">
-                <span className="pill-label-vibe">Discover Groups</span>
-            </div>
+        return (
+            <div className="workspace-module fade-in">
+                <div className="module-header mb-5">
+                    <h2 className="display-title sm">Community Exchange</h2>
+                    <p className="subtitle">Connect with the collective. Accelerate your growth.</p>
+                </div>
 
-            <div className="community-grid">
-                <div className="glass-card-vibe group-card">
-                    <div className="group-badge">ACTIVE NOW</div>
-                    <div className="group-content">
-                        <div className="group-icon">🙏</div>
-                        <h3>Faith & Focus</h3>
-                        <p>Daily morning prayers and intentional living discussions.</p>
-                        <div className="group-stats">
-                            <span className="stat-tag">2.4k Members</span>
-                            <span className="stat-tag">Live Now</span>
-                        </div>
+                <div className="section-label mb-4">
+                    <span className="pill-label-vibe">Discover Groups</span>
+                </div>
+
+                <div className="community-grid">
+                    {groups.map(g => {
+                        const isJoined = myGroups.has(g.id)
+                        return (
+                            <div key={g.id} className="glass-card-vibe group-card">
+                                {g.is_active_now && <div className="group-badge">ACTIVE NOW</div>}
+                                <div className="group-content">
+                                    <div className="group-icon">{g.icon}</div>
+                                    <h3>{g.name}</h3>
+                                    <p>{g.description}</p>
+                                    <div className="group-stats">
+                                        <span className="stat-tag">{g.member_count_display}</span>
+                                        {g.is_active_now && <span className="stat-tag">Live Now</span>}
+                                    </div>
+                                </div>
+                                <div className="group-actions-arch mt-4">
+                                    {!isJoined ? (
+                                        <button 
+                                            className="btn btn-vibration-outline btn-sm w-100"
+                                            onClick={() => handleToggleGroup(g.id)}
+                                            disabled={joining[g.id]}
+                                        >
+                                            {joining[g.id] ? '...' : 'Join Group'}
+                                        </button>
+                                    ) : (
+                                        <div className="d-flex gap-2">
+                                            <button 
+                                                className="btn btn-primary btn-vibration btn-sm flex-1"
+                                                onClick={() => setActiveGroup(g)}
+                                            >
+                                                Enter Group Chat
+                                            </button>
+                                            <button 
+                                                className="btn btn-sm btn-ghost-arch"
+                                                onClick={() => handleToggleGroup(g.id)}
+                                                disabled={joining[g.id]}
+                                                title="Leave Group"
+                                            >
+                                                &times;
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        )
+                    })}
+                </div>
+
+                <div className="glass-card-vibe mt-5 event-spotlight">
+                    <div className="event-info">
+                        <span className="pill-label-vibe">Spotlight Event</span>
+                        <h3>The Bloom Summit 2026</h3>
+                        <p>A massive virtual gathering of mentors and mentees to set intentions, build roadmaps, and network for the upcoming year.</p>
                     </div>
-                    <button className="btn btn-vibration-outline btn-sm w-100 mt-4">Join Group</button>
-                </div>
-
-                <div className="glass-card-vibe group-card">
-                    <div className="group-content">
-                        <div className="group-icon">🌱</div>
-                        <h3>Growth Hive</h3>
-                        <p>Sharing breakthroughs in career and personal development.</p>
-                        <div className="group-stats">
-                            <span className="stat-tag">1.8k Members</span>
-                            <span className="stat-tag">12 Space Chats</span>
-                        </div>
+                    <div className="event-actions">
+                        <button className="btn btn-primary btn-vibration px-5 py-3">RSVP Now</button>
                     </div>
-                    <button className="btn btn-vibration-outline btn-sm w-100 mt-4">Join Group</button>
-                </div>
-
-                <div className="glass-card-vibe group-card">
-                    <div className="group-content">
-                        <div className="group-icon">🎭</div>
-                        <h3>Creative Bloom</h3>
-                        <p>Support for artists, writers, and digital creators.</p>
-                        <div className="group-stats">
-                            <span className="stat-tag">950 Members</span>
-                            <span className="stat-tag">Daily Prompts</span>
-                        </div>
-                    </div>
-                    <button className="btn btn-vibration-outline btn-sm w-100 mt-4">Join Group</button>
                 </div>
             </div>
-
-            <div className="glass-card-vibe mt-5 event-spotlight">
-                <div className="event-info">
-                    <span className="pill-label-vibe">Spotlight Event</span>
-                    <h3>The Bloom Summit 2026</h3>
-                    <p>A massive virtual gathering of mentors and mentees to set intentions, build roadmaps, and network for the upcoming year.</p>
-                </div>
-                <div className="event-actions">
-                    <button className="btn btn-primary btn-vibration px-5 py-3">RSVP Now</button>
-                </div>
-            </div>
-        </div>
-    )
+        )
+    }
 
     const renderAssignments = () => (
         <div className="workspace-module fade-in">

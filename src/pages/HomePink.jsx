@@ -39,6 +39,9 @@ const HomePink = () => {
                             <Link to="/booking" className="btn-start-journey">
                                 start your journey 🌸
                             </Link>
+                            <Link to="/auth?role=mentor" className="btn-mentor-join-link">
+                                join as a mentor 🌿
+                            </Link>
                         </div>
                         
                         {/* Ellipse 2 - Floating Blob Portrait */}

@@ -34,6 +34,9 @@ export default function Home() {
                             <Link to="/booking" className="btn-replica-black">
                                 Book Session
                             </Link>
+                            <Link to="/auth?role=mentor" className="btn-replica-outline">
+                                Join as a Mentor
+                            </Link>
                         </div>
                     </div>
 

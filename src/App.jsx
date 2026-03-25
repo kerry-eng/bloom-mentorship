@@ -35,8 +35,8 @@ function App() {
     return (
         <ThemeProvider>
             <MusicProvider>
-                {!['/dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
-                {['/dashboard', '/', '/about', '/reflections', '/blogs'].includes(location.pathname) && <MobileNavbar />}
+                {!['/dashboard', '/mentor-dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
+                {['/dashboard', '/mentor-dashboard', '/', '/about', '/reflections', '/blogs'].includes(location.pathname) && <MobileNavbar />}
                 <Routes>
                     <Route path="/" element={<HomeLoader />} />
                     <Route path="/auth" element={<Auth />} />
@@ -62,7 +62,7 @@ function App() {
 
                     <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
-                {!['/dashboard', '/auth', '/reflections', '/edit-profile'].includes(location.pathname) && <Footer />}
+                {!['/dashboard', '/mentor-dashboard', '/auth', '/reflections', '/edit-profile'].includes(location.pathname) && <Footer />}
             </MusicProvider>
         </ThemeProvider>
     )

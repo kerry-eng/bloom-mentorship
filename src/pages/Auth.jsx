@@ -1,13 +1,16 @@
 import { useState } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../supabase'
 import './Auth.css'
 
 export default function Auth() {
     const [mode, setMode] = useState('signin') // 'signin' | 'signup'
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [searchParams] = useSearchParams()
     const [fullName, setFullName] = useState('')
+    const [role, setRole] = useState('client')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState('')
@@ -18,8 +21,8 @@ export default function Auth() {
         setError('')
         setLoading(true)
         try {
-            if (provider === 'google') await signInWithGoogle()
-            if (provider === 'facebook') await signInWithFacebook()
+            if (provider === 'google') await signInWithGoogle('client')
+            if (provider === 'facebook') await signInWithFacebook('client')
             // Note: OAuth redirects away, so navigation here is usually not needed immediately,
             // but Supabase will redirect back to /dashboard based on our redirectTo config.
         } catch (err) {
@@ -35,14 +38,30 @@ export default function Auth() {
         setLoading(true)
         try {
             if (mode === 'signup') {
-                await signUp(email, password, fullName)
-                // navigate('/personalization') // Redirection will happen after login or via a check
-                setSuccess('Account created! Please check your email to confirm, then sign in.')
-                setMode('signin')
+                await signUp(email, password, fullName, role)
+                setSuccess('Account created! Please check your email to confirm.')
+                // If auto-logged in (email confirm off), redirect
+                if (role === 'mentor') {
+                    window.location.href = 'http://localhost:5174/auth'
+                } else {
+                    navigate('/dashboard')
+                }
             } else {
-                await signIn(email, password)
-                // We should check if personalization is completed here or in a wrapper
-                navigate('/dashboard')
+                const data = await signIn(email, password)
+                
+                // Fetch profile to check role
+                const { data: profileData } = await supabase
+                    .from('profiles')
+                    .select('role')
+                    .eq('id', data.user.id)
+                    .single()
+
+                if (profileData?.role === 'mentor') {
+                    // Mentors are redirected to the other portal
+                    window.location.href = 'http://localhost:5174/login'
+                } else {
+                    navigate('/dashboard')
+                }
             }
         } catch (err) {
             setError(err.message || 'Something went wrong. Please try again.')
@@ -83,15 +102,20 @@ export default function Auth() {
                         {error && <div className="auth-error-hint">{error}</div>}
 
                         {mode === 'signup' && (
-                            <div className="nature-input-group">
-                                <label>Full Name</label>
-                                <input
-                                    type="text"
-                                    value={fullName}
-                                    onChange={e => setFullName(e.target.value)}
-                                    required
-                                />
-                            </div>
+                            <>
+                                <div className="nature-input-group">
+                                    <label>Full Name</label>
+                                    <input
+                                        type="text"
+                                        value={fullName}
+                                        onChange={e => setFullName(e.target.value)}
+                                        required
+                                    />
+                                </div>
+                                <div className="mentor-portal-hint">
+                                    Are you a Mentor? <a href="http://localhost:5174/auth">Join the Mentor Portal</a>
+                                </div>
+                            </>
                         )}
 
                         <div className="nature-input-group">
