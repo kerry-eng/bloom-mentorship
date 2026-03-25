@@ -8,9 +8,10 @@ const __dirname = path.dirname(__filename)
 
 export default defineConfig({
     root: __dirname,
+    envDir: path.resolve(__dirname, '..'),
     plugins: [react()],
     server: {
-        port: 5174,
+        port: 4174,
         fs: {
             allow: [path.resolve(__dirname, '..')]
         }
