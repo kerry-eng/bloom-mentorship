@@ -8,6 +8,7 @@ import GroupChat from '../components/GroupChat'
 import { useRef } from 'react'
 import './Dashboard.css'
 import DashboardLayout from '../components/DashboardLayout'
+import DirectMessagesPanel from '../../shared/components/DirectMessagesPanel'
 
 function timeUntil(dateStr) {
     const diff = new Date(dateStr) - new Date()
@@ -30,6 +31,38 @@ function getGreeting() {
     if (hour < 12) return 'Good morning'
     if (hour < 17) return 'Good afternoon'
     return 'Good evening'
+}
+
+function buildClientMessageThreads(sessionList, clientId) {
+    if (!clientId) return []
+
+    const threadMap = new Map()
+
+    for (const session of sessionList) {
+        if (!session.mentor_id) continue
+
+        const currentThread = threadMap.get(session.mentor_id)
+        const latestTimestamp = new Date(session.scheduled_at).getTime()
+
+        if (!currentThread || latestTimestamp > currentThread.latestTimestamp) {
+            threadMap.set(session.mentor_id, {
+                key: `${clientId}:${session.mentor_id}`,
+                clientId,
+                mentorId: session.mentor_id,
+                counterpartName: session.mentor?.full_name || 'Assigned mentor',
+                counterpartEmail: session.mentor?.email || '',
+                counterpartAvatar: session.mentor?.avatar_url || '',
+                metaLine: session.session_label || session.session_type || 'Mentorship session',
+                secondaryLine: session.status ? `Session status: ${session.status}` : '',
+                latestSessionAt: session.scheduled_at,
+                latestTimestamp
+            })
+        }
+    }
+
+    return Array.from(threadMap.values())
+        .sort((a, b) => b.latestTimestamp - a.latestTimestamp)
+        .map(({ latestTimestamp, ...thread }) => thread)
 }
 
 export default function Dashboard() {
@@ -144,7 +177,7 @@ export default function Dashboard() {
         try {
             const { data: sessData, error: sessErr } = await supabase
                 .from('sessions')
-                .select('*, mentor:mentor_id(full_name)')
+                .select('id, client_id, mentor_id, session_type, session_label, duration_mins, price, scheduled_at, status, notes, take_homes, actionables, key_insights, challenges, next_steps, mentor:mentor_id(id, full_name, email, avatar_url)')
                 .eq('client_id', user.id)
                 .order('scheduled_at', { ascending: true })
             if (sessErr) throw sessErr
@@ -326,6 +359,7 @@ export default function Dashboard() {
 
     const upcoming = sessions.filter(s => new Date(s.scheduled_at) > new Date() || isJoinable(s.scheduled_at))
     const past = sessions.filter(s => new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at))
+    const messageThreads = buildClientMessageThreads(sessions, user?.id)
 
     const renderOverview = () => (
         <div className="overview-container-arch fade-in">
@@ -612,7 +646,7 @@ export default function Dashboard() {
         </div>
     )
 
-    const renderMessages = () => (
+    const renderMessagesLegacy = () => (
         <div className="workspace-module fade-in">
             <div className="module-header">
                 <h2 className="display-title sm">Communications</h2>
@@ -634,6 +668,25 @@ export default function Dashboard() {
                     <input type="text" placeholder="Type a message..." className="chat-input" />
                     <button className="btn btn-primary btn-icon"><span>✈️</span></button>
                 </div>
+            </div>
+        </div>
+    )
+
+    const renderMessages = () => (
+        <div className="workspace-module fade-in">
+            <div className="module-header">
+                <h2 className="display-title sm">Communications</h2>
+                <p className="subtitle">Message the mentors assigned to your booked sessions.</p>
+            </div>
+
+            <div className="mt-5">
+                <DirectMessagesPanel
+                    supabase={supabase}
+                    userId={user?.id}
+                    threads={messageThreads}
+                    emptyHeading="No mentor thread yet"
+                    emptyCopy="Once you book a session with an assigned mentor, direct messaging will open here."
+                />
             </div>
         </div>
     )

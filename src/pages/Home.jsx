@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
-import { getMentorAppUrl } from '../config/appUrls'
 import './Home.css'
 
 export default function Home() {
@@ -16,34 +15,80 @@ export default function Home() {
             <section className="hero-replica-v2">
                 <div className="hero-atmosphere-v2" aria-hidden="true">
                     <div className="geometric-pattern"></div>
+                    <div className="hero-replica-v2__orb hero-replica-v2__orb--left"></div>
+                    <div className="hero-replica-v2__orb hero-replica-v2__orb--right"></div>
                 </div>
 
                 <div className="container hero-replica-v2__inner">
                     <div className="hero-replica-v2__content fade-in">
+                        <span className="hero-replica-v2__eyebrow">Confidential support for your next season</span>
+
                         <h1 className="hero-replica-v2__title">
-                            Find <br />
-                            Peace, <span className="grow-text-neon">Grow</span> <br />
-                            Stronger
+                            Find steadiness.
+                            <br />
+                            Build clarity.
+                            <br />
+                            <span className="grow-text-neon">Grow stronger.</span>
                         </h1>
                         
                         <p className="hero-replica-v2__subtitle">
-                            Professional mental health support tailored to your journey. 
-                            Safe, confidential, and compassionate.
+                            Personalised mental wellness support designed for real life.
+                            Private, practical, and rooted in compassionate guidance that
+                            helps you move forward with confidence.
                         </p>
                         
                         <div className="hero-replica-v2__actions">
                             <Link to="/booking" className="btn-replica-black">
                                 Book Session
                             </Link>
-                            <a href={getMentorAppUrl('/auth')} className="btn-replica-outline">
-                                Join as a Mentor
+                            <a href="#services" className="btn-replica-outline">
+                                Explore Programs
                             </a>
+                        </div>
+
+                        <div className="hero-replica-v2__trust">
+                            <div className="hero-replica-v2__trust-card">
+                                <strong>Private by design</strong>
+                                <span>Confidential sessions with a clear support plan.</span>
+                            </div>
+                            <div className="hero-replica-v2__mini-stats">
+                                <div>
+                                    <strong>200+</strong>
+                                    <span>guided clients</span>
+                                </div>
+                                <div>
+                                    <strong>7 days</strong>
+                                    <span>booking flexibility</span>
+                                </div>
+                                <div>
+                                    <strong>1:1</strong>
+                                    <span>focused care</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div className="hero-replica-v2__image-side fade-in">
-                        <div className="replica-v2-image-wrapper">
-                            <img src="/Ellipse 4.png" alt="Find Peace" className="replica-v2-hero-img" />
+                    <div className="hero-replica-v2__visual fade-in">
+                        <div className="hero-replica-v2__visual-shell">
+                            <div className="hero-replica-v2__badge hero-replica-v2__badge--top">
+                                <span className="hero-replica-v2__badge-label">Care focus</span>
+                                <strong>Calm, clarity, direction</strong>
+                            </div>
+
+                            <div className="hero-replica-v2__image-side">
+                                <div className="replica-v2-image-wrapper">
+                                    <img src="/Ellipse 4.png" alt="Bloom wellness support" className="replica-v2-hero-img" />
+                                </div>
+                            </div>
+
+                            <div className="hero-replica-v2__support-card">
+                                <span className="hero-replica-v2__support-kicker">What you get</span>
+                                <ul className="hero-replica-v2__support-list">
+                                    <li>One-on-one guided sessions</li>
+                                    <li>Goal-oriented emotional support</li>
+                                    <li>Flexible online booking</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </div>

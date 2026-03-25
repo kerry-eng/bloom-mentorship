@@ -52,6 +52,7 @@ export default function DashboardSidebar({ isMobileMenuOpen, setIsMobileMenuOpen
                         <>
                             <button className={`nav-item-arch ${activeView === 'schedule' ? 'active' : ''}`} onClick={() => handleNavClick('schedule')}>MY SCHEDULE</button>
                             <button className={`nav-item-arch ${activeView === 'earnings' ? 'active' : ''}`} onClick={() => handleNavClick('earnings')}>MY EARNINGS</button>
+                            <button className={`nav-item-arch ${activeView === 'messages' ? 'active' : ''}`} onClick={() => handleNavClick('messages')}>MESSAGES</button>
                         </>
                     )}
                     <button className={`nav-item-arch ${activeView === 'settings' ? 'active' : ''}`} onClick={() => handleNavClick('settings')}>SETTINGS</button>
