@@ -232,7 +232,8 @@
 @media (max-width: 640px) {
     .auth-nature-container {
         padding: 1rem;
-        align-items: flex-start;
+        align-items: center;
+        justify-content: center;
         background-attachment: scroll;
     }
 
