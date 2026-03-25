@@ -1,6 +1,6 @@
 import React from 'react';
 import DashboardSidebar from './DashboardSidebar';
-import DashboardTopbar from './DashboardTopbar';
+import DashboardTopbar from './DashboardTopbarRefined';
 import MobileNavbar from './MobileNavbar';
 import MobileProfileSheet from './MobileProfileSheet';
 
