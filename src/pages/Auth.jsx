@@ -1,21 +1,21 @@
 import { useState } from 'react'
-import { useNavigate, Link, useSearchParams } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../supabase'
+import { getMentorAppUrl } from '../config/appUrls'
 import './Auth.css'
 
 export default function Auth() {
     const [mode, setMode] = useState('signin') // 'signin' | 'signup'
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [searchParams] = useSearchParams()
     const [fullName, setFullName] = useState('')
-    const [role, setRole] = useState('client')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState('')
     const { signIn, signUp, signInWithGoogle, signInWithFacebook } = useAuth()
     const navigate = useNavigate()
+    const mentorPortalUrl = getMentorAppUrl('/auth')
 
     async function handleSocial(provider) {
         setError('')
@@ -38,14 +38,9 @@ export default function Auth() {
         setLoading(true)
         try {
             if (mode === 'signup') {
-                await signUp(email, password, fullName, role)
+                await signUp(email, password, fullName, 'client')
                 setSuccess('Account created! Please check your email to confirm.')
-                // If auto-logged in (email confirm off), redirect
-                if (role === 'mentor') {
-                    window.location.href = 'http://localhost:5174/auth'
-                } else {
-                    navigate('/dashboard')
-                }
+                navigate('/dashboard')
             } else {
                 const data = await signIn(email, password)
                 
@@ -58,7 +53,7 @@ export default function Auth() {
 
                 if (profileData?.role === 'mentor') {
                     // Mentors are redirected to the other portal
-                    window.location.href = 'http://localhost:5174/login'
+                    window.location.href = mentorPortalUrl
                 } else {
                     navigate('/dashboard')
                 }
@@ -113,7 +108,7 @@ export default function Auth() {
                                     />
                                 </div>
                                 <div className="mentor-portal-hint">
-                                    Are you a Mentor? <a href="http://localhost:5174/auth">Join the Mentor Portal</a>
+                                    Are you a Mentor? <a href={mentorPortalUrl}>Join the Mentor Portal</a>
                                 </div>
                             </>
                         )}

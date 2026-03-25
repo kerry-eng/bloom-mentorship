@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Routes, Route, Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from './context/AuthContext'
 import Home from './pages/Home'
@@ -19,6 +20,8 @@ import EditProfile from './pages/EditProfile'
 import Footer from './components/Footer'
 import { MusicProvider } from './context/MusicContext'
 import { ThemeProvider, useTheme } from './context/ThemeContext'
+import { getMentorAppUrl } from './config/appUrls'
+import MentorDashboard from './pages/MentorDashboard'
 
 function App() {
     const { loading } = useAuth()
@@ -58,6 +61,10 @@ function App() {
                     <Route path="/edit-profile" element={
                         <ProtectedRoute><EditProfile /></ProtectedRoute>
                     } />
+                    <Route path="/mentor-dashboard" element={<MentorPortalRedirect />} />
+                    <Route path="/mentor" element={
+                        <ProtectedRoute mentorOnly><MentorDashboard /></ProtectedRoute>
+                    } />
                     <Route path="/session/:sessionId" element={<Session />} />
 
                     <Route path="*" element={<Navigate to="/" replace />} />
@@ -66,6 +73,14 @@ function App() {
             </MusicProvider>
         </ThemeProvider>
     )
+}
+
+function MentorPortalRedirect() {
+    useEffect(() => {
+        window.location.href = getMentorAppUrl('/dashboard')
+    }, [])
+
+    return null
 }
 
 function HomeLoader() {

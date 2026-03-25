@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from 'react'
 import { supabase } from '../supabase'
+import { getAppUrlForRole } from '../config/appUrls'
 
 const AuthContext = createContext({})
 
@@ -107,24 +108,22 @@ export function AuthProvider({ children }) {
         await supabase.auth.signOut()
     }
 
-    async function signInWithGoogle(role = 'client') {
-        const target = role === 'mentor' ? '/mentor-dashboard' : '/dashboard'
+    async function signInWithGoogle(role = 'client', redirectPath = '/dashboard') {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: `${window.location.origin}${target}`,
+                redirectTo: getAppUrlForRole(role, redirectPath),
                 data: { role }
             }
         })
         if (error) throw error
     }
 
-    async function signInWithFacebook(role = 'client') {
-        const target = role === 'mentor' ? '/mentor-dashboard' : '/dashboard'
+    async function signInWithFacebook(role = 'client', redirectPath = '/dashboard') {
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'facebook',
             options: {
-                redirectTo: `${window.location.origin}${target}`,
+                redirectTo: getAppUrlForRole(role, redirectPath),
                 data: { role }
             }
         })

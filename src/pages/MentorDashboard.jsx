@@ -96,7 +96,7 @@ export default function MentorDashboard() {
                     <div className="mentor-card">
                         <h2>
                             Current Schedule
-                            <Link to="/booking" className="btn-mentor btn-mentor-outline">Manage Slots</Link>
+                            <Link to="/edit-profile" className="btn-mentor btn-mentor-outline">Profile Settings</Link>
                         </h2>
                         <div className="session-list">
                             {sessions.length === 0 ? (

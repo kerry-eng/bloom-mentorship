@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "mentor:dev": "vite --config mentor-portal/vite.config.js",
     "build": "vite build",
+    "mentor:build": "vite build --config mentor-portal/vite.config.js",
     "preview": "vite preview"
   },
   "dependencies": {

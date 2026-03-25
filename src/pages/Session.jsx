@@ -6,10 +6,10 @@ import { useWebRTC } from '../hooks/useWebRTC'
 import VideoCallModal from '../components/VideoCallModal'
 import './Session.css'
 
-export default function Session() {
+export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
     const { sessionId } = useParams()
     const [searchParams] = useSearchParams()
-    const isMentor = searchParams.get('role') === 'mentor'
+    const isMentor = forceMentor || searchParams.get('role') === 'mentor'
 
     const { user } = useAuth()
     const navigate = useNavigate()
@@ -90,7 +90,7 @@ export default function Session() {
         } catch (e) {
             console.error(e)
         }
-        navigate(isMentor ? '/' : '/dashboard')
+        navigate(isMentor ? mentorHomePath : '/dashboard')
     }
 
     if (loading) return (
