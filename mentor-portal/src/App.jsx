@@ -1,67 +1,61 @@
-import { useEffect } from 'react'
-import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom'
-import { useAuth } from '../../src/context/AuthContext'
-import { ThemeProvider } from '../../src/context/ThemeContext'
-import ProtectedRoute from '../../src/components/ProtectedRoute'
-import MentorDashboard from '../../src/pages/MentorDashboard'
-import Session from '../../src/pages/Session'
-import EditProfile from '../../src/pages/EditProfile'
-import MentorAuth from './pages/MentorAuth'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import { useAuth } from './context/AuthContext'
+import Login from './pages/Login'
+import MentorDashboard from './pages/MentorDashboard'
+import AdminDashboard from './pages/AdminDashboard'
+import Mentors from './pages/Mentors'
+import ProtectedRoute from './components/ProtectedRoute'
+import DashboardLayout from './components/DashboardLayout'
+import { useState } from 'react'
 
-export default function App() {
-    const { loading } = useAuth()
-    const location = useLocation()
+function App() {
+  const { loading, signOut, user, isMentor, isSuperAdmin } = useAuth()
+  const [activeView, setActiveView] = useState('overview')
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-    if (loading) {
-        return (
-            <div className="mentor-portal-shell mentor-portal-loading">
-                <div className="spinner" />
-            </div>
-        )
-    }
-
+  if (loading) {
     return (
-        <ThemeProvider>
-            <div className={`mentor-portal-shell ${location.pathname === '/auth' ? 'mentor-auth-route' : ''}`}>
-                <Routes>
-                    <Route path="/" element={<MentorHomeGate />} />
-                    <Route path="/auth" element={<MentorAuth />} />
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute mentorOnly mentorRedirectTo="/auth" requireOnboarding={false}>
-                                <MentorDashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/session/:sessionId"
-                        element={
-                            <ProtectedRoute mentorOnly mentorRedirectTo="/auth" requireOnboarding={false}>
-                                <Session forceMentor mentorHomePath="/dashboard" />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/edit-profile"
-                        element={
-                            <ProtectedRoute mentorOnly mentorRedirectTo="/auth" requireOnboarding={false}>
-                                <EditProfile />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route path="*" element={<Navigate to="/" replace />} />
-                </Routes>
-            </div>
-        </ThemeProvider>
-    )
+      <div style={{
+        display: 'flex',
+        height: '100vh',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: '1rem',
+        background: '#fdf6f0',
+        fontFamily: 'sans-serif',
+        color: '#7c6d8a'
+      }}>
+        <div style={{ fontSize: '2rem' }}>🌸</div>
+        <p>Loading Bloom Admin...</p>
+      </div>
+      )
+  }
+
+  const authenticatedContent = (
+    <DashboardLayout
+      isMobileMenuOpen={isMobileMenuOpen}
+      setIsMobileMenuOpen={setIsMobileMenuOpen}
+      activeView={activeView}
+      setActiveView={setActiveView}
+      onProfileClick={() => setActiveView('settings')}
+    >
+      <Routes>
+        <Route path="/" element={<ProtectedRoute>{isSuperAdmin ? <AdminDashboard /> : <MentorDashboard activeView={activeView} setActiveView={setActiveView} />}</ProtectedRoute>} />
+        <Route path="/dashboard" element={<ProtectedRoute>{isSuperAdmin ? <AdminDashboard /> : <MentorDashboard activeView={activeView} setActiveView={setActiveView} />}</ProtectedRoute>} />
+        <Route path="/mentors" element={<ProtectedRoute><Mentors /></ProtectedRoute>} />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </DashboardLayout>
+  )
+
+  return (
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/auth" element={<Login />} />
+      <Route path="*" element={user ? authenticatedContent : <Navigate to="/auth" replace />} />
+    </Routes>
+  )
 }
 
-function MentorHomeGate() {
-    const { user, isMentor } = useAuth()
-
-    if (!user) return <Navigate to="/auth" replace />
-    if (isMentor) return <Navigate to="/dashboard" replace />
-
-    return <Navigate to="/auth" replace />
-}
+export default App

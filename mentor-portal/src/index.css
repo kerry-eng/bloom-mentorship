@@ -1,0 +1,263 @@
+@import url('./pages/Login.css');
+@import url('./pages/MentorDashboard.css');
+
+:root {
+  --color-lavender-light: #f3f0f5;
+  --color-lavender: #e6e0eb;
+  --color-lavender-deep: #7c6d8a;
+  --color-sage: #84a59d;
+  --color-sage-light: #f0f4f3;
+  --color-text: #2d2633;
+  --color-text-soft: #6e6575;
+  --text-primary: #2d2633;
+  --text-secondary: #6e6575;
+  --accent-gold: #c5a059;
+  --color-white: #ffffff;
+  
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 40px;
+  
+  --glass-bg: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-shadow: 0 20px 50px rgba(124, 109, 138, 0.1);
+  --glass-blur: blur(20px);
+  
+  --font-display: 'Playfair Display', serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* Base Workspace Layout */
+.workspace-page {
+  background: #fdf6f0;
+  min-height: 100vh;
+  color: var(--color-text);
+  font-family: var(--font-body);
+}
+
+.workspace-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+.workspace-sidebar {
+  width: 280px;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-right: 1px solid var(--glass-border);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.workspace-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.workspace-topbar-arch {
+  height: 80px;
+  padding: 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.topbar-right-arch {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+.action-items-arch {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.topbar-btn-circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(0,0,0,0.05);
+  background: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.topbar-btn-circle:hover {
+  background: #f8fafc;
+  transform: translateY(-2px);
+}
+
+.notification-dot {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+.user-profile-arch {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.5rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.user-profile-arch:hover {
+  background: rgba(0,0,0,0.02);
+}
+
+.avatar-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5d87ff, #a78bfa);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1rem;
+  box-shadow: 0 4px 12px rgba(93, 135, 255, 0.2);
+}
+
+.user-info-arch {
+  display: flex !important;
+  flex-direction: column !important;
+  line-height: 1.2 !important;
+  text-align: left !important;
+}
+
+.user-name-arch {
+  font-size: 0.9rem !important;
+  font-weight: 700 !important;
+  color: #1a1a1a !important;
+  display: block !important;
+}
+
+.user-role-arch {
+  font-size: 0.65rem !important;
+  font-weight: 800 !important;
+  color: #94a3b8 !important;
+  letter-spacing: 0.05em !important;
+  display: block !important;
+}
+
+.workspace-content {
+  padding: 3rem;
+  flex: 1;
+}
+
+/* Orbs & Decor */
+.mentor-theme-orbs {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.4;
+  animation: orb-float 20s infinite alternate ease-in-out;
+}
+
+@keyframes orb-float {
+  from { transform: translate(0, 0) scale(1); }
+  to { transform: translate(30px, -50px) scale(1.1); }
+}
+
+.orb-lavender { background: #dcd1e5; }
+.orb-sage { background: #c8dad5; }
+
+/* Grid & Panels */
+.mentor-grid {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: var(--glass-shadow);
+  padding: 2rem;
+}
+
+/* Typography & Links */
+.section-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-lavender-deep);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  font-family: var(--font-display);
+}
+
+/* Sidebar Nav */
+.sidebar-nav {
+  margin-top: 3rem;
+  flex: 1;
+}
+
+.nav-item-arch {
+  display: block;
+  width: 100%;
+  text-align: left;
+  background: none;
+  border: none;
+  padding: 0.75rem 0;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  color: var(--color-text-soft);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.nav-item-arch:hover, .nav-item-arch.active {
+  color: var(--color-text);
+  padding-left: 0.5rem;
+}
