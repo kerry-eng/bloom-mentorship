@@ -51,7 +51,7 @@ export default function AdminDashboard() {
         try {
             const { data, error } = await supabase
                 .from('sessions')
-                .select('*, profiles:client_id(full_name, email), mentor:mentor_id(full_name)')
+                .select('id, client_id, mentor_id, scheduled_at, status, price, session_label, session_type, profiles:client_id(full_name, email), mentor:mentor_id(full_name)')
                 .order('scheduled_at', { ascending: true })
 
             if (error) throw error

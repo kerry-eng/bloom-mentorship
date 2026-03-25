@@ -9,12 +9,19 @@ import DashboardLayout from './components/DashboardLayout'
 import { useState } from 'react'
 
 function App() {
-  const { loading, signOut, user, isMentor, isSuperAdmin } = useAuth()
+  const { loading, profileLoading, profile, user, isSuperAdmin } = useAuth()
   const [activeView, setActiveView] = useState('overview')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isProfileSheetOpen, setIsProfileSheetOpen] = useState(false)
+  const rolePending = Boolean(
+    user &&
+    profileLoading &&
+    !profile &&
+    !user?.user_metadata?.role &&
+    !user?.user_metadata?.is_super_admin
+  )
 
-  if (loading) {
+  if (loading || rolePending) {
     return (
       <div style={{
         display: 'flex',

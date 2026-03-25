@@ -1,26 +1,37 @@
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useRef, useState } from 'react'
 import { supabase } from '../supabase'
 
 const AuthContext = createContext({})
+const profileSelect = 'id, full_name, email, role, verification_status, is_super_admin, bio, phone, avatar_url, banner_url, created_at'
 
 export function AuthProvider({ children }) {
     const [user, setUser] = useState(null)
     const [profile, setProfile] = useState(null)
     const [loading, setLoading] = useState(true)
+    const [profileLoading, setProfileLoading] = useState(false)
+    const hasBootstrappedSession = useRef(false)
+    const profileRequestId = useRef(0)
 
     useEffect(() => {
         supabase.auth.getSession().then(({ data: { session } }) => {
+            hasBootstrappedSession.current = true
             setUser(session?.user ?? null)
+            setLoading(false)
+
             if (session?.user) fetchProfile(session.user.id, session.user)
-            else setLoading(false)
+            else setProfile(null)
         })
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+            if (event === 'INITIAL_SESSION' && hasBootstrappedSession.current) return
+
             setUser(session?.user ?? null)
+            setLoading(false)
+
             if (session?.user) fetchProfile(session.user.id, session.user)
             else {
                 setProfile(null)
-                setLoading(false)
+                setProfileLoading(false)
             }
         })
 
@@ -28,10 +39,13 @@ export function AuthProvider({ children }) {
     }, [])
 
     async function fetchProfile(userId, userData = null) {
+        const requestId = ++profileRequestId.current
+        setProfileLoading(true)
+
         try {
             const { data, error } = await supabase
                 .from('profiles')
-                .select('*')
+                .select(profileSelect)
                 .eq('id', userId)
                 .single()
             
@@ -48,30 +62,36 @@ export function AuthProvider({ children }) {
                             role: meta.role || 'client',
                             verification_status: meta.role === 'mentor' ? 'pending' : 'none'
                         })
-                        .select()
+                        .select(profileSelect)
                         .single()
                     
-                    if (!insertError) setProfile(newProfile)
+                    if (!insertError && profileRequestId.current === requestId) setProfile(newProfile)
                 }
             } else {
-                setProfile(data)
+                if (profileRequestId.current === requestId) setProfile(data)
                 
                 // Aggressive check: If metadata says mentor but profile says client, AUTO-HEAL
                 const meta = userData?.user_metadata || user?.user_metadata
                 if (meta?.role === 'mentor' && data.role === 'client') {
-                    const { data: updatedProfile } = await supabase
+                    supabase
                         .from('profiles')
                         .update({ role: 'mentor' })
                         .eq('id', userId)
-                        .select()
+                        .select(profileSelect)
                         .single()
-                    if (updatedProfile) setProfile(updatedProfile)
+                        .then(({ data: updatedProfile }) => {
+                            if (updatedProfile && profileRequestId.current === requestId) {
+                                setProfile(updatedProfile)
+                            }
+                        })
                 }
             }
         } catch (err) {
             console.error('Profile fetch error:', err)
         } finally {
-            setLoading(false)
+            if (profileRequestId.current === requestId) {
+                setProfileLoading(false)
+            }
         }
     }
 
@@ -128,6 +148,7 @@ export function AuthProvider({ children }) {
             user, 
             profile, 
             loading, 
+            profileLoading,
             signIn, 
             signUp,
             signOut, 

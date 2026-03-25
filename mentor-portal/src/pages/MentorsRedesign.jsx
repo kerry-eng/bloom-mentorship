@@ -42,7 +42,7 @@ export default function MentorsRedesign() {
 
         const { data, error } = await supabase
             .from('profiles')
-            .select('*')
+            .select('id, full_name, email, bio, expertise, role, verification_status, is_flagged, created_at')
             .eq('role', 'mentor')
             .order('created_at', { ascending: false })
 
@@ -399,26 +399,32 @@ export default function MentorsRedesign() {
 
                                     return (
                                         <article key={mentor.id} className="mentor-record-card">
-                                            <div className="mentor-record-card__identity">
-                                                <div className="mentor-record-card__avatar">
-                                                    {getInitials(mentor.full_name, mentor.email)}
-                                                </div>
-
-                                                <div className="mentor-record-card__copy">
-                                                    <div className="mentor-record-card__headline">
-                                                        <h3>{mentor.full_name || 'Incomplete Profile'}</h3>
-                                                        <span className={`mentor-status-badge mentor-status-badge--${status.toLowerCase()}`}>
-                                                            {status}
-                                                        </span>
+                                            <div className="mentor-record-card__top">
+                                                <div className="mentor-record-card__identity">
+                                                    <div className="mentor-record-card__avatar">
+                                                        {getInitials(mentor.full_name, mentor.email)}
                                                     </div>
-                                                    <p>{mentor.email}</p>
+
+                                                    <div className="mentor-record-card__copy">
+                                                        <div className="mentor-record-card__headline">
+                                                            <h3>{mentor.full_name || 'Incomplete Profile'}</h3>
+                                                            <span className={`mentor-status-badge mentor-status-badge--${status.toLowerCase()}`}>
+                                                                {status}
+                                                            </span>
+                                                        </div>
+                                                        <p>{mentor.email}</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div className="mentor-record-card__details">
+                                                <div className="mentor-record-card__section mentor-record-card__section--bio">
+                                                    <span>Bio</span>
                                                     <p className="mentor-record-card__bio">
                                                         {mentor.bio || 'No bio added yet.'}
                                                     </p>
                                                 </div>
-                                            </div>
 
-                                            <div className="mentor-record-card__meta">
                                                 <div className="mentor-record-card__section">
                                                     <span>Expertise</span>
                                                     <div className="mentor-record-tags">

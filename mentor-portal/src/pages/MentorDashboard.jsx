@@ -16,6 +16,15 @@ function isJoinable(dateStr) {
     return diff < 15 * 60000 && diff > -90 * 60000
 }
 
+function applySessionUpdate(session, updates) {
+    return { ...session, ...updates }
+}
+
+function getLatestCompletedSession(sessionList) {
+    const pastCompleted = sessionList.filter(session => session.status === 'completed')
+    return pastCompleted.length > 0 ? pastCompleted[pastCompleted.length - 1] : null
+}
+
 export default function MentorDashboard({ activeView = 'overview', setActiveView }) {
     const { user, profile, refreshProfile } = useAuth()
     const [sessions, setSessions] = useState([])
@@ -39,7 +48,11 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
     useEffect(() => {
         if (user) {
             fetchSessions()
-            fetchVotd()
+            const verseTimer = setTimeout(() => {
+                fetchVotd()
+            }, 1200)
+
+            return () => clearTimeout(verseTimer)
         }
     }, [user])
 
@@ -55,10 +68,20 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
 
     async function fetchVotd() {
         try {
+            const todayKey = `mentor_votd_${new Date().toISOString().slice(0, 10)}`
+            const cachedVerse = sessionStorage.getItem(todayKey)
+
+            if (cachedVerse) {
+                setVotd(JSON.parse(cachedVerse))
+                return
+            }
+
             const resp = await fetch('https://labs.bible.org/api/?passage=votd&type=json')
             const data = await resp.json()
             if (data && data[0]) {
-                setVotd({ text: data[0].text, reference: `${data[0].bookname} ${data[0].chapter}:${data[0].verse}` })
+                const nextVotd = { text: data[0].text, reference: `${data[0].bookname} ${data[0].chapter}:${data[0].verse}` }
+                setVotd(nextVotd)
+                sessionStorage.setItem(todayKey, JSON.stringify(nextVotd))
             }
         } catch (e) { /* fallback */ }
     }
@@ -68,15 +91,15 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         try {
             const { data: sessData, error } = await supabase
                 .from('sessions')
-                .select('*, profiles:client_id(full_name, email, avatar_url)')
+                .select('id, client_id, mentor_id, scheduled_at, status, price, session_label, session_type, notes, key_insights, next_steps, profiles:client_id(full_name, email, avatar_url)')
                 .eq('mentor_id', user.id)
                 .order('scheduled_at', { ascending: true })
             if (error) throw error
-            setSessions(sessData || [])
+            const nextSessions = sessData || []
+            setSessions(nextSessions)
 
-            const pastCompleted = (sessData || []).filter(s => s.status === 'completed')
-            if (pastCompleted.length > 0) {
-                const latest = pastCompleted[pastCompleted.length - 1]
+            const latest = getLatestCompletedSession(nextSessions)
+            if (latest) {
                 setActiveReflectionSession(latest)
                 setReflectionForm({
                     notes: latest.notes || '',
@@ -95,7 +118,9 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         setSaving(s => ({ ...s, [sessionId]: 'confirming' }))
         try {
             await supabase.from('sessions').update({ status: 'active' }).eq('id', sessionId)
-            await fetchSessions()
+            setSessions(currentSessions => currentSessions.map(session => (
+                session.id === sessionId ? applySessionUpdate(session, { status: 'active' }) : session
+            )))
         } catch (e) { console.error(e) }
         finally { setSaving(s => ({ ...s, [sessionId]: false })) }
     }
@@ -104,7 +129,21 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         setSaving(s => ({ ...s, [sessionId]: 'completing' }))
         try {
             await supabase.from('sessions').update({ status: 'completed' }).eq('id', sessionId)
-            await fetchSessions()
+            setSessions(currentSessions => {
+                const nextSessions = currentSessions.map(session => (
+                    session.id === sessionId ? applySessionUpdate(session, { status: 'completed' }) : session
+                ))
+                const latest = getLatestCompletedSession(nextSessions)
+                if (latest) {
+                    setActiveReflectionSession(latest)
+                    setReflectionForm({
+                        notes: latest.notes || '',
+                        key_insights: latest.key_insights || '',
+                        next_steps: latest.next_steps || ''
+                    })
+                }
+                return nextSessions
+            })
         } catch (e) { console.error(e) }
         finally { setSaving(s => ({ ...s, [sessionId]: false })) }
     }

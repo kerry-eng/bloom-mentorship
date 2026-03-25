@@ -3,9 +3,9 @@ import { useAuth } from '../context/AuthContext'
 import { getClientAppUrl } from '../config/appUrls'
 
 export default function ProtectedRoute({ children }) {
-    const { user, isMentor, loading } = useAuth()
+    const { user, isMentor, loading, profileLoading } = useAuth()
 
-    if (loading) return (
+    if (loading || (user && profileLoading && !isMentor)) return (
         <div style={{
             display: 'flex', height: '100vh', alignItems: 'center',
             justifyContent: 'center', flexDirection: 'column', gap: '1rem',
