@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+﻿import React, { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../supabase'
-import DashboardTopbar from '../components/DashboardTopbar'
 import VideoCallModal from '../components/VideoCallModal'
 import './MentorDashboard.css'
 
@@ -20,7 +18,6 @@ function isJoinable(dateStr) {
 
 export default function MentorDashboard({ activeView = 'overview', setActiveView }) {
     const { user, profile, refreshProfile } = useAuth()
-    const navigate = useNavigate()
     const [sessions, setSessions] = useState([])
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState({})
@@ -98,7 +95,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         setSaving(s => ({ ...s, [sessionId]: 'confirming' }))
         try {
             await supabase.from('sessions').update({ status: 'active' }).eq('id', sessionId)
-            await fetchAllData()
+            await fetchSessions()
         } catch (e) { console.error(e) }
         finally { setSaving(s => ({ ...s, [sessionId]: false })) }
     }
@@ -179,12 +176,10 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
     const completedSessions = sessions.filter(s => s.status === 'completed')
     const totalRevenue = completedSessions.reduce((acc, s) => acc + (s.price || 0), 0)
     const firstName = profile?.full_name?.split(' ')[0] || 'Mentor'
-    const viewTabs = [
-        { id: 'overview', label: 'Overview' },
-        { id: 'schedule', label: 'Schedule' },
-        { id: 'earnings', label: 'Earnings' },
-        { id: 'settings', label: 'Profile' },
-    ]
+    const memberSince = profile?.created_at
+        ? `${Math.floor((new Date() - new Date(profile.created_at)) / (1000 * 60 * 60 * 24 * 30))} months mentoring`
+        : 'New mentor'
+    const nextSession = upcoming[0]
     const summaryCards = [
         { label: 'Active sessions', value: upcoming.length },
         { label: 'Revenue', value: `KES ${totalRevenue.toLocaleString()}` },
@@ -200,7 +195,6 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
 
     const renderOverview = () => (
         <div className="overview-container-arch fade-in">
-            {/* Booking Alert Banner */}
             {pendingNew.length > 0 && (
                 <div className="booking-alert-banner">
                     <span className="alert-icon">📬</span>
@@ -208,115 +202,121 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                         <strong>{pendingNew.length} New Booking{pendingNew.length > 1 ? 's' : ''} Awaiting Confirmation</strong>
                         <p>A mentee has paid and is waiting for your confirmation.</p>
                     </div>
-                    <button className="btn-mentor-alert" onClick={() => setActiveView('schedule')}>View Schedule →</button>
+                    <button className="btn-mentor-alert" onClick={() => setActiveView('schedule')}>Open schedule</button>
                 </div>
             )}
 
-            {/* Banner & Profile Section */}
-            <div className="profile-header-arch">
-                <div className="hero-banner-arch" onClick={() => bannerInputRef.current?.click()}>
-                    <img src={profile?.banner_url || "https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&q=80"} alt="Banner" className="arch-banner-img" />
-                    {uploading.banner && <div className="upload-overlay-arch">Uploading...</div>}
+            <section className="mentor-overview-hero">
+                <div className="mentor-overview-media">
+                    <div className="hero-banner-arch" onClick={() => bannerInputRef.current?.click()}>
+                        <img src={profile?.banner_url || "https://images.unsplash.com/photo-1542435503-956c469947f6?auto=format&fit=crop&q=80"} alt="Banner" className="arch-banner-img" />
+                        <div className="mentor-overview-badges">
+                            <span className={`mentor-status-pill ${isVerified ? 'verified' : 'pending'}`}>
+                                {isVerified ? 'Verified mentor' : 'Review pending'}
+                            </span>
+                            <span className="mentor-status-pill subtle">{memberSince}</span>
+                            <span className="mentor-status-pill subtle">{upcoming.length} active sessions</span>
+                        </div>
+                        {uploading.banner && <div className="upload-overlay-arch">Uploading...</div>}
+                    </div>
+                    <div className="profile-overlay-circle" onClick={() => avatarInputRef.current?.click()}>
+                        <img src={profile?.avatar_url || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80"} alt="Avatar" className="arch-avatar-img" />
+                        <div className="avatar-edit-hint"><span>CHANGE</span></div>
+                        {uploading.avatar && <div className="upload-overlay-arch">...</div>}
+                    </div>
                 </div>
-                <div className="profile-overlay-circle" onClick={() => avatarInputRef.current?.click()}>
-                    <img src={profile?.avatar_url || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80"} alt="Avatar" className="arch-avatar-img" />
-                    <div className="avatar-edit-hint"><span>CHANGE</span></div>
-                    {uploading.avatar && <div className="upload-overlay-arch">...</div>}
-                </div>
-            </div>
-            <input type="file" ref={bannerInputRef} onChange={e => handleMediaUpload(e, 'banner')} style={{ display: 'none' }} accept="image/*" />
-            <input type="file" ref={avatarInputRef} onChange={e => handleMediaUpload(e, 'avatar')} style={{ display: 'none' }} accept="image/*" />
+                <input type="file" ref={bannerInputRef} onChange={e => handleMediaUpload(e, 'banner')} style={{ display: 'none' }} accept="image/*" />
+                <input type="file" ref={avatarInputRef} onChange={e => handleMediaUpload(e, 'avatar')} style={{ display: 'none' }} accept="image/*" />
 
-            {/* Greeting Row */}
-            <div className="bio-row-arch">
-                <div className="mentor-welcome">
+                <div className="mentor-overview-copy">
+                    <span className="mentor-overview-kicker">Mentor profile hub</span>
+                    <h2>{profile?.full_name || 'Mentor profile'}</h2>
+                    <p>{profile?.bio || 'Shape your public profile, manage live sessions, and keep your mentoring rhythm visible at a glance.'}</p>
+
                     {!isVerified && (
                         <div className="verification-notice-arch">
-                            <span>🕒 Your Mentor Profile is currently pending administrative review. We\'ll notify you once you\'re cleared to host sessions.</span>
+                            <span>🕒 Your mentor profile is still under review. You can keep refining your profile while you wait.</span>
                         </div>
                     )}
-                    <h1>Welcome back, {profile?.full_name?.split(' ')[0] || 'Mentor'} 🌸</h1>
-                    <p className="bio-p">{profile?.bio || 'Empowering growth and guiding the next generation.'}</p>
-                </div>
-                <div className="bio-stats-group">
-                    <div className="stat-unit">
-                        <span className="stat-value">{upcoming.length}</span>
-                        <span className="stat-label">Active</span>
-                    </div>
-                    <div className="stat-unit">
-                        <span className="stat-value">KES {totalRevenue.toLocaleString()}</span>
-                        <span className="stat-label">Earnings</span>
-                    </div>
-                </div>
-                <div className="bio-actions">
-                    <button className="join-demo-btn-arch" onClick={() => setActiveVideoSession({ profiles: { full_name: 'Mentee Demo' }, session_label: 'Instant Meeting' })}>
-                        📅 INSTANT MEETING
-                    </button>
-                    <button className="edit-profile-btn-arch" onClick={() => setActiveView('settings')}>EDIT PROFILE</button>
-                </div>
-            </div>
 
-            {/* Info Cards */}
-            <div className="info-cards-row-arch">
-                <div className="arch-card info-card">
-                    <span className="card-label-arch">Member Since:</span>
-                    <div className="card-content-arch">
-                        <span className="icon-arch">🕒</span>
-                        <span className="value-arch">
-                            {profile?.created_at ? `${Math.floor((new Date() - new Date(profile.created_at)) / (1000 * 60 * 60 * 24 * 30))} months ago` : 'New Mentor'}
-                        </span>
+                    <div className="mentor-overview-actions">
+                        <button type="button" className="mentor-shell-action primary" onClick={() => setActiveView('settings')}>
+                            Edit profile
+                        </button>
+                        <button type="button" className="mentor-shell-action" onClick={() => setActiveView('schedule')}>
+                            View schedule
+                        </button>
+                        <button
+                            type="button"
+                            className="mentor-shell-action ghost"
+                            onClick={() => setActiveVideoSession({ profiles: { full_name: 'Mentee Demo' }, session_label: 'Instant Meeting' })}
+                        >
+                            Instant meeting
+                        </button>
                     </div>
-                </div>
-                <div className="arch-card info-card text-center">
-                    <span className="card-label-arch">Your Energy:</span>
-                    <div className="card-content-arch mood-selector-arch">
-                        {['🔋', '🧘', '🚀', '☕'].map(m => (
-                            <button key={m} className={`mood-btn-arch ${selectedMood === m ? 'active' : ''}`} onClick={() => setSelectedMood(m)}>{m}</button>
-                        ))}
-                    </div>
-                </div>
-                <div className="arch-card info-card verse-card">
-                    <span className="card-label-arch">Wisdom of the Day:</span>
-                    <div className="verse-content-arch">
-                        <p className="verse-text">"{votd.text}"</p>
-                        <span className="verse-ref">— {votd.reference}</span>
-                    </div>
-                </div>
-            </div>
 
-            {/* Bento Row */}
-            <div className="bento-row-arch">
-                <div className="arch-card schedule-card-arch">
-                    <div className="schedule-header">
-                        <div className="date-badge-arch">
-                            <span className="month">{upcoming[0] ? new Date(upcoming[0].scheduled_at).toLocaleString('default', { month: 'short' }).toUpperCase() : '---'}</span>
-                            <span className="day">{upcoming[0] ? new Date(upcoming[0].scheduled_at).getDate() : '--'}</span>
+                    <div className="mentor-overview-meta">
+                        <div className="mentor-overview-meta-card">
+                            <span>Member since</span>
+                            <strong>{memberSince}</strong>
                         </div>
-                        <h3>Next Up</h3>
-                    </div>
-                    <div className="schedule-body">
-                        {loading ? <p className="empty-msg-arch">Loading...</p> : upcoming.length === 0 ? (
-                            <p className="empty-msg-arch">No upcoming sessions.</p>
-                        ) : (
-                            <div className="mini-session">
-                                <strong>With {upcoming[0].profiles?.full_name || 'Mentee'}</strong>
-                                <span>{upcoming[0].session_label || upcoming[0].session_type}</span>
-                                <span>{new Date(upcoming[0].scheduled_at).toLocaleString()}</span>
-                            </div>
-                        )}
-                        <button className="book-btn-arch" onClick={() => setActiveView('schedule')}>View Full Schedule</button>
+                        <div className="mentor-overview-meta-card">
+                            <span>Contact</span>
+                            <strong>{profile?.phone || 'Add phone number'}</strong>
+                        </div>
+                        <div className="mentor-overview-meta-card">
+                            <span>Revenue</span>
+                            <strong>KES {totalRevenue.toLocaleString()}</strong>
+                        </div>
                     </div>
                 </div>
+            </section>
 
-                <div className="arch-card reflection-card-arch">
-                    <div className="reflection-header">
-                        <h3>Session Notes</h3>
-                        <span className="subtitle-arch">Mentee: {activeReflectionSession?.profiles?.full_name || 'No past session yet'}</span>
+            <section className="mentor-overview-grid">
+                <article className="arch-card overview-feature-card overview-feature-card--next">
+                    <div className="overview-feature-header">
+                        <div>
+                            <span className="overview-feature-kicker">Next session</span>
+                            <h3>{nextSession ? nextSession.session_label || nextSession.session_type : 'No upcoming session'}</h3>
+                        </div>
+                        <span className="overview-feature-tag">{nextSession ? nextSession.status.toUpperCase() : 'CLEAR'}</span>
+                    </div>
+                    {loading ? <p className="empty-msg-arch">Loading...</p> : nextSession ? (
+                        <div className="overview-next-session">
+                            <div className="overview-next-session__row">
+                                <span>Mentee</span>
+                                <strong>{nextSession.profiles?.full_name || 'Mentee'}</strong>
+                            </div>
+                            <div className="overview-next-session__row">
+                                <span>When</span>
+                                <strong>{new Date(nextSession.scheduled_at).toLocaleString()}</strong>
+                            </div>
+                            <div className="overview-next-session__row">
+                                <span>Value</span>
+                                <strong>KES {(nextSession.price || 0).toLocaleString()}</strong>
+                            </div>
+                            <button className="book-btn-arch" onClick={() => setActiveView('schedule')}>Manage session</button>
+                        </div>
+                    ) : (
+                        <div className="overview-empty-state">
+                            <p>No active session is lined up yet.</p>
+                            <button className="book-btn-arch" onClick={() => setActiveView('schedule')}>Open schedule</button>
+                        </div>
+                    )}
+                </article>
+
+                <article className="arch-card overview-feature-card overview-feature-card--notes">
+                    <div className="overview-feature-header">
+                        <div>
+                            <span className="overview-feature-kicker">Session notes</span>
+                            <h3>{activeReflectionSession?.profiles?.full_name || 'Reflection space'}</h3>
+                        </div>
+                        <span className="overview-feature-tag subtle">Private</span>
                     </div>
                     <div className="reflection-body-arch">
                         <textarea
                             className="reflection-textarea-arch"
-                            placeholder="Key takeaways from your last session..."
+                            placeholder="Capture the strongest takeaway from your latest session."
                             value={reflectionForm.notes}
                             onChange={e => setReflectionForm(prev => ({ ...prev, notes: e.target.value }))}
                         />
@@ -324,8 +324,46 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                             {saveStatus === 'saving' ? 'SAVING...' : saveStatus === 'saved' ? 'SAVED ✓' : 'SAVE NOTES'}
                         </button>
                     </div>
-                </div>
-            </div>
+                </article>
+
+                <article className="arch-card overview-feature-card">
+                    <div className="overview-feature-header">
+                        <div>
+                            <span className="overview-feature-kicker">Daily pulse</span>
+                            <h3>Your energy</h3>
+                        </div>
+                        <span className="overview-feature-tag subtle">{selectedMood}</span>
+                    </div>
+                    <div className="card-content-arch mood-selector-arch mood-selector-arch--expanded">
+                        {['🔋', '🧘', '🚀', '☕'].map(m => (
+                            <button key={m} className={`mood-btn-arch ${selectedMood === m ? 'active' : ''}`} onClick={() => setSelectedMood(m)}>{m}</button>
+                        ))}
+                    </div>
+                    <div className="overview-mini-stats">
+                        <div>
+                            <span>Pending</span>
+                            <strong>{pendingNew.length}</strong>
+                        </div>
+                        <div>
+                            <span>Completed</span>
+                            <strong>{completedSessions.length}</strong>
+                        </div>
+                    </div>
+                </article>
+
+                <article className="arch-card overview-feature-card overview-feature-card--wisdom">
+                    <div className="overview-feature-header">
+                        <div>
+                            <span className="overview-feature-kicker">Wisdom of the day</span>
+                            <h3>Daily grounding</h3>
+                        </div>
+                    </div>
+                    <div className="verse-content-arch">
+                        <p className="verse-text">"{votd.text}"</p>
+                        <span className="verse-ref">— {votd.reference}</span>
+                    </div>
+                </article>
+            </section>
         </div>
     )
 
@@ -333,8 +371,9 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         <div className="workspace-module fade-in" style={{ padding: '1.5rem 4rem 3rem' }}>
             <div className="module-header-mentor">
                 <div>
+                    <span className="module-kicker">Session desk</span>
                     <h2>My Schedule</h2>
-                    <p className="subtitle-arch">All your mentee bookings, past and upcoming.</p>
+                    <p className="subtitle-arch">Everything upcoming, active, or already wrapped.</p>
                 </div>
                 {pendingNew.length > 0 && (
                     <div className="pending-badge-large">
@@ -437,6 +476,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
             <div className="workspace-module fade-in" style={{ padding: '1.5rem 4rem 3rem' }}>
                 <div className="module-header-mentor">
                     <div>
+                        <span className="module-kicker">Revenue desk</span>
                         <h2>My Earnings</h2>
                         <p className="subtitle-arch">Revenue from your completed sessions.</p>
                     </div>
@@ -527,6 +567,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         <div className="workspace-module fade-in" style={{ padding: '1.5rem 4rem 3rem' }}>
             <div className="module-header-mentor">
                 <div>
+                    <span className="module-kicker">Profile studio</span>
                     <h2>Profile Settings</h2>
                     <p className="subtitle-arch">Update your public mentor profile.</p>
                 </div>
@@ -594,10 +635,29 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                 <div className="mentor-shell-copy">
                     <span className="section-label">Mentor portal</span>
                     <h1>{getGreeting()}, {firstName}</h1>
-                    <p>Manage sessions, earnings, and profile settings from one calm workspace.</p>
+                    <p>Run sessions, revenue, and profile updates from one composed workspace that feels like your practice, not a spreadsheet.</p>
+                    <div className="mentor-shell-highlights">
+                        <span className={`mentor-shell-highlight ${isVerified ? 'verified' : 'pending'}`}>
+                            {isVerified ? 'Verified mentor' : 'Review pending'}
+                        </span>
+                        <span className="mentor-shell-highlight">KES {totalRevenue.toLocaleString()} earned</span>
+                    </div>
                 </div>
 
                 <div className="mentor-shell-panel">
+                    <div className="mentor-shell-profile">
+                        <img
+                            src={profile?.avatar_url || "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80"}
+                            alt="Mentor avatar"
+                            className="mentor-shell-profile__avatar"
+                        />
+                        <div>
+                            <span className="mentor-shell-profile__label">Dashboard owner</span>
+                            <strong>{profile?.full_name || 'Mentor profile'}</strong>
+                            <p>{memberSince}</p>
+                        </div>
+                    </div>
+
                     <div className="mentor-shell-stats">
                         {summaryCards.map(card => (
                             <div key={card.label} className="mentor-shell-stat">
@@ -620,19 +680,6 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                     </div>
                 </div>
             </header>
-
-            <nav className="mentor-view-switcher" aria-label="Mentor dashboard views">
-                {viewTabs.map(tab => (
-                    <button
-                        key={tab.id}
-                        type="button"
-                        className={`mentor-view-switcher__tab ${activeView === tab.id ? 'active' : ''}`}
-                        onClick={() => setActiveView(tab.id)}
-                    >
-                        {tab.label}
-                    </button>
-                ))}
-            </nav>
 
             <main className="dashboard-main-mentor dashboard-main-mentor--modern" style={{ borderTop: 'none' }}>
                 {renderView()}
