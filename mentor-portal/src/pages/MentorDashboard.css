@@ -159,7 +159,11 @@
     letter-spacing: 0.1em;
 }
 
-.bio-actions {}
+.bio-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
 
 .edit-profile-btn-arch {
     background: #5d87ff;
@@ -1721,6 +1725,7 @@
 }
 
 .join-demo-btn-arch {
+    display: none;
     background: #7c6d8a;
     color: white;
     border: none;
