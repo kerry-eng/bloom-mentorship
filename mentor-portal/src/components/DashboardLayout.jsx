@@ -1,8 +1,9 @@
 import React from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import DashboardTopbar from './DashboardTopbar';
+import MobileNavbar from './MobileNavbar';
 
-export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobileMenuOpen, activeView, setActiveView, onProfileClick }) {
+export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobileMenuOpen, activeView, setActiveView, onProfileClick, isSuperAdmin }) {
     return (
         <div className={`workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
             <div className="workspace-container">
@@ -30,6 +31,12 @@ export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobil
                     <div className="sidebar-overlay" onClick={() => setIsMobileMenuOpen(false)}></div>
                 )}
             </div>
+
+            <MobileNavbar
+                activeView={activeView}
+                setActiveView={setActiveView}
+                isSuperAdmin={isSuperAdmin}
+            />
         </div>
     );
 }

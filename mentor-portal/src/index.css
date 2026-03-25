@@ -1,5 +1,6 @@
 @import url('./pages/Login.css');
 @import url('./pages/MentorDashboard.css');
+@import url('./components/MobileNavbar.css');
 
 :root {
   --color-lavender-light: #f3f0f5;
@@ -170,6 +171,14 @@
   flex: 1;
 }
 
+.show-mobile {
+  display: none !important;
+}
+
+.hide-mobile {
+  display: block;
+}
+
 /* Orbs & Decor */
 .mentor-theme-orbs {
   position: fixed;
@@ -260,4 +269,112 @@
 .nav-item-arch:hover, .nav-item-arch.active {
   color: var(--color-text);
   padding-left: 0.5rem;
+}
+
+.mobile-brand-arch {
+  display: none;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.mobile-brand-mark {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #7c6d8a, #c7b9d9);
+  color: white;
+  font-size: 1rem;
+  box-shadow: 0 10px 24px rgba(124, 109, 138, 0.2);
+}
+
+.mobile-brand-copy {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.05;
+}
+
+.mobile-brand-title {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: var(--color-text);
+}
+
+.mobile-brand-subtitle {
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+}
+
+.mobile-action-chip {
+  display: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: white;
+  color: var(--color-text);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(124, 109, 138, 0.08);
+}
+
+.mobile-action-chip__icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+@media (max-width: 768px) {
+  .show-mobile {
+    display: flex !important;
+  }
+
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .workspace-container {
+    display: block;
+    min-height: 100vh;
+  }
+
+  .workspace-sidebar {
+    display: none;
+  }
+
+  .workspace-main {
+    min-height: 100vh;
+  }
+
+  .workspace-topbar-arch {
+    height: auto;
+    min-height: 72px;
+    padding: 0.85rem 1rem;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  .topbar-left-arch {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .topbar-right-arch {
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+
+  .workspace-content {
+    padding: 1rem 1rem calc(7rem + env(safe-area-inset-bottom));
+  }
+
+  .mentor-theme-orbs {
+    opacity: 0.55;
+  }
 }

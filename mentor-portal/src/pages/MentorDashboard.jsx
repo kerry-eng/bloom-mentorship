@@ -469,36 +469,38 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
 
                 <div className="arch-card">
                     <span className="card-label-arch">Session Ledger</span>
-                    <table className="earnings-table">
-                        <thead>
-                            <tr>
-                                <th>Mentee</th>
-                                <th>Session</th>
-                                <th>Date</th>
-                                <th>Status</th>
-                                <th>Amount</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {sessions.length === 0 ? (
-                                <tr><td colSpan={5} style={{ textAlign: 'center', color: '#94a3b8' }}>No sessions found.</td></tr>
-                            ) : [...sessions].sort((a,b) => new Date(b.scheduled_at) - new Date(a.scheduled_at)).map(s => (
-                                <tr key={s.id}>
-                                    <td>{s.profiles?.full_name || 'Mentee'}</td>
-                                    <td>{s.session_label || s.session_type}</td>
-                                    <td>{new Date(s.scheduled_at).toLocaleDateString()}</td>
-                                    <td><span className={`status-badge ${s.status}`}>{s.status.toUpperCase()}</span></td>
-                                    <td className="amount-cell">KES {(s.price || 0).toLocaleString()}</td>
+                    <div className="table-scroll-arch">
+                        <table className="earnings-table">
+                            <thead>
+                                <tr>
+                                    <th>Mentee</th>
+                                    <th>Session</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Amount</th>
                                 </tr>
-                            ))}
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <td colSpan={4} className="total-label">Projected Total</td>
-                                <td className="amount-cell total-value">KES {sessions.reduce((acc, s) => acc + (s.price || 0), 0).toLocaleString()}</td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                            </thead>
+                            <tbody>
+                                {sessions.length === 0 ? (
+                                    <tr><td colSpan={5} style={{ textAlign: 'center', color: '#94a3b8' }}>No sessions found.</td></tr>
+                                ) : [...sessions].sort((a,b) => new Date(b.scheduled_at) - new Date(a.scheduled_at)).map(s => (
+                                    <tr key={s.id}>
+                                        <td>{s.profiles?.full_name || 'Mentee'}</td>
+                                        <td>{s.session_label || s.session_type}</td>
+                                        <td>{new Date(s.scheduled_at).toLocaleDateString()}</td>
+                                        <td><span className={`status-badge ${s.status}`}>{s.status.toUpperCase()}</span></td>
+                                        <td className="amount-cell">KES {(s.price || 0).toLocaleString()}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td colSpan={4} className="total-label">Projected Total</td>
+                                    <td className="amount-cell total-value">KES {sessions.reduce((acc, s) => acc + (s.price || 0), 0).toLocaleString()}</td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
                 </div>
             </div>
         )

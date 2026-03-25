@@ -38,6 +38,7 @@ function App() {
       setIsMobileMenuOpen={setIsMobileMenuOpen}
       activeView={activeView}
       setActiveView={setActiveView}
+      isSuperAdmin={isSuperAdmin}
       onProfileClick={() => setActiveView('settings')}
     >
       <Routes>

@@ -634,6 +634,140 @@
     .mentor-dashboard-container { padding: 1rem 1.5rem 3rem; }
 }
 
+@media (max-width: 640px) {
+    .overview-container-arch,
+    .mentor-dashboard-container,
+    .workspace-module {
+        padding: 1rem 1rem 7rem !important;
+    }
+
+    .profile-header-arch {
+        margin-bottom: 3.5rem;
+    }
+
+    .hero-banner-arch {
+        height: 220px;
+    }
+
+    .profile-overlay-circle {
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -52px;
+        width: 132px;
+        height: 132px;
+        border-width: 7px;
+    }
+
+    .bio-row-arch {
+        margin-top: 1.25rem;
+        margin-bottom: 2rem;
+        gap: 1rem;
+    }
+
+    .mentor-welcome h1 {
+        font-size: 1.6rem;
+        line-height: 1.12;
+        white-space: normal;
+    }
+
+    .bio-p {
+        font-size: 0.88rem;
+    }
+
+    .bio-stats-group {
+        justify-content: flex-start;
+        gap: 2rem;
+    }
+
+    .bio-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .edit-profile-btn-arch,
+    .join-demo-btn-arch,
+    .book-btn-arch,
+    .save-reflection-btn-arch,
+    .btn-mentor,
+    .btn-mentor-save,
+    .btn-mentor-cancel {
+        width: 100%;
+        justify-content: center;
+        box-sizing: border-box;
+    }
+
+    .info-cards-row-arch,
+    .bento-row-arch,
+    .mentor-stats-row,
+    .mentor-grid,
+    .earnings-stats-row,
+    .settings-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .arch-card {
+        padding: 1.25rem;
+        border-radius: 18px;
+    }
+
+    .schedule-card-arch {
+        min-height: auto;
+    }
+
+    .schedule-header {
+        align-items: flex-start;
+        gap: 1rem;
+        flex-wrap: wrap;
+    }
+
+    .session-card-mentor,
+    .session-card-arch {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .session-card-right {
+        align-items: flex-start;
+        width: 100%;
+    }
+
+    .session-btns {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+
+    .session-btns .btn-mentor {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .settings-form-arch {
+        padding: 1.25rem;
+        gap: 1rem;
+    }
+
+    .settings-submit-row {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .revenue-chart-container,
+    .earnings-ledger-card {
+        padding: 1.25rem;
+    }
+
+    .table-scroll-arch {
+        overflow-x: auto;
+        width: 100%;
+    }
+
+    .table-scroll-arch .earnings-table {
+        min-width: 560px;
+    }
+}
+
 /* ============================================
    BOOKING ALERTS & BANNER
 ============================================ */
