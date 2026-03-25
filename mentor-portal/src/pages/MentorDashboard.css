@@ -448,10 +448,22 @@
 ============================================ */
 .mentor-dashboard-container {
     padding: 1.5rem 4rem 3rem;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    box-sizing: border-box;
 }
 
 .mentor-header {
     margin-bottom: 2.5rem;
+}
+
+.mentor-header--admin {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
 }
 
 .mentor-welcome h1 {
@@ -464,6 +476,149 @@
     font-size: 0.95rem;
     color: #64748b;
     margin-top: 0.4rem;
+}
+
+.mentor-shell-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1.2fr);
+    gap: 1.5rem;
+    align-items: stretch;
+    margin-bottom: 1.5rem;
+}
+
+.mentor-shell-copy {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.75rem;
+}
+
+.mentor-shell-copy h1 {
+    font-size: 2.4rem;
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    color: #1a1a1a;
+    margin: 0;
+}
+
+.mentor-shell-copy p {
+    margin: 0;
+    max-width: 54ch;
+    font-size: 1rem;
+    color: #64748b;
+    line-height: 1.6;
+}
+
+.mentor-shell-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 24px;
+    box-shadow: 0 18px 50px rgba(15, 23, 42, 0.05);
+    backdrop-filter: blur(18px);
+}
+
+.mentor-shell-stats {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
+}
+
+.mentor-shell-stat {
+    border-radius: 18px;
+    background: linear-gradient(180deg, rgba(248, 250, 252, 0.92), rgba(255, 255, 255, 0.96));
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    padding: 0.95rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mentor-shell-stat span {
+    font-size: 0.64rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.mentor-shell-stat strong {
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #1a1a1a;
+}
+
+.mentor-shell-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: flex-end;
+}
+
+.mentor-shell-action {
+    appearance: none;
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    background: white;
+    color: #1a1a1a;
+    padding: 0.85rem 1.1rem;
+    border-radius: 14px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    letter-spacing: 0.03em;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.mentor-shell-action:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 24px rgba(15, 23, 42, 0.08);
+}
+
+.mentor-shell-action.primary {
+    background: linear-gradient(135deg, #7c6d8a 0%, #5d87ff 100%);
+    color: white;
+    border-color: transparent;
+}
+
+.mentor-shell-action.ghost {
+    background: #f8fafc;
+    color: #475569;
+}
+
+.mentor-view-switcher {
+    display: inline-flex;
+    gap: 0.35rem;
+    padding: 0.35rem;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    border-radius: 999px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.04);
+    margin-bottom: 1.5rem;
+}
+
+.mentor-view-switcher__tab {
+    appearance: none;
+    border: 0;
+    background: transparent;
+    color: #64748b;
+    padding: 0.8rem 1.15rem;
+    border-radius: 999px;
+    font-size: 0.82rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.mentor-view-switcher__tab.active {
+    background: #1a1a1a;
+    color: white;
+    transform: translateY(-1px);
 }
 
 .mentor-overview {}
@@ -503,6 +658,40 @@
     display: grid;
     grid-template-columns: 2fr 1fr;
     gap: 2rem;
+    align-items: start;
+}
+
+.mentor-admin-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.mentor-admin-meta {
+    min-width: 120px;
+    padding: 0.85rem 1rem;
+    border-radius: 18px;
+    background: rgba(248, 250, 252, 0.95);
+    border: 1px solid rgba(226, 232, 240, 0.95);
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.mentor-admin-meta span {
+    font-size: 0.64rem;
+    font-weight: 800;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+.mentor-admin-meta strong {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #1a1a1a;
 }
 
 .mentor-card {
@@ -632,6 +821,17 @@
     .mentor-stats-row { grid-template-columns: repeat(2, 1fr); }
     .mentor-grid { grid-template-columns: 1fr; }
     .mentor-dashboard-container { padding: 1rem 1.5rem 3rem; }
+    .mentor-shell-header { grid-template-columns: 1fr; }
+    .mentor-shell-copy h1 { font-size: 2rem; }
+    .mentor-shell-actions,
+    .mentor-admin-actions {
+        justify-content: flex-start;
+    }
+    .mentor-view-switcher {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 0.2rem;
+    }
 }
 
 @media (max-width: 640px) {

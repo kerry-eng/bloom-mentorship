@@ -11,6 +11,7 @@ export default function AdminDashboard() {
     const [mentors, setMentors] = useState([])
     const [loading, setLoading] = useState(true)
     const [saving, setSaving] = useState({})
+    const [lastSyncedAt, setLastSyncedAt] = useState(null)
 
     useEffect(() => {
         if (!isSuperAdmin) {
@@ -35,6 +36,7 @@ export default function AdminDashboard() {
 
             if (error) throw error
             setSessions(data || [])
+            setLastSyncedAt(new Date())
         } catch (e) {
             console.error('Error fetching ALL sessions:', e)
         } finally {
@@ -52,6 +54,12 @@ export default function AdminDashboard() {
         } finally {
             setSaving(s => ({ ...s, [sessionId]: false }))
         }
+    }
+
+    const handleRefresh = () => {
+        setLoading(true)
+        fetchAllSessions()
+        fetchAllMentors()
     }
 
     const today = new Date()
@@ -138,13 +146,32 @@ export default function AdminDashboard() {
     )
 
     return (
-        <div className="mentor-dashboard-container">
-            <header className="mentor-header">
+        <div className="mentor-dashboard-container mentor-dashboard-container--admin">
+            <header className="mentor-header mentor-header--admin">
                 <div className="mentor-welcome">
-                    <h1>Super Admin Overview</h1>
-                    <p>Command center for the Bloom Mentorship platform.</p>
+                    <span className="section-label">Super admin</span>
+                    <h1>Command center</h1>
+                    <p>Monitor assignments, mentors, and platform health from one place.</p>
+                </div>
+
+                <div className="mentor-admin-actions">
+                    <div className="mentor-admin-meta">
+                        <span>Outstanding</span>
+                        <strong>{stats.pending}</strong>
+                    </div>
+                    <div className="mentor-admin-meta">
+                        <span>Last sync</span>
+                        <strong>{lastSyncedAt ? lastSyncedAt.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Pending'}</strong>
+                    </div>
+                    <button type="button" className="mentor-shell-action primary" onClick={handleRefresh}>
+                        Refresh data
+                    </button>
+                    <button type="button" className="mentor-shell-action ghost" onClick={() => navigate('/mentors')}>
+                        Open directory
+                    </button>
                 </div>
             </header>
+
             {renderOverview()}
         </div>
     )

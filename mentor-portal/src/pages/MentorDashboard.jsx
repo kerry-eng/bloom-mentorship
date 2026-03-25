@@ -178,6 +178,23 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
     const pendingNew = sessions.filter(s => s.status === 'paid' || s.status === 'pending')
     const completedSessions = sessions.filter(s => s.status === 'completed')
     const totalRevenue = completedSessions.reduce((acc, s) => acc + (s.price || 0), 0)
+    const firstName = profile?.full_name?.split(' ')[0] || 'Mentor'
+    const viewTabs = [
+        { id: 'overview', label: 'Overview' },
+        { id: 'schedule', label: 'Schedule' },
+        { id: 'earnings', label: 'Earnings' },
+        { id: 'settings', label: 'Profile' },
+    ]
+    const summaryCards = [
+        { label: 'Active sessions', value: upcoming.length },
+        { label: 'Revenue', value: `KES ${totalRevenue.toLocaleString()}` },
+        { label: 'Pending bookings', value: pendingNew.length },
+    ]
+
+    const handleRefresh = () => {
+        fetchSessions()
+        fetchVotd()
+    }
 
     // ---------- VIEWS ----------
 
@@ -573,7 +590,51 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
 
     return (
         <div className="mentor-dashboard-page-arch">
-            <main className="dashboard-main-mentor" style={{ borderTop: 'none' }}>
+            <header className="mentor-shell-header">
+                <div className="mentor-shell-copy">
+                    <span className="section-label">Mentor portal</span>
+                    <h1>{getGreeting()}, {firstName}</h1>
+                    <p>Manage sessions, earnings, and profile settings from one calm workspace.</p>
+                </div>
+
+                <div className="mentor-shell-panel">
+                    <div className="mentor-shell-stats">
+                        {summaryCards.map(card => (
+                            <div key={card.label} className="mentor-shell-stat">
+                                <span>{card.label}</span>
+                                <strong>{card.value}</strong>
+                            </div>
+                        ))}
+                    </div>
+
+                    <div className="mentor-shell-actions">
+                        <button type="button" className="mentor-shell-action primary" onClick={() => setActiveVideoSession({ profiles: { full_name: 'Mentee Demo' }, session_label: 'Instant Meeting' })}>
+                            Instant meeting
+                        </button>
+                        <button type="button" className="mentor-shell-action" onClick={() => setActiveView('schedule')}>
+                            Open schedule
+                        </button>
+                        <button type="button" className="mentor-shell-action ghost" onClick={handleRefresh}>
+                            Refresh
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <nav className="mentor-view-switcher" aria-label="Mentor dashboard views">
+                {viewTabs.map(tab => (
+                    <button
+                        key={tab.id}
+                        type="button"
+                        className={`mentor-view-switcher__tab ${activeView === tab.id ? 'active' : ''}`}
+                        onClick={() => setActiveView(tab.id)}
+                    >
+                        {tab.label}
+                    </button>
+                ))}
+            </nav>
+
+            <main className="dashboard-main-mentor dashboard-main-mentor--modern" style={{ borderTop: 'none' }}>
                 {renderView()}
             </main>
 
