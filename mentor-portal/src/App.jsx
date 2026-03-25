@@ -41,18 +41,18 @@ function App() {
       onProfileClick={() => setActiveView('settings')}
     >
       <Routes>
-        <Route path="/" element={<ProtectedRoute>{isSuperAdmin ? <AdminDashboard /> : <MentorDashboard activeView={activeView} setActiveView={setActiveView} />}</ProtectedRoute>} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<ProtectedRoute>{isSuperAdmin ? <AdminDashboard /> : <MentorDashboard activeView={activeView} setActiveView={setActiveView} />}</ProtectedRoute>} />
         <Route path="/mentors" element={<ProtectedRoute><Mentors /></ProtectedRoute>} />
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<Navigate to="/dashboard" replace />} />
       </Routes>
     </DashboardLayout>
   )
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
       <Route path="/auth" element={<Login />} />
+      <Route path="/login" element={<Navigate to="/auth" replace />} />
       <Route path="*" element={user ? authenticatedContent : <Navigate to="/auth" replace />} />
     </Routes>
   )

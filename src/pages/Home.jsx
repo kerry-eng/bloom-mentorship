@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
+import { getMentorAppUrl } from '../config/appUrls'
 import './Home.css'
 
 export default function Home() {
@@ -34,9 +35,9 @@ export default function Home() {
                             <Link to="/booking" className="btn-replica-black">
                                 Book Session
                             </Link>
-                            <Link to="/auth?role=mentor" className="btn-replica-outline">
+                            <a href={getMentorAppUrl('/auth')} className="btn-replica-outline">
                                 Join as a Mentor
-                            </Link>
+                            </a>
                         </div>
                     </div>
 

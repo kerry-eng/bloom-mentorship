@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { supabase } from '../supabase'
+import { getClientAppUrl } from '../config/appUrls'
 import './Login.css'
 
 export default function Login() {
@@ -11,8 +13,9 @@ export default function Login() {
     const [specialty, setSpecialty] = useState('')
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
-    const { signIn, signUp, signInWithGoogle } = useAuth()
+    const { signIn, signUp, signInWithGoogle, signOut } = useAuth()
     const navigate = useNavigate()
+    const clientPortalUrl = getClientAppUrl('/auth')
 
     async function handleSubmit(e) {
         e.preventDefault()
@@ -24,8 +27,25 @@ export default function Login() {
                 await signUp(email, password, fullName, 'mentor', { expertise: [specialty] })
                 alert('Application submitted! Please check your email and wait for admin approval.')
             } else {
-                await signIn(email, password)
-                navigate('/')
+                const data = await signIn(email, password)
+                const { data: profileData } = await supabase
+                    .from('profiles')
+                    .select('role, verification_status, is_super_admin')
+                    .eq('id', data.user.id)
+                    .single()
+
+                const canEnterPortal =
+                    profileData?.role === 'mentor' ||
+                    profileData?.role === 'admin' ||
+                    profileData?.is_super_admin
+
+                if (!canEnterPortal) {
+                    await signOut()
+                    window.location.href = clientPortalUrl
+                    return
+                }
+
+                navigate('/dashboard')
             }
         } catch (err) {
             setError(err.message || 'Something went wrong.')

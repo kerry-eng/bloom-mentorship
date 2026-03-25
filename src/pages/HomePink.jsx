@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getMentorAppUrl } from '../config/appUrls';
 import './HomePink.css';
 
 const HomePink = () => {
@@ -39,9 +40,9 @@ const HomePink = () => {
                             <Link to="/booking" className="btn-start-journey">
                                 start your journey 🌸
                             </Link>
-                            <Link to="/auth?role=mentor" className="btn-mentor-join-link">
+                            <a href={getMentorAppUrl('/auth')} className="btn-mentor-join-link">
                                 join as a mentor 🌿
-                            </Link>
+                            </a>
                         </div>
                         
                         {/* Ellipse 2 - Floating Blob Portrait */}

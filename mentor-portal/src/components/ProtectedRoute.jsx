@@ -1,5 +1,6 @@
 import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
+import { getClientAppUrl } from '../config/appUrls'
 
 export default function ProtectedRoute({ children }) {
     const { user, isMentor, loading } = useAuth()
@@ -15,16 +16,11 @@ export default function ProtectedRoute({ children }) {
         </div>
     )
 
-    if (!user) return <Navigate to="/login" replace />
+    if (!user) return <Navigate to="/auth" replace />
 
     if (!isMentor) {
-        return (
-            <div style={{ textAlign: 'center', padding: '5rem' }}>
-                <h2>Access Denied</h2>
-                <p>This panel is for mentors only.</p>
-                <button className="btn btn-primary" onClick={() => window.location.href = '/'}>Go Back</button>
-            </div>
-        )
+        window.location.href = getClientAppUrl('/auth')
+        return null
     }
 
     return children
