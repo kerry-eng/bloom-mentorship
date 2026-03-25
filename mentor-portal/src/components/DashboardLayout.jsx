@@ -2,8 +2,9 @@ import React from 'react';
 import DashboardSidebar from './DashboardSidebar';
 import DashboardTopbar from './DashboardTopbar';
 import MobileNavbar from './MobileNavbar';
+import MobileProfileSheet from './MobileProfileSheet';
 
-export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobileMenuOpen, activeView, setActiveView, onProfileClick, isSuperAdmin }) {
+export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobileMenuOpen, activeView, setActiveView, onProfileClick, isSuperAdmin, isProfileSheetOpen, setIsProfileSheetOpen, onOpenProfileSheet }) {
     return (
         <div className={`workspace-page ${isMobileMenuOpen ? 'mobile-menu-active' : ''}`}>
             <div className="workspace-container">
@@ -19,6 +20,7 @@ export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobil
                         isMobileMenuOpen={isMobileMenuOpen} 
                         setIsMobileMenuOpen={setIsMobileMenuOpen}
                         onProfileClick={onProfileClick}
+                        onOpenProfileSheet={onOpenProfileSheet}
                         setActiveView={setActiveView}
                     />
 
@@ -36,6 +38,17 @@ export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobil
                 activeView={activeView}
                 setActiveView={setActiveView}
                 isSuperAdmin={isSuperAdmin}
+                isProfileSheetOpen={isProfileSheetOpen}
+                onOpenProfileSheet={onOpenProfileSheet}
+            />
+
+            <MobileProfileSheet
+                open={isProfileSheetOpen}
+                onClose={() => setIsProfileSheetOpen(false)}
+                onEditProfile={() => {
+                    setIsProfileSheetOpen(false)
+                    setActiveView('settings')
+                }}
             />
         </div>
     );

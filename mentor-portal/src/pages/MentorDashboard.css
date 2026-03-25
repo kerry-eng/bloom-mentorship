@@ -706,6 +706,11 @@
         grid-template-columns: 1fr;
     }
 
+    .mentor-main-panel,
+    .mentor-side-panel {
+        min-width: 0;
+    }
+
     .arch-card {
         padding: 1.25rem;
         border-radius: 18px;
@@ -740,6 +745,24 @@
     .session-btns .btn-mentor {
         flex: 1;
         min-width: 120px;
+    }
+
+    .admin-assign-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+
+    .admin-select {
+        width: 100%;
+    }
+
+    .mentor-actions-list {
+        gap: 0.75rem;
+    }
+
+    .mentor-actions-list .btn-mentor {
+        width: 100%;
     }
 
     .settings-form-arch {

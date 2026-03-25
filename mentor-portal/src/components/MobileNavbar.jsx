@@ -29,15 +29,6 @@ function ChartIcon() {
     );
 }
 
-function SettingsIcon() {
-    return (
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z" fill="none" stroke="currentColor" strokeWidth="1.8" />
-            <path d="M19.4 13.2v-2.4l-2-.7a6.9 6.9 0 0 0-.8-1.9l1-1.9-1.7-1.7-1.9 1a6.9 6.9 0 0 0-1.9-.8l-.7-2h-2.4l-.7 2a6.9 6.9 0 0 0-1.9.8l-1.9-1-1.7 1.7 1 1.9a6.9 6.9 0 0 0-.8 1.9l-2 .7v2.4l2 .7a6.9 6.9 0 0 0 .8 1.9l-1 1.9 1.7 1.7 1.9-1a6.9 6.9 0 0 0 1.9.8l.7 2h2.4l.7-2a6.9 6.9 0 0 0 1.9-.8l1.9 1 1.7-1.7-1-1.9a6.9 6.9 0 0 0 .8-1.9l2-.7Z" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinejoin="round" />
-        </svg>
-    );
-}
-
 function UsersIcon() {
     return (
         <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -57,7 +48,26 @@ function LogoutIcon() {
     );
 }
 
-export default function MobileNavbar({ activeView, setActiveView, isSuperAdmin }) {
+function MoreIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="5" cy="12" r="1.5" fill="currentColor" />
+            <circle cx="12" cy="12" r="1.5" fill="currentColor" />
+            <circle cx="19" cy="12" r="1.5" fill="currentColor" />
+        </svg>
+    );
+}
+
+function ProfileIcon() {
+    return (
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" fill="none" stroke="currentColor" strokeWidth="1.8" />
+            <path d="M4.5 20.2a7.5 7.5 0 0 1 15 0" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        </svg>
+    );
+}
+
+export default function MobileNavbar({ activeView, setActiveView, isSuperAdmin, isProfileSheetOpen, onOpenProfileSheet }) {
     const { signOut } = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -66,18 +76,24 @@ export default function MobileNavbar({ activeView, setActiveView, isSuperAdmin }
         ? [
             { label: 'Home', view: 'overview', to: '/dashboard', icon: HomeIcon },
             { label: 'Mentors', to: '/mentors', icon: UsersIcon },
+            { label: 'Profile', action: 'profile', icon: ProfileIcon },
             { label: 'Logout', action: 'logout', icon: LogoutIcon },
         ]
         : [
             { label: 'Home', view: 'overview', to: '/dashboard', icon: HomeIcon },
             { label: 'Schedule', view: 'schedule', icon: CalendarIcon },
             { label: 'Earnings', view: 'earnings', icon: ChartIcon },
-            { label: 'Settings', view: 'settings', icon: SettingsIcon },
+            { label: 'More', action: 'profile', icon: MoreIcon },
         ];
 
     const handleSelect = (tab) => {
         if (tab.action === 'logout') {
             signOut();
+            return;
+        }
+
+        if (tab.action === 'profile') {
+            onOpenProfileSheet?.();
             return;
         }
 
@@ -92,6 +108,7 @@ export default function MobileNavbar({ activeView, setActiveView, isSuperAdmin }
 
     const isTabActive = (tab) => {
         if (tab.action === 'logout') return false;
+        if (tab.action === 'profile') return !!isProfileSheetOpen;
         if (tab.to === '/mentors') return location.pathname === '/mentors';
         if (tab.view) return activeView === tab.view;
         return location.pathname === tab.to;

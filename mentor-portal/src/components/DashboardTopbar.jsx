@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 
-export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen, onProfileClick, setActiveView }) {
+export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen, onProfileClick, onOpenProfileSheet, setActiveView }) {
     const { user, profile } = useAuth();
 
     return (
@@ -31,10 +31,10 @@ export default function DashboardTopbar({ isMobileMenuOpen, setIsMobileMenuOpen,
                         <span className="notification-dot"></span>
                     </button>
                 </div>
-                <button className="mobile-action-chip show-mobile" type="button" onClick={() => setActiveView('settings')} aria-label="Open settings">
+                <button className="mobile-action-chip show-mobile" type="button" onClick={onOpenProfileSheet} aria-label="Open profile sheet">
                     <span className="mobile-action-chip__icon">⚙</span>
                 </button>
-                <div className="user-profile-arch" onClick={onProfileClick}>
+                <div className="user-profile-arch hide-mobile" onClick={onProfileClick}>
                     <div className="avatar-circle">
                         {profile?.full_name ? profile.full_name.charAt(0).toUpperCase() : (user?.email?.charAt(0).toUpperCase() || 'M')}
                     </div>

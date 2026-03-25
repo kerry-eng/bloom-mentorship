@@ -12,6 +12,7 @@ function App() {
   const { loading, signOut, user, isMentor, isSuperAdmin } = useAuth()
   const [activeView, setActiveView] = useState('overview')
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isProfileSheetOpen, setIsProfileSheetOpen] = useState(false)
 
   if (loading) {
     return (
@@ -39,6 +40,9 @@ function App() {
       activeView={activeView}
       setActiveView={setActiveView}
       isSuperAdmin={isSuperAdmin}
+      isProfileSheetOpen={isProfileSheetOpen}
+      setIsProfileSheetOpen={setIsProfileSheetOpen}
+      onOpenProfileSheet={() => setIsProfileSheetOpen(true)}
       onProfileClick={() => setActiveView('settings')}
     >
       <Routes>

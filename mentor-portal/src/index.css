@@ -1,6 +1,7 @@
 @import url('./pages/Login.css');
 @import url('./pages/MentorDashboard.css');
 @import url('./components/MobileNavbar.css');
+@import url('./components/MobileProfileSheet.css');
 
 :root {
   --color-lavender-light: #f3f0f5;
