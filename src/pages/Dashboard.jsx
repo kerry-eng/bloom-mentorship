@@ -596,15 +596,20 @@ export default function Dashboard() {
                         <Link to="/booking" className="text-link mt-3 d-inline-block">Book your first session</Link>
                     </div>
                 ) : (
-                    sessions.map(s => (
-                        <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at) ? 'past-session' : ''}`}>
+                    sessions.map(s => {
+                        const isPendingPayment = s.status === 'pending' && s.stripe_payment_id
+                        const isPast = new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at)
+                        return (
+                        <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isPast ? 'past-session' : ''}`}>
                             <div className="assignment-status-row d-flex justify-content-between align-items-center mb-4">
-                                <div className={`assignment-status ${new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at) ? 'done' : 'pending'}`}>
-                                    {new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at) ? '✓ COMPLETED' : 'UPCOMING'}
+                                <div
+                                    className={`assignment-status ${isPast ? 'done' : isPendingPayment ? '' : 'pending'}`}
+                                    style={isPendingPayment ? { background: '#fff3cd', color: '#856404', border: '1px solid #ffe08a', borderRadius: '6px', padding: '4px 12px', fontWeight: '700', fontSize: '0.78rem' } : {}}
+                                >
+                                    {isPast ? '✓ COMPLETED' : isPendingPayment ? '⏳ AWAITING PAYMENT CONFIRMATION' : 'UPCOMING'}
                                 </div>
                                 <span className="session-price-tag">KES {s.price?.toLocaleString()}</span>
                             </div>
-
                             <div className="session-content-row d-flex justify-content-between align-items-end">
                                 <div>
                                     <h3 className="mb-2">{s.session_label || s.session_type}</h3>
@@ -618,10 +623,18 @@ export default function Dashboard() {
                                             Mentor: <strong>{s.mentor.full_name}</strong>
                                         </p>
                                     )}
+                                    {isPendingPayment && (
+                                        <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#856404' }}>
+                                            M-Pesa Ref: <strong style={{ fontFamily: 'monospace' }}>{(s.stripe_payment_id || '').replace('LOOP_', '')}</strong> - Under review by admin.
+                                        </p>
+                                    )}
                                 </div>
-
                                 <div className="session-actions">
-                                    {isJoinable(s.scheduled_at) ? (
+                                    {isPendingPayment ? (
+                                        <button className="btn btn-vibration-outline disabled" disabled style={{ opacity: 0.6 }}>
+                                            ⏳ Pending Approval
+                                        </button>
+                                    ) : isJoinable(s.scheduled_at) ? (
                                         <Link
                                             to={`/session/${s.id}?role=user`}
                                             className="btn btn-primary btn-vibration px-5"
@@ -633,14 +646,15 @@ export default function Dashboard() {
                                             Starts soon
                                         </button>
                                     ) : (
-                                        <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview'); /* Scroll to reflection */ }}>
+                                        <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>
                                             Record Reflection
                                         </button>
                                     )}
                                 </div>
                             </div>
                         </div>
-                    ))
+                        )
+                    })}
                 )}
             </div>
         </div>
