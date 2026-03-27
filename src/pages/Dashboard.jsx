@@ -620,7 +620,7 @@ export default function Dashboard() {
                             return new Date(b.scheduled_at) - new Date(a.scheduled_at);
                         })
                         .map(s => {
-                        const isPendingPayment = s.status === 'pending' && s.stripe_payment_id
+                        const isPendingPayment = s.status === 'pending' || s.status === 'paid'
                         const isPast = new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at)
                         return (
                         <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isPast ? 'past-session' : ''}`}>
