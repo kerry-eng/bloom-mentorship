@@ -638,63 +638,76 @@ export default function Dashboard() {
                             return new Date(b.scheduled_at) - new Date(a.scheduled_at);
                         })
                         .map(s => {
-                        const isPendingPayment = s.status?.trim().toLowerCase() === 'pending' || s.status?.trim().toLowerCase() === 'paid'
-                        const isPast = new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at)
-                        return (
-                        <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isPast ? 'past-session' : ''}`}>
-                            <div className="assignment-status-row d-flex justify-content-between align-items-center mb-4">
-                                <div
-                                    className={`assignment-status ${isPast ? 'done' : isPendingPayment ? 'status-pending-confirmation' : 'pending'}`}
-                                >
-                                    {isPast ? '✓ COMPLETED' : isPendingPayment ? '⏳ PAYMENT CONFIRMATION' : 'UPCOMING'}
-                                </div>
-                                <span className="session-price-tag">KES {s.price?.toLocaleString()}</span>
-                            </div>
-                            <div className="session-content-row d-flex justify-content-between align-items-end">
-                                <div>
-                                    <h3 className="mb-2">{s.session_label || s.session_type}</h3>
-                                    <p className="session-meta">
-                                        📅 {new Date(s.scheduled_at).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
-                                        <br />
-                                        ⏰ {new Date(s.scheduled_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
-                                    </p>
-                                    {s.mentor && (
-                                        <p className="mentor-name-tag mt-2">
-                                            Mentor: <strong>{s.mentor.full_name}</strong>
-                                        </p>
-                                    )}
-                                    {isPendingPayment && (
-                                        <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#856404' }}>
-                                            M-Pesa Ref: <strong style={{ fontFamily: 'monospace' }}>{(s.stripe_payment_id || '').replace('LOOP_', '')}</strong> - Under review by admin.
-                                        </p>
-                                    )}
-                                </div>
-                                <div className="session-actions">
-                                    {isPendingPayment ? (
-                                        <button className="btn btn-vibration-outline" onClick={handleShowPaymentAlert}>
-                                            ⏳ Payment Confirmation
-                                        </button>
-                                    ) : (s.status?.trim().toLowerCase() === 'active' || s.status?.trim().toLowerCase() === 'confirmed') && isJoinable(s.scheduled_at) ? (
-                                        <Link
-                                            to={`/session/${s.id}?role=user`}
-                                            className="btn btn-primary btn-vibration px-5"
+                            const status = s.status?.trim().toLowerCase()
+                            const isPendingPayment = status === 'pending' || status === 'paid'
+                            const isConfirmed = status === 'confirmed' || status === 'active'
+                            const isJoinableNow = isJoinable(s.scheduled_at)
+                            const isPast = new Date(s.scheduled_at) < new Date() && !isJoinableNow
+                            const isCompleted = isConfirmed && isPast
+                            
+                            return (
+                                <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isCompleted ? 'past-session' : ''}`}>
+                                    <div className="assignment-status-row d-flex justify-content-between align-items-center mb-4">
+                                        <div
+                                            className={`assignment-status ${isCompleted ? 'done' : isPendingPayment ? 'status-pending-confirmation' : 'pending'}`}
                                         >
-                                            🎥 Join Meeting
-                                        </Link>
-                                    ) : new Date(s.scheduled_at) > new Date() ? (
-                                        <button className="btn btn-vibration-outline disabled" disabled>
-                                            {s.status?.trim().toLowerCase() === 'pending' ? '⏳ Payment Confirmation' : 'Starts soon'}
-                                        </button>
-                                    ) : (
-                                        <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>
-                                            Record Reflection
-                                        </button>
-                                    )}
+                                            {isPendingPayment ? '⏳ PAYMENT CONFIRMATION' : isCompleted ? '✓ COMPLETED' : 'UPCOMING'}
+                                        </div>
+                                        <span className="session-price-tag">KES {s.price?.toLocaleString()}</span>
+                                    </div>
+                                    <div className="session-content-row d-flex justify-content-between align-items-end">
+                                        <div>
+                                            <h3 className="mb-2">{s.session_label || s.session_type}</h3>
+                                            <p className="session-meta">
+                                                📅 {new Date(s.scheduled_at).toLocaleDateString(undefined, { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+                                                <br />
+                                                ⏰ {new Date(s.scheduled_at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}
+                                            </p>
+                                            {s.mentor && (
+                                                <p className="mentor-name-tag mt-2">
+                                                    Mentor: <strong>{s.mentor.full_name}</strong>
+                                                </p>
+                                            )}
+                                            {isPendingPayment && (
+                                                <p style={{ marginTop: '0.5rem', fontSize: '0.85rem', color: '#856404' }}>
+                                                    M-Pesa Ref: <strong style={{ fontFamily: 'monospace' }}>{(s.stripe_payment_id || '').replace('LOOP_', '')}</strong> - Under review by admin.
+                                                </p>
+                                            )}
+                                        </div>
+                                        <div className="session-actions">
+                                            {isPendingPayment ? (
+                                                <button className="btn btn-vibration-outline" onClick={handleShowPaymentAlert}>
+                                                    ⏳ Payment Confirmation
+                                                </button>
+                                            ) : isConfirmed && isJoinableNow ? (
+                                                <Link
+                                                    to={`/session/${s.id}?role=user`}
+                                                    className="btn btn-primary btn-vibration px-5"
+                                                >
+                                                    🎥 Join Meeting
+                                                </Link>
+                                            ) : isConfirmed && !isPast ? (
+                                                <button className="btn btn-vibration-outline disabled" disabled>
+                                                    Starts soon
+                                                </button>
+                                            ) : isCompleted ? (
+                                                <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>
+                                                    Record Reflection
+                                                </button>
+                                            ) : isPast ? (
+                                                <button className="btn btn-vibration-outline disabled" disabled title="Awaiting admin review of expired session">
+                                                    ⏳ Processing
+                                                </button>
+                                            ) : (
+                                                <button className="btn btn-vibration-outline disabled" disabled>
+                                                    Awaiting Approval
+                                                </button>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        )
-                    })
+                            )
+                        })
                 )}
             </div>
         </div>
