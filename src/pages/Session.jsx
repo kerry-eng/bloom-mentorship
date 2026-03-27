@@ -17,6 +17,7 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
     const [loading, setLoading] = useState(true)
     const [error, setError] = useState('')
     const [elapsed, setElapsed] = useState(0)
+    const [hasLeft, setHasLeft] = useState(false)  // "Left" screen with Rejoin option
     const timerRef = useRef(null)
 
     const localVideoRef = useRef(null)
@@ -38,6 +39,19 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
         endCall: endWebRTC,
         error: webRTCError
     } = useWebRTC(sessionId, isMentor)
+
+    // Warn user before refresh/close while in a live call
+    useEffect(() => {
+        const handleBeforeUnload = (e) => {
+            if (callStatus === 'connected' || callStatus === 'connecting') {
+                e.preventDefault()
+                e.returnValue = 'You are in an active session. Are you sure you want to leave?'
+                return e.returnValue
+            }
+        }
+        window.addEventListener('beforeunload', handleBeforeUnload)
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+    }, [callStatus])
 
     useEffect(() => {
         fetchSession()
@@ -93,6 +107,11 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
     async function handleEndCall() {
         clearInterval(timerRef.current)
         endWebRTC()
+        // Show "left session" screen instead of navigating away
+        setHasLeft(true)
+    }
+
+    async function handleFullyExit() {
         try {
             if (!isMentor) {
                 await supabase.from('sessions').update({ status: 'completed' }).eq('id', sessionId)
@@ -101,6 +120,13 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
             console.error(e)
         }
         navigate(isMentor ? mentorHomePath : '/dashboard')
+    }
+
+    function handleRejoin() {
+        setHasLeft(false)
+        setElapsed(0)
+        // startCall will re-initialise the WebRTC connection
+        startCall()
     }
 
     if (loading) return (
@@ -117,6 +143,46 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
                 <h2 className="figma-script-title" style={{ fontSize: '2rem' }}>Session Unavailable</h2>
                 <p style={{ marginBottom: '1.5rem', color: 'var(--color-text-mid)' }}>{error}</p>
                 <Link to="/dashboard" className="btn figma-btn-primary">Back to Dashboard</Link>
+            </div>
+        </div>
+    )
+
+    // "You've left" interstitial screen
+    if (hasLeft) return (
+        <div className="session-page">
+            <div className="session__topbar">
+                <div className="session__topbar-left">
+                    <span className="session__logo figma-script-title" style={{ margin: 0, display: 'flex', alignItems: 'center' }}>
+                        <img src="/LOGO.png" alt="Bloom" style={{ height: '45px', width: 'auto' }} />
+                    </span>
+                </div>
+            </div>
+            <div className="session__room">
+                <div className="figma-panel" style={{ maxWidth: '500px', margin: 'auto', textAlign: 'center', padding: '3rem 2rem' }}>
+                    <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>👋</div>
+                    <h2 className="figma-script-title" style={{ fontSize: '2.2rem', marginBottom: '0.5rem' }}>
+                        You've Left the Session
+                    </h2>
+                    <p style={{ color: 'var(--color-text-mid)', marginBottom: '2rem', lineHeight: 1.6 }}>
+                        Did you leave by accident? You can rejoin right now — the session is still active.
+                    </p>
+                    <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                        <button
+                            className="btn figma-btn-primary"
+                            style={{ fontSize: '1rem', padding: '0.85rem 2rem' }}
+                            onClick={handleRejoin}
+                        >
+                            🔄 Rejoin Session
+                        </button>
+                        <button
+                            className="btn btn-secondary"
+                            style={{ fontSize: '1rem', padding: '0.85rem 2rem' }}
+                            onClick={handleFullyExit}
+                        >
+                            Exit to Dashboard
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     )
