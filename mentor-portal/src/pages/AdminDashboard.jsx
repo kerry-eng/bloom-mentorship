@@ -104,30 +104,33 @@ export default function AdminDashboard() {
                             ) : upcoming.length === 0 ? (
                                 <p className="empty-msg">No upcoming sessions across the platform.</p>
                             ) : (
-                                upcoming.map(s => (
-                                    <div key={s.id} className="mentor-session-item">
-                                        <div className="session-client-info">
-                                            <h4>👤 {s.profiles?.full_name || 'Client'}</h4>
-                                            <p>{s.session_label || s.session_type} • {new Date(s.scheduled_at).toLocaleString()}</p>
-                                        </div>
-                                        <div className="session-actions">
-                                            <span className={`status-badge ${s.status}`}>{s.status.toUpperCase()}</span>
-                                        </div>
-                                        <div className="admin-assign-row">
-                                            <select 
-                                                value={s.mentor_id || ''} 
-                                                onChange={(e) => assignMentor(s.id, e.target.value)}
-                                                className="admin-select"
-                                                disabled={saving[s.id]}
-                                            >
-                                                <option value="">Unassigned</option>
-                                                {mentors.map(m => <option key={m.id} value={m.id}>{m.full_name}</option>)}
-                                            </select>
-                                            <span>{saving[s.id] ? 'Saving...' : 'Assign Mentor'}</span>
-                                        </div>
-                                    </div>
-                                ))
-                            )}
+                                    upcoming.map(s => {
+                                        const statusClean = s.status?.trim().toLowerCase() || 'pending'
+                                        return (
+                                            <div key={s.id} className="mentor-session-item">
+                                                <div className="session-client-info">
+                                                    <h4>👤 {s.profiles?.full_name || 'Client'}</h4>
+                                                    <p>{s.session_label || s.session_type} • {new Date(s.scheduled_at).toLocaleString()}</p>
+                                                </div>
+                                                <div className="session-actions">
+                                                    <span className={`status-badge ${statusClean}`}>{statusClean.toUpperCase()}</span>
+                                                </div>
+                                                <div className="admin-assign-row">
+                                                    <select 
+                                                        value={s.mentor_id || ''} 
+                                                        onChange={(e) => assignMentor(s.id, e.target.value)}
+                                                        className="admin-select"
+                                                        disabled={saving[s.id]}
+                                                    >
+                                                        <option value="">Unassigned</option>
+                                                        {mentors.map(m => <option key={m.id} value={m.id}>{m.full_name}</option>)}
+                                                    </select>
+                                                    <span>{saving[s.id] ? 'Saving...' : 'Assign Mentor'}</span>
+                                                </div>
+                                            </div>
+                                        )
+                                    })
+                                )}
                         </div>
                     </div>
                 </div>

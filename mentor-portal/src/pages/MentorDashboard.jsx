@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { useAuth } from '../context/AuthContext'
 import { supabase } from '../supabase'
 import VideoCallModal from '../components/VideoCallModal'
@@ -244,7 +244,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
     const past = sessions.filter(s => s.status === 'completed' || s.status === 'cancelled')
         .sort((a, b) => new Date(b.scheduled_at) - new Date(a.scheduled_at))
 
-    const pendingNew = sessions.filter(s => s.status === 'paid' || s.status === 'pending')
+    const pendingNew = sessions.filter(s => s.status?.trim().toLowerCase() === 'paid' || s.status?.trim().toLowerCase() === 'pending')
     const completedSessions = sessions.filter(s => s.status === 'completed')
     const totalRevenue = completedSessions.reduce((acc, s) => acc + (s.price || 0), 0)
     const firstName = profile?.full_name?.split(' ')[0] || 'Mentor'
@@ -461,6 +461,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                     : upcoming.length === 0 ? <div className="empty-state-mentor"><span>📅</span><p>No active sessions.</p></div>
                     : upcoming.map(s => {
                         const isPastDue = new Date(s.scheduled_at) < new Date()
+                        const statusLower = s.status?.trim().toLowerCase()
                         return (
                             <div key={s.id} className={`session-card-mentor ${s.status} ${isPastDue ? 'past-due' : ''}`}>
                                 <div className="session-card-left">
@@ -472,7 +473,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                                     <div className="session-card-info">
                                         <div className="card-title-row">
                                             <h4>{s.profiles?.full_name || 'Mentee'}</h4>
-                                            {isPastDue && <span className="past-due-badge">HELD?</span>}
+                                            {isPastDue && statusLower === 'pending' && <span className="past-due-badge">HELD?</span>}
                                         </div>
                                         <p>{s.session_label || s.session_type}</p>
                                         <p className="session-time-arch">
@@ -484,17 +485,17 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                                     <span className="price-tag-mentor">KES {(s.price || 0).toLocaleString()}</span>
                                     <span className={`status-badge ${s.status}`}>{s.status.toUpperCase()}</span>
                                     <div className="session-btns">
-                                        {s.status === 'paid' && (
+                                        {(statusLower === 'paid' || statusLower === 'pending') && (
                                             <button className="btn-mentor btn-mentor-primary" onClick={() => confirmBooking(s.id)} disabled={!!saving[s.id]}>
                                                 {saving[s.id] ? '...' : '✓ CONFIRM'}
                                             </button>
                                         )}
-                                        {s.status === 'active' && isJoinable(s.scheduled_at) && (
+                                        {statusLower === 'active' && isJoinable(s.scheduled_at) && (
                                             <button className="btn-mentor btn-mentor-primary" onClick={() => setActiveVideoSession(s)}>
                                                 🎥 JOIN NOW
                                             </button>
                                         )}
-                                        {s.status === 'active' && !isJoinable(s.scheduled_at) && (
+                                        {statusLower === 'active' && !isJoinable(s.scheduled_at) && (
                                             <button className="btn-mentor btn-mentor-outline" onClick={() => markCompleted(s.id)} disabled={!!saving[s.id]}>
                                                 {saving[s.id] ? '...' : 'Mark Completed'}
                                             </button>
