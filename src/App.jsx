@@ -23,6 +23,7 @@ import { ThemeProvider, useTheme } from './context/ThemeContext'
 import { getMentorAppUrl } from './config/appUrls'
 import MentorDashboard from './pages/MentorDashboard'
 import InstallPWA from './components/InstallPWA'
+import PWASplashScreen from './components/PWASplashScreen'
 
 function App() {
     const { loading } = useAuth()
@@ -39,6 +40,7 @@ function App() {
     return (
         <ThemeProvider>
             <MusicProvider>
+                <PWASplashScreen />
                 {!['/dashboard', '/mentor-dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
                 {['/dashboard', '/mentor-dashboard', '/', '/about', '/reflections', '/blogs', '/booking'].includes(location.pathname) && <MobileNavbar />}
                 <InstallPWA />
