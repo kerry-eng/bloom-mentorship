@@ -596,7 +596,30 @@ export default function Dashboard() {
                         <Link to="/booking" className="text-link mt-3 d-inline-block">Book your first session</Link>
                     </div>
                 ) : (
-                    sessions.map(s => {
+                    [...sessions]
+                        .sort((a, b) => {
+                            const getPriority = (s) => {
+                                if (s.status === 'active' || s.status === 'confirmed') return 1;
+                                if (s.status === 'pending') return 2;
+                                if (s.status === 'completed') return 3;
+                                if (s.status === 'cancelled') return 4;
+                                return 5;
+                            };
+                            
+                            const priA = getPriority(a);
+                            const priB = getPriority(b);
+                            
+                            if (priA !== priB) return priA - priB;
+                            
+                            // For same priority, sort by date
+                            if (priA <= 2) {
+                                // Upcoming: Nearest first
+                                return new Date(a.scheduled_at) - new Date(b.scheduled_at);
+                            }
+                            // Past: Most recent first
+                            return new Date(b.scheduled_at) - new Date(a.scheduled_at);
+                        })
+                        .map(s => {
                         const isPendingPayment = s.status === 'pending' && s.stripe_payment_id
                         const isPast = new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at)
                         return (
@@ -634,7 +657,7 @@ export default function Dashboard() {
                                         <button className="btn btn-vibration-outline disabled" disabled style={{ opacity: 0.6 }}>
                                             ⏳ Pending Approval
                                         </button>
-                                    ) : isJoinable(s.scheduled_at) ? (
+                                    ) : (s.status === 'active' || s.status === 'confirmed') && isJoinable(s.scheduled_at) ? (
                                         <Link
                                             to={`/session/${s.id}?role=user`}
                                             className="btn btn-primary btn-vibration px-5"
@@ -643,7 +666,7 @@ export default function Dashboard() {
                                         </Link>
                                     ) : new Date(s.scheduled_at) > new Date() ? (
                                         <button className="btn btn-vibration-outline disabled" disabled>
-                                            Starts soon
+                                            {s.status === 'pending' ? '⏳ Awaiting Confirmation' : 'Starts soon'}
                                         </button>
                                     ) : (
                                         <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>

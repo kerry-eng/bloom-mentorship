@@ -5,9 +5,9 @@ import { supabase } from '../supabase'
 import './Booking.css'
 
 const SESSION_TYPES = [
-    { id: 'discovery', label: 'Discovery Session', duration: '30 min', price: 2500, desc: 'A professional introduction to identify your primary goals.' },
-    { id: 'deep-dive', label: 'Deep Dive Session', duration: '60 min', price: 4500, desc: 'An intensive session to work through complex challenges.' },
-    { id: 'monthly', label: 'Monthly Mentorship', duration: '4× / month', price: 15000, desc: 'Ongoing weekly support with priority messaging access.' }
+    { id: 'discovery', label: 'Discovery Session', duration: '30 min', price: 500, desc: 'A professional introduction to identify your primary goals.' },
+    { id: 'deep-dive', label: 'Deep Dive Session', duration: '60 min', price: 1500, desc: 'An intensive session to work through complex challenges.' },
+    { id: 'monthly', label: 'Monthly Mentorship', duration: '4× / month', price: 6000, desc: 'Ongoing weekly support with priority messaging access.' }
 ]
 
 const TIMESLOTS = ['09:00', '10:30', '12:00', '14:00', '15:30', '17:00']

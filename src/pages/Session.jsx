@@ -61,10 +61,16 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
             }
             const { data, error: err } = await query.single()
             if (err && !isMentor) {
-                // Only block clients from seeing invalid sessions
                 setError('Session not found or access denied.')
                 return
             }
+
+            // Payment verification check for clients
+            if (!isMentor && data && !['active', 'confirmed'].includes(data.status)) {
+                setError('Payment awaiting confirmation. Please wait for an admin or mentor to approve your access.')
+                return
+            }
+
             setSession(data || { id: sessionId })
         } catch (e) {
             if (!isMentor) setError(e.message)
