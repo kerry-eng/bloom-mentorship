@@ -8,7 +8,7 @@ export default defineConfig({
     VitePWA({
       registerType: 'autoUpdate',
       injectRegister: 'auto',
-      includeAssets: ['LOGO.png'],
+      includeAssets: ['LOGO.png', 'icon-192.png', 'icon-512.png', 'Splash screen.png'],
       manifest: {
         name: 'Bloom Mentorship',
         short_name: 'Bloom',
