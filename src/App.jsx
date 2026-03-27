@@ -39,7 +39,7 @@ function App() {
         <ThemeProvider>
             <MusicProvider>
                 {!['/dashboard', '/mentor-dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
-                {['/dashboard', '/mentor-dashboard', '/', '/about', '/reflections', '/blogs'].includes(location.pathname) && <MobileNavbar />}
+                {['/dashboard', '/mentor-dashboard', '/', '/about', '/reflections', '/blogs', '/booking'].includes(location.pathname) && <MobileNavbar />}
                 <Routes>
                     <Route path="/" element={<HomeLoader />} />
                     <Route path="/auth" element={<Auth />} />
