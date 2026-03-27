@@ -18,6 +18,7 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
     const [error, setError] = useState('')
     const [elapsed, setElapsed] = useState(0)
     const [hasLeft, setHasLeft] = useState(false)  // "Left" screen with Rejoin option
+    const [autoJoined, setAutoJoined] = useState(false) // Track if we've auto-joined this reload
     const timerRef = useRef(null)
 
     const localVideoRef = useRef(null)
@@ -57,6 +58,17 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
         fetchSession()
         return () => clearInterval(timerRef.current)
     }, [sessionId])
+
+    // Auto-join on reload if we were previously in this session
+    useEffect(() => {
+        if (!loading && !error && session && !autoJoined && callStatus === 'idle') {
+            const activeId = sessionStorage.getItem('activeSessionId')
+            if (activeId === sessionId) {
+                setAutoJoined(true)
+                startCall()
+            }
+        }
+    }, [loading, error, session, sessionId, autoJoined, callStatus, startCall])
 
     useEffect(() => {
         if (localVideoRef.current && localStream) {
@@ -107,11 +119,13 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
     async function handleEndCall() {
         clearInterval(timerRef.current)
         endWebRTC()
+        sessionStorage.removeItem('activeSessionId')
         // Show "left session" screen instead of navigating away
         setHasLeft(true)
     }
 
     async function handleFullyExit() {
+        sessionStorage.removeItem('activeSessionId')
         try {
             if (!isMentor) {
                 await supabase.from('sessions').update({ status: 'completed' }).eq('id', sessionId)
@@ -125,7 +139,13 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
     function handleRejoin() {
         setHasLeft(false)
         setElapsed(0)
+        sessionStorage.setItem('activeSessionId', sessionId)
         // startCall will re-initialise the WebRTC connection
+        startCall()
+    }
+
+    function handleStartCall() {
+        sessionStorage.setItem('activeSessionId', sessionId)
         startCall()
     }
 
@@ -217,7 +237,7 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
                                 id="join-call-btn"
                                 className="btn figma-btn-primary"
                                 style={{ fontSize: '1.05rem', padding: '1rem 2.5rem' }}
-                                onClick={startCall}
+                                onClick={handleStartCall}
                                 disabled={callStatus === 'permissions'}
                             >
                                 🎥 Join Session
