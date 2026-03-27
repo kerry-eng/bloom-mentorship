@@ -634,7 +634,7 @@ export default function Dashboard() {
                             return new Date(b.scheduled_at) - new Date(a.scheduled_at);
                         })
                         .map(s => {
-                        const isPendingPayment = s.status === 'pending' || s.status === 'paid'
+                        const isPendingPayment = s.status?.toLowerCase() === 'pending' || s.status?.toLowerCase() === 'paid'
                         const isPast = new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at)
                         return (
                         <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isPast ? 'past-session' : ''}`}>
@@ -671,7 +671,7 @@ export default function Dashboard() {
                                         <button className="btn btn-vibration-outline" onClick={handleShowPaymentAlert}>
                                             ⏳ Payment Confirmation
                                         </button>
-                                    ) : (s.status === 'active' || s.status === 'confirmed') && isJoinable(s.scheduled_at) ? (
+                                    ) : (s.status?.toLowerCase() === 'active' || s.status?.toLowerCase() === 'confirmed') && isJoinable(s.scheduled_at) ? (
                                         <Link
                                             to={`/session/${s.id}?role=user`}
                                             className="btn btn-primary btn-vibration px-5"
@@ -680,7 +680,7 @@ export default function Dashboard() {
                                         </Link>
                                     ) : new Date(s.scheduled_at) > new Date() ? (
                                         <button className="btn btn-vibration-outline disabled" disabled>
-                                            {s.status === 'pending' ? '⏳ Awaiting Confirmation' : 'Starts soon'}
+                                            {s.status?.toLowerCase() === 'pending' ? '⏳ Payment Confirmation' : 'Starts soon'}
                                         </button>
                                     ) : (
                                         <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>
