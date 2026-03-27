@@ -253,13 +253,15 @@
 }
 
 .call-footer {
-    height: 100px;
-    background: #111;
+    height: 80px;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(15,15,15,0.8));
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 3rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 0 1.5rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 1000;
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
 }
 
 .call-info {
@@ -288,18 +290,21 @@
 }
 
 .control-btn {
-    width: 48px;
-    height: 48px;
+    min-width: 46px;
+    min-height: 46px;
+    width: auto;
+    height: auto;
     border-radius: 50%;
-    background: #2a2a2a;
-    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     color: white;
     font-size: 1.25rem;
     cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    backdrop-filter: blur(8px);
 }
 
 .control-btn:hover {
@@ -308,15 +313,85 @@
 }
 
 .control-btn.end-call {
-    width: auto;
-    padding: 0 2rem;
-    border-radius: 24px;
-    background: #ef4444;
+    background: #ff4d4d;
+    padding: 0 1.75rem;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
     gap: 0.75rem;
-    font-size: 0.9rem;
-    font-weight: 700;
+    justify-content: center;
+    width: auto;
+    height: 46px;
+    min-width: 120px;
+    font-weight: 600;
+    box-shadow: 0 4px 15px rgba(255, 77, 77, 0.3);
 }
 
-.control-btn.end-call:hover {
-    background: #dc2626;
+/* ============================================
+   MOBILE RESPONSIVE Overrides
+   ============================================ */
+@media (max-width: 768px) {
+    .video-overlay {
+        padding: 0;
+    }
+
+    .video-container {
+        width: 100vw !important;
+        height: 100vh !important;
+        border-radius: 0 !important;
+        max-width: none !important;
+        max-height: none !important;
+    }
+
+    .active-call-view {
+        flex-direction: column;
+    }
+
+    .self-preview {
+        width: 100px;
+        height: 140px;
+        bottom: 90px;
+        right: 12px;
+        border-radius: 8px;
+        border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .call-footer {
+        gap: 0.5rem;
+        padding: 0 0.75rem;
+        height: 80px;
+        min-height: 80px;
+        justify-content: space-between;
+    }
+
+    .call-info {
+        display: none !important;
+    }
+
+    .call-controls {
+        gap: 0.5rem;
+        flex: 1;
+        justify-content: center;
+    }
+
+    .control-group {
+        gap: 0.4rem;
+    }
+
+    .control-btn {
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 1rem;
+    }
+
+    .control-btn.end-call {
+        min-width: 90px;
+        height: 40px;
+        padding: 0 1rem;
+        font-size: 0.85rem;
+    }
+
+    .bloom-logo-pulse {
+        font-size: 2.2rem;
+    }
 }

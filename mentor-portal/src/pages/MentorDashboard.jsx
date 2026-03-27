@@ -14,7 +14,8 @@ function getGreeting() {
 
 function isJoinable(dateStr) {
     const diff = new Date(dateStr) - new Date()
-    return diff < 15 * 60000 && diff > -90 * 60000
+    // Relaxed: Joinable if within 15 mins start or up to 24h past start
+    return diff < 15 * 60000 && diff > -1440 * 60000 
 }
 
 function applySessionUpdate(session, updates) {
@@ -147,13 +148,16 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
         }
     }
 
-    async function confirmBooking(sessionId) {
+    async function confirmBooking(session) {
+        const sessionId = session.id
         setSaving(s => ({ ...s, [sessionId]: 'confirming' }))
         try {
             await supabase.from('sessions').update({ status: 'active' }).eq('id', sessionId)
-            setSessions(currentSessions => currentSessions.map(session => (
-                session.id === sessionId ? applySessionUpdate(session, { status: 'active' }) : session
+            setSessions(currentSessions => currentSessions.map(s => (
+                s.id === sessionId ? applySessionUpdate(s, { status: 'active' }) : s
             )))
+            // Auto-join after confirmation
+            setActiveVideoSession({ ...session, status: 'active' })
         } catch (e) { console.error(e) }
         finally { setSaving(s => ({ ...s, [sessionId]: false })) }
     }
@@ -486,7 +490,7 @@ export default function MentorDashboard({ activeView = 'overview', setActiveView
                                     <span className={`status-badge ${s.status}`}>{s.status.toUpperCase()}</span>
                                     <div className="session-btns">
                                         {(statusLower === 'paid' || statusLower === 'pending') && (
-                                            <button className="btn-mentor btn-mentor-primary" onClick={() => confirmBooking(s.id)} disabled={!!saving[s.id]}>
+                                            <button className="btn-mentor btn-mentor-primary" onClick={() => confirmBooking(s)} disabled={!!saving[s.id]}>
                                                 {saving[s.id] ? '...' : '✓ CONFIRM'}
                                             </button>
                                         )}

@@ -195,7 +195,7 @@ export default function VideoCallModal({ session, onClose }) {
 
                             <button className="control-btn end-call" onClick={onClose}>
                                 <span className="icon">📞</span>
-                                <span>LEAVE SESSION</span>
+                                <span>LEAVE</span>
                             </button>
 
                             <div className="control-group">
