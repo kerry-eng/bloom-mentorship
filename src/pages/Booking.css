@@ -59,19 +59,9 @@
 }
 
 .session-card.active {
-    background: white;
-    border: var(--glow-border);
-    box-shadow: var(--glow-shadow);
-}
-
-.session-card.active::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 4px;
-    background: var(--gradient-meta);
+    background: rgba(16, 185, 129, 0.05); /* Faint green/primary tint */
+    border: 2px solid #10b981; /* Solid figma primary emerald/green */
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
 }
 
 .session-card-header {
@@ -141,9 +131,9 @@
 }
 
 .mentor-card-select.active {
-    background: white;
-    border: var(--glow-border);
-    box-shadow: var(--glow-shadow);
+    background: rgba(16, 185, 129, 0.05);
+    border: 2px solid #10b981;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.15);
 }
 
 .mentor-avatar {
@@ -239,10 +229,10 @@
 }
 
 .time-slot.active {
-    background: var(--gradient-meta);
+    background: #10b981;
     color: white;
-    border: none;
-    box-shadow: var(--glow-shadow);
+    border: 1px solid #059669;
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
 }
 
 /* Summary */
@@ -309,4 +299,21 @@
         position: relative;
         top: 0;
     }
+}
+.session-card.active::after,
+.mentor-card-select.active::after {
+    content: '?';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: #10b981;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: bold;
 }
