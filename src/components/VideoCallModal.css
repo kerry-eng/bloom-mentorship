@@ -62,13 +62,15 @@
     flex-direction: column;
     position: relative;
     background: #000;
-    min-height: 0; /* Critical for flex children to shrink */
+    min-height: 0;
+    overflow: hidden;
 }
 
 .main-video-feed {
-    flex: 1;
-    min-height: 0; /* Critical: allows flex child to shrink, preventing video from hiding footer */
     position: relative;
+    width: 100%;
+    /* Always leave room for the 80px footer */
+    height: calc(100% - 80px);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -194,18 +196,21 @@
 }
 
 .call-footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
     height: 80px;
     min-height: 80px;
-    flex-shrink: 0; /* Prevent footer from being compressed or hidden */
-    background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(15,15,15,0.8));
+    flex-shrink: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), rgba(15,15,15,0.85));
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 2.5rem;
     padding: 0 1.5rem;
     border-top: 1px solid rgba(255,255,255,0.1);
-    z-index: 100;
-    position: relative;
+    z-index: 200;
     box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
 }
 
