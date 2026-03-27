@@ -679,21 +679,19 @@ export default function Dashboard() {
                                                 <button className="btn btn-vibration-outline" onClick={handleShowPaymentAlert}>
                                                     ⏳ Payment Confirmation
                                                 </button>
-                                            ) : isConfirmed && isJoinableNow ? (
-                                                <Link
-                                                    to={`/session/${s.id}?role=user`}
-                                                    className="btn btn-primary btn-vibration px-5"
-                                                >
-                                                    🎥 Join Meeting
-                                                </Link>
-                                            ) : isConfirmed && !isPast ? (
-                                                <button className="btn btn-vibration-outline disabled" disabled>
-                                                    Starts soon
-                                                </button>
-                                            ) : isCompleted ? (
-                                                <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>
-                                                    Record Reflection
-                                                </button>
+                                            ) : isConfirmed ? (
+                                                !isPast ? (
+                                                    <Link
+                                                        to={`/session/${s.id}?role=user`}
+                                                        className="btn btn-primary btn-vibration px-5"
+                                                    >
+                                                        🎥 Join Now
+                                                    </Link>
+                                                ) : (
+                                                    <button className="btn btn-vibration-outline" onClick={() => { setActiveView('overview') }}>
+                                                        Record Reflection
+                                                    </button>
+                                                )
                                             ) : isPast ? (
                                                 <button className="btn btn-vibration-outline disabled" disabled title="Awaiting admin review of expired session">
                                                     ⏳ Processing
