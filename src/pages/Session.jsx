@@ -172,6 +172,10 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
                     isCameraOff={isCameraOff}
                     toggleMic={toggleMic}
                     toggleCamera={toggleCamera}
+                    toggleScreenShare={toggleScreenShare}
+                    isScreenSharing={isScreenSharing}
+                    messages={messages}
+                    sendMessage={sendMessage}
                     callStatus={callStatus}
                     isMentor={isMentor}
                 />
