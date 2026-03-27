@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import './Dashboard.css'
 import DashboardLayout from '../components/DashboardLayout'
 import DirectMessagesPanel from '../../shared/components/DirectMessagesPanel'
+import Swal from 'sweetalert2'
 
 function timeUntil(dateStr) {
     const diff = new Date(dateStr) - new Date()
@@ -361,6 +362,19 @@ export default function Dashboard() {
     const past = sessions.filter(s => new Date(s.scheduled_at) < new Date() && !isJoinable(s.scheduled_at))
     const messageThreads = buildClientMessageThreads(sessions, user?.id)
 
+    const handleShowPaymentAlert = () => {
+        Swal.fire({
+            title: 'Payment Under Review',
+            text: 'Your payment is being confirmed. The mentor will be with you shortly. Thank you for your patience!',
+            icon: 'info',
+            confirmButtonColor: 'var(--color-primary)',
+            customClass: {
+                popup: 'glass-card-vibe',
+                title: 'display-title-sm'
+            }
+        })
+    }
+
     const renderOverview = () => (
         <div className="overview-container-arch fade-in">
             {/* Banner & Profile Section */}
@@ -626,10 +640,10 @@ export default function Dashboard() {
                         <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isPast ? 'past-session' : ''}`}>
                             <div className="assignment-status-row d-flex justify-content-between align-items-center mb-4">
                                 <div
-                                    className={`assignment-status ${isPast ? 'done' : isPendingPayment ? '' : 'pending'}`}
+                                    className={`assignment-status ${isPast ? 'done' : isPendingPayment ? 'pending-payment' : 'pending'}`}
                                     style={isPendingPayment ? { background: '#fff3cd', color: '#856404', border: '1px solid #ffe08a', borderRadius: '6px', padding: '4px 12px', fontWeight: '700', fontSize: '0.78rem' } : {}}
                                 >
-                                    {isPast ? '✓ COMPLETED' : isPendingPayment ? '⏳ AWAITING PAYMENT CONFIRMATION' : 'UPCOMING'}
+                                    {isPast ? '✓ COMPLETED' : isPendingPayment ? '⏳ PAYMENT CONFIRMATION' : 'UPCOMING'}
                                 </div>
                                 <span className="session-price-tag">KES {s.price?.toLocaleString()}</span>
                             </div>
@@ -654,8 +668,8 @@ export default function Dashboard() {
                                 </div>
                                 <div className="session-actions">
                                     {isPendingPayment ? (
-                                        <button className="btn btn-vibration-outline disabled" disabled style={{ opacity: 0.6 }}>
-                                            ⏳ Pending Approval
+                                        <button className="btn btn-vibration-outline" onClick={handleShowPaymentAlert}>
+                                            ⏳ Payment Confirmation
                                         </button>
                                     ) : (s.status === 'active' || s.status === 'confirmed') && isJoinable(s.scheduled_at) ? (
                                         <Link
