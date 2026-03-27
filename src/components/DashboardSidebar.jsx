@@ -28,13 +28,7 @@ export default function DashboardSidebar({ isMobileMenuOpen, setIsMobileMenuOpen
         <aside className={`workspace-sidebar ${isMobileMenuOpen ? 'open' : ''}`}>
             <div className="sidebar-brand">
                 <Link to="/" className="brand-logo" onClick={() => setIsMobileMenuOpen(false)}>
-                    <div className="logo-icon-arch">
-                        <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M20 5C20 5 20 15 10 20C15 20 20 20 20 35C20 35 20 25 30 20C25 20 20 20 20 5Z" fill="#588157"/>
-                            <circle cx="20" cy="12" r="3" fill="#A3B18A"/>
-                        </svg>
-                    </div>
-                    <span className="logo-text" style={{ fontFamily: "'Playfair Display', serif" }}>Bloom</span>
+                    <img src="/LOGO.png" alt="Bloom Logo" style={{ height: '45px', width: 'auto' }} />
                 </Link>
             </div>
             

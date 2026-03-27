@@ -11,7 +11,7 @@ export default function About() {
             <section className="about-hero-replica">
                 <div className="container about-hero-replica__inner">
                     <div className="about-hero-replica__content fade-in">
-                        <span className="about-hero-replica__label">Our Mission 🌿</span>
+                        <span className="about-hero-replica__label">Our Mission </span>
                         <h1 className="about-hero-replica__title">
                             GUIDING <br />
                             YOUR PATH <br />
@@ -108,7 +108,7 @@ export default function About() {
             <section className="core-values">
                 <div className="container">
                     <div className="section-header-centered">
-                        <span className="section-label-vibe">Our Ethics 💎</span>
+                        <span className="section-label-vibe">Our Ethics </span>
                         <h2 className="display-title">OUR CORE VALUES</h2>
                         <p className="subtitle-vibe">The foundation of every interaction at Bloom.</p>
                     </div>

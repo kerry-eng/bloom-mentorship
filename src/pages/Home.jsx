@@ -41,9 +41,9 @@ export default function Home() {
                             <Link to="/booking" className="btn-replica-black">
                                 Book Session
                             </Link>
-                            <a href="#services" className="btn-replica-outline">
+                            {/* <a href="#services" className="btn-replica-outline">
                                 Explore Programs
-                            </a>
+                            </a> */}
                         </div>
 
                         <div className="hero-replica-v2__trust">
@@ -179,7 +179,7 @@ export default function Home() {
                 <div className="container">
                     <div className="section-header-centered">
                         <h2 className="display-title">WHAT SETS US APART</h2>
-                        <p className="subtitle">real results come from structure, commitment, and support 💪</p>
+                        <p className="subtitle">Real results come from structure, commitment, and support </p>
                     </div>
 
                     <div className="apart-grid">
@@ -254,7 +254,7 @@ export default function Home() {
                 <div className="container">
                     <div className="verse-card fade-in">
                         <div className="verse-icon">📖</div>
-                            <h3 className="verse-title">Verse of the Day 🌿</h3>
+                            <h3 className="verse-title">Verse of the Day</h3>
                         <blockquote className="verse-text">
                             "For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."
                         </blockquote>
@@ -281,7 +281,7 @@ export default function Home() {
                             </svg>
                         </div>
 
-                        <h2 className="transformation-title">START YOUR TRANSFORMATION ⚡</h2>
+                        <h2 className="transformation-title">START YOUR TRANSFORMATION </h2>
 
                         <p className="transformation-desc">
                             Take the first step toward real change. Book a free 30-minute

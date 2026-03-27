@@ -21,8 +21,7 @@ export default function Booking() {
     const [mentors, setMentors] = useState(null)
     const [selectedMentor, setSelectedMentor] = useState(null)
     const [error, setError] = useState('')
-    const [phone, setPhone] = useState('')
-    const [paymentStatus, setPaymentStatus] = useState(null) // 'prompted' | 'success' | 'failed'
+    const [transactionId, setTransactionId] = useState('')
     const { user, profile } = useAuth()
     const navigate = useNavigate()
 
@@ -62,59 +61,24 @@ export default function Booking() {
         setSelectedTime(`${h}:${m}`)
     }
 
-    useEffect(() => {
-        // Listen for realtime payment updates
-        if (!user) return
-
-        const channel = supabase.channel('schema-db-changes')
-            .on(
-                'postgres_changes',
-                {
-                    event: 'UPDATE',
-                    schema: 'public',
-                    table: 'sessions',
-                    filter: `client_id=eq.${user.id}`
-                },
-                (payload) => {
-                    if (payload.new.status === 'paid') {
-                        setPaymentStatus('success')
-                        setTimeout(() => navigate('/dashboard?view=assignments&booked=1'), 2000)
-                    } else if (payload.new.status === 'cancelled') {
-                        setPaymentStatus('failed')
-                        setError('Payment was cancelled or failed.')
-                        setLoading(false)
-                    }
-                }
-            )
-            .subscribe()
-
-        return () => {
-            supabase.removeChannel(channel)
-        }
-    }, [user, navigate])
-
-    const handleBooking = async () => {
+    const handleBooking = () => {
         if (!selectedDate || !selectedTime || !selectedMentor) {
             setError('Please select a mentor, date and time.')
             return
         }
-        if (!phone.trim() || phone.length < 9) {
-            setError('Please enter a valid M-Pesa phone number (e.g. 2547...).')
+        if (!transactionId.trim()) {
+            setError('Please enter the M-Pesa transaction code.')
             return
         }
-        
-        // format phone (ensure it starts with 254)
-        let formattedPhone = phone.trim().replace(/\s+/g, '')
-        if (formattedPhone.startsWith('0')) formattedPhone = '254' + formattedPhone.substring(1)
-        if (formattedPhone.startsWith('+')) formattedPhone = formattedPhone.substring(1)
-
         setError('')
         setLoading(true)
+        saveSession(`LOOP_${transactionId.trim().toUpperCase()}`)
+    }
 
+    async function saveSession(paymentRef) {
         try {
-            // 1. Create a pending session to get an ID for tracking
             const scheduledAt = new Date(`${selectedDate}T${selectedTime}:00`).toISOString()
-            const { data: sessionData, error: err } = await supabase.from('sessions').insert({
+            const { error: err } = await supabase.from('sessions').insert({
                 client_id: user.id,
                 session_type: session.id,
                 session_label: session.label,
@@ -122,27 +86,14 @@ export default function Booking() {
                 price: session.price,
                 scheduled_at: scheduledAt,
                 mentor_id: selectedMentor?.id,
-                status: 'pending' // stripe_payment_id will be set by the edge function
-            }).select().single()
-
-            if (err) throw err
-
-            // 2. Trigger Daraja STK Push via Supabase Edge Function
-            const { data, error: fnError } = await supabase.functions.invoke('mpesa-stk-push', {
-                body: { 
-                    phone: formattedPhone, 
-                    amount: session.price, 
-                    sessionId: sessionData.id 
-                }
+                status: 'pending',
+                stripe_payment_id: paymentRef
             })
-
-            if (fnError) throw new Error(fnError.message)
-            if (data?.error) throw new Error(data.error)
-
-            setPaymentStatus('prompted')
+            if (err) throw err
+            navigate('/dashboard?view=assignments&booked=1')
         } catch (e) {
-            console.error(e)
-            setError(e.message || 'Failed to initiate payment. Please try again.')
+            setError(e.message)
+        } finally {
             setLoading(false)
         }
     }
@@ -280,53 +231,38 @@ export default function Booking() {
 
                             {error && <div className="error-msg">{error}</div>}
 
-                            {paymentStatus === 'prompted' ? (
-                                <div className="payment-instructions text-center" style={{ marginTop: '1.5rem', padding: '2rem 1.5rem', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '16px', border: '1px solid var(--color-primary)' }}>
-                                    <div className="spinner mx-auto mb-3" style={{ borderColor: 'var(--color-primary) transparent var(--color-primary) transparent' }} />
-                                    <h4 style={{ color: 'var(--color-text-dark)', fontSize: '1.1rem', fontWeight: '800' }}>Check Your Phone</h4>
-                                    <p style={{ marginTop: '0.5rem', fontSize: '0.95rem', color: 'var(--color-text-mid)' }}>
-                                        We've sent an M-Pesa prompt to <strong>{phone}</strong>. Please enter your PIN to complete the payment of KES {session.price.toLocaleString()}.
-                                    </p>
-                                    <p style={{ marginTop: '1rem', fontSize: '0.85rem', color: 'var(--color-primary)' }}>
-                                        Waiting for payment confirmation...
-                                    </p>
+                            <div className="payment-instructions" style={{ marginTop: '1.5rem', padding: '1.5rem', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)' }}>
+                                <h4 style={{ marginBottom: '1rem', color: 'var(--color-text-dark)', fontSize: '1.1rem', fontWeight: '800' }}>Payment Instructions</h4>
+                                <div style={{ marginBottom: '1rem', fontSize: '0.95rem', color: 'var(--color-text-mid)', lineHeight: '1.6' }}>
+                                    <p>1. Go to <strong>M-Pesa</strong> &gt; <strong>Lipa na M-Pesa</strong> &gt; <strong>Paybill</strong></p>
+                                    <p>2. Enter Paybill Number: <strong style={{ color: 'var(--color-primary)', fontSize: '1.05rem' }}>714777</strong></p>
+                                    <p>3. Enter Account Number: <strong style={{ color: 'var(--color-primary)', fontSize: '1.05rem' }}>0710341260</strong></p>
+                                    <p>4. Enter Amount: <strong>KES {session.price.toLocaleString()}</strong></p>
                                 </div>
-                            ) : paymentStatus === 'success' ? (
-                                <div className="payment-instructions text-center" style={{ marginTop: '1.5rem', padding: '2rem 1.5rem', background: 'rgba(16, 185, 129, 0.1)', borderRadius: '16px', border: '1px solid #10b981' }}>
-                                    <h4 style={{ color: '#10b981', fontSize: '1.2rem', fontWeight: '800' }}>Payment Successful!</h4>
-                                    <p style={{ marginTop: '0.5rem', fontSize: '0.95rem', color: 'var(--color-text-mid)' }}>
-                                        Your booking is confirmed. Redirecting to dashboard...
-                                    </p>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="payment-instructions" style={{ marginTop: '1.5rem', padding: '1.5rem', background: 'rgba(255, 255, 255, 0.6)', borderRadius: '16px', border: '1px solid rgba(0,0,0,0.05)' }}>
-                                        <h4 style={{ marginBottom: '1rem', color: 'var(--color-text-dark)', fontSize: '1.1rem', fontWeight: '800' }}>Pay Via M-Pesa</h4>
-                                        <div style={{ marginBottom: '1rem', fontSize: '0.95rem', color: 'var(--color-text-mid)', lineHeight: '1.6' }}>
-                                            <p>Automatically prompt your phone for payment. The transaction will be billed to <strong>Paybill 714777</strong>.</p>
-                                        </div>
-                                        
-                                        <label className="form-label" style={{ display: 'block', marginBottom: '0.5rem' }}>M-Pesa Phone Number</label>
-                                        <input 
-                                            type="text" 
-                                            className="form-input" 
-                                            placeholder="e.g. 254712345678 or 0712345678" 
-                                            value={phone}
-                                            onChange={e => setPhone(e.target.value)}
-                                            style={{ width: '100%' }}
-                                        />
-                                    </div>
+                                
+                                <p style={{ fontSize: '0.9rem', color: 'var(--color-primary)', marginBottom: '1rem', fontWeight: '600' }}>
+                                    Once the payment is made, enter the M-Pesa transaction code below to confirm your booking.
+                                </p>
+                                
+                                <label className="form-label" style={{ display: 'block', marginBottom: '0.5rem' }}>M-Pesa Transaction Code</label>
+                                <input 
+                                    type="text" 
+                                    className="form-input" 
+                                    placeholder="e.g. QAB1234XYZ" 
+                                    value={transactionId}
+                                    onChange={e => setTransactionId(e.target.value)}
+                                    style={{ width: '100%', textTransform: 'uppercase' }}
+                                />
+                            </div>
 
-                                    <button
-                                        className="btn btn-primary btn-vibration btn-checkout w-100"
-                                        onClick={handleBooking}
-                                        disabled={loading || !phone.trim()}
-                                        style={{ marginTop: '1.5rem' }}
-                                    >
-                                        {loading ? <div className="spinner sm" /> : `Pay KES ${session.price.toLocaleString()} Now`}
-                                    </button>
-                                </>
-                            )}
+                            <button
+                                className="btn btn-primary btn-vibration btn-checkout w-100"
+                                onClick={handleBooking}
+                                disabled={loading}
+                                style={{ marginTop: '1.5rem' }}
+                            >
+                                {loading ? <div className="spinner sm" /> : 'Confirm Booking'}
+                            </button>
                         </div>
                     </div>
                 </div>

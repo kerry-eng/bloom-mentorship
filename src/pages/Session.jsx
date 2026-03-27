@@ -118,7 +118,7 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
                 <>
                     <div className="session__topbar">
                         <div className="session__topbar-left">
-                            <span className="session__logo figma-script-title" style={{ fontSize: '1.8rem', margin: 0 }}>Bloom ✿</span>
+                            <span className="session__logo figma-script-title" style={{ margin: 0, display: 'flex', alignItems: 'center' }}><img src="/LOGO.png" alt="Bloom" style={{ height: '45px', width: 'auto' }} /></span>
                         </div>
                         <Link to="/dashboard" className="btn btn-secondary btn-sm">Exit</Link>
                     </div>

@@ -8,7 +8,7 @@ export default function Footer() {
                 <div className="footer-main">
                     <div className="footer-brand">
                         <Link to="/" className="footer-logo">
-                            BLOOM
+                            <img src="/LOGO.png" alt="Bloom Logo" style={{ height: '40px', filter: 'brightness(0) invert(1)' }} />
                         </Link>
                         <p className="footer-tagline">
                             Empowering professional and personal growth through expert mentorship and structured reflection.

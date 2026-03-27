@@ -950,7 +950,7 @@
 
 /* ─── Coaching Programs Section ─── */
 .section-coaching {
-    padding: 10rem 0;
+    padding: 6rem 0;
     background: #ffffff;
     position: relative;
 }
@@ -1118,7 +1118,7 @@
 
 /* ─── What Sets Us Apart Section ─── */
 .section-apart {
-    padding: 8rem 0;
+    padding: 4rem 0;
     background: #eef2ff;
     /* Very light blue background as in image */
     position: relative;
@@ -1247,13 +1247,13 @@
 
 /* ─── Verse of the Day Section ─── */
 .verse-section {
-    padding: 6rem 0;
+    padding: 3rem 0;
     background: white;
 }
 
 .verse-card {
     background: var(--gradient-lush);
-    padding: 5rem 3rem;
+    padding: 3rem 2rem;
     border-radius: 40px;
     text-align: center;
     position: relative;
@@ -1305,7 +1305,7 @@
 /* ─── Transformation CTA Section ─── */
 /* ─── Transformation CTA Section (Elegant Glassmorphism) ─── */
 .transformation-cta-section {
-    padding: 8rem 0 120px;
+    padding: 4rem 0 80px;
     background: transparent;
     position: relative;
     overflow: hidden;
@@ -1318,7 +1318,7 @@
     -webkit-backdrop-filter: blur(32px) saturate(180%);
     border: 1px solid rgba(255, 255, 255, 0.4);
     border-radius: 40px;
-    padding: 6rem 4rem;
+    padding: 4rem 2rem;
     text-align: center;
     box-shadow:
         0 8px 32px 0 rgba(148, 185, 255, 0.1),
