@@ -302,7 +302,7 @@
 }
 .session-card.active::after,
 .mentor-card-select.active::after {
-    content: '?';
+    content: '\2713';
     position: absolute;
     top: 1rem;
     right: 1rem;
