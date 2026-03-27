@@ -14,8 +14,10 @@
 }
 
 .video-container {
-    width: 80vw;
-    height: 80vh;
+    width: 90vw;
+    max-width: 1200px;
+    height: 90vh;
+    max-height: 90vh;
     background: #1a1a1a;
     border-radius: 24px;
     overflow: hidden;
@@ -23,6 +25,7 @@
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
     display: flex;
     flex-direction: column;
+    flex-shrink: 0;
 }
 
 .connecting-view {
@@ -64,17 +67,21 @@
 
 .main-video-feed {
     flex: 1;
+    min-height: 0; /* Critical: allows flex child to shrink, preventing video from hiding footer */
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     overflow: hidden;
+    background: #000;
 }
 
 .main-video-element {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* Don't crop business meetings */
+    max-height: 100%; /* Prevent overflow outside flex container */
+    object-fit: contain;
+    display: block;
     background: #000;
 }
 
@@ -187,8 +194,9 @@
 }
 
 .call-footer {
-    height: 80px; /* Slightly taller for better touch targets */
+    height: 80px;
     min-height: 80px;
+    flex-shrink: 0; /* Prevent footer from being compressed or hidden */
     background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(15,15,15,0.8));
     display: flex;
     align-items: center;
@@ -197,6 +205,7 @@
     padding: 0 1.5rem;
     border-top: 1px solid rgba(255,255,255,0.1);
     z-index: 100;
+    position: relative;
     box-shadow: 0 -10px 40px rgba(0,0,0,0.5);
 }
 
