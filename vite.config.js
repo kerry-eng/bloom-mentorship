@@ -32,5 +32,17 @@ export default defineConfig({
         ]
       }
     })
-  ]
+  ],
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'vendor-supabase': ['@supabase/supabase-js'],
+          'vendor-ui': ['sweetalert2', 'lucide-react', 'react-router-dom'],
+          'vendor-react': ['react', 'react-dom']
+        }
+      }
+    },
+    chunkSizeWarningLimit: 600
+  }
 })
