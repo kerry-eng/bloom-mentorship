@@ -27,10 +27,14 @@ export default function Session({ forceMentor = false, mentorHomePath = '/' }) {
         remoteStream,
         isMuted,
         isCameraOff,
+        isScreenSharing,
+        messages,
         callStatus,
         startCall,
         toggleMic,
         toggleCamera,
+        toggleScreenShare,
+        sendMessage,
         endCall: endWebRTC,
         error: webRTCError
     } = useWebRTC(sessionId, isMentor)
