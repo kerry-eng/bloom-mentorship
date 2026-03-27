@@ -24,7 +24,8 @@ function timeUntil(dateStr) {
 
 function isJoinable(dateStr) {
     const diff = new Date(dateStr) - new Date()
-    return diff < 15 * 60000 && diff > -90 * 60000
+    // Joinable 15m before and up to 24 hours after
+    return diff < 15 * 60000 && diff > -24 * 60 * 60000
 }
 
 function getGreeting() {
