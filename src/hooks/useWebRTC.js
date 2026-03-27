@@ -26,6 +26,7 @@ export function useWebRTC(sessionId, isMentor = false) {
 
     const startCall = useCallback(async () => {
         const idToUse = sessionId || 'instant-meeting-room'
+        const myPeerId = isMentor ? 'mentor-signaler' : 'client-signaler'
         setError(null)
         setCallStatus('connecting')
 
@@ -61,7 +62,7 @@ export function useWebRTC(sessionId, isMentor = false) {
                     channelRef.current.send({
                         type: 'broadcast',
                         event: 'ice-candidate',
-                        payload: { candidate: event.candidate, from: isMentor ? 'mentor' : 'client' }
+                        payload: { candidate: event.candidate, from: myPeerId }
                     })
                 }
             }
@@ -74,19 +75,21 @@ export function useWebRTC(sessionId, isMentor = false) {
             }
 
             channel.on('broadcast', { event: 'peer-joined' }, async ({ payload }) => {
-                console.log('Peer joined:', payload)
-                channel.send({ type: 'broadcast', event: 'peer-presence', payload: { from: isMentor ? 'mentor' : 'client' } })
-                
-                if (isMentor && payload.from === 'client') {
-                    const offer = await pc.createOffer()
-                    await pc.setLocalDescription(offer)
-                    channel.send({ type: 'broadcast', event: 'offer', payload: { sdp: offer } })
+                if (payload.from !== myPeerId) {
+                    // Send back presence so they know we are here
+                    channel.send({ type: 'broadcast', event: 'peer-presence', payload: { from: myPeerId } })
+                    
+                    // Mentor always initiates the offer
+                    if (isMentor) {
+                        const offer = await pc.createOffer()
+                        await pc.setLocalDescription(offer)
+                        channel.send({ type: 'broadcast', event: 'offer', payload: { sdp: offer } })
+                    }
                 }
             })
 
             channel.on('broadcast', { event: 'peer-presence' }, async ({ payload }) => {
-                if (isMentor && payload.from === 'client' && !pc.localDescription) {
-                    console.log('Client presence detected, sending offer')
+                if (payload.from !== myPeerId && isMentor && !pc.localDescription) {
                     const offer = await pc.createOffer()
                     await pc.setLocalDescription(offer)
                     channel.send({ type: 'broadcast', event: 'offer', payload: { sdp: offer } })
@@ -94,8 +97,7 @@ export function useWebRTC(sessionId, isMentor = false) {
             })
 
             channel.on('broadcast', { event: 'offer' }, async ({ payload }) => {
-                if (!isMentor) {
-                    console.log('Offer received, sending answer')
+                if (!isMentor && !pc.localDescription) {
                     await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp))
                     const answer = await pc.createAnswer()
                     await pc.setLocalDescription(answer)
@@ -105,16 +107,14 @@ export function useWebRTC(sessionId, isMentor = false) {
             })
 
             channel.on('broadcast', { event: 'answer' }, async ({ payload }) => {
-                if (isMentor) {
-                    console.log('Answer received')
+                if (isMentor && pc.localDescription && !pc.remoteDescription) {
                     await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp))
                     processPendingCandidates()
                 }
             })
 
             channel.on('broadcast', { event: 'ice-candidate' }, async ({ payload }) => {
-                const fromOther = isMentor ? payload.from === 'client' : payload.from === 'mentor'
-                if (fromOther && payload.candidate) {
+                if (payload.from !== myPeerId && payload.candidate) {
                     if (pc.remoteDescription) {
                         await pc.addIceCandidate(new RTCIceCandidate(payload.candidate)).catch(e => console.warn(e))
                     } else {
@@ -129,11 +129,10 @@ export function useWebRTC(sessionId, isMentor = false) {
 
             channel.subscribe((status) => {
                 if (status === 'SUBSCRIBED') {
-                    console.log('Successfully subscribed to signaling channel')
                     channel.send({
                         type: 'broadcast',
                         event: 'peer-joined',
-                        payload: { from: isMentor ? 'mentor' : 'client' }
+                        payload: { from: myPeerId }
                     })
                 }
             })
@@ -166,10 +165,11 @@ export function useWebRTC(sessionId, isMentor = false) {
 
         const heartbeat = setInterval(() => {
             if (channelRef.current) {
+                const myPeerId = isMentor ? 'mentor-signaler' : 'client-signaler'
                 channelRef.current.send({
                     type: 'broadcast',
                     event: 'peer-presence',
-                    payload: { from: isMentor ? 'mentor' : 'client' }
+                    payload: { from: myPeerId }
                 })
             }
         }, 3000)
