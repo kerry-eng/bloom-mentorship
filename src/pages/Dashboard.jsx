@@ -367,7 +367,10 @@ export default function Dashboard() {
         Swal.fire({
             title: 'Payment Under Review',
             text: 'Your payment is being confirmed. The mentor will be with you shortly. Thank you for your patience!',
-            icon: 'info',
+            imageUrl: '/LOGO.png',
+            imageWidth: 80,
+            imageHeight: 80,
+            imageAlt: 'Bloom Logo',
             confirmButtonColor: 'var(--color-primary)',
             customClass: {
                 popup: 'glass-card-vibe',
@@ -641,8 +644,7 @@ export default function Dashboard() {
                         <div key={s.id} className={`glass-card-vibe p-5 assignment-item ${isPast ? 'past-session' : ''}`}>
                             <div className="assignment-status-row d-flex justify-content-between align-items-center mb-4">
                                 <div
-                                    className={`assignment-status ${isPast ? 'done' : isPendingPayment ? 'pending-payment' : 'pending'}`}
-                                    style={isPendingPayment ? { background: '#fff3cd', color: '#856404', border: '1px solid #ffe08a', borderRadius: '6px', padding: '4px 12px', fontWeight: '700', fontSize: '0.78rem' } : {}}
+                                    className={`assignment-status ${isPast ? 'done' : isPendingPayment ? 'status-pending-confirmation' : 'pending'}`}
                                 >
                                     {isPast ? '✓ COMPLETED' : isPendingPayment ? '⏳ PAYMENT CONFIRMATION' : 'UPCOMING'}
                                 </div>

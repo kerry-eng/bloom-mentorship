@@ -2140,3 +2140,25 @@
     color: var(--color-primary);
 }
 /* --- RESPONSIVENESS END --- */
+
+.status-pending-confirmation {
+    background: #fff3cd !important;
+    color: #856404 !important;
+    border: 1px solid #ffe08a !important;
+    border-radius: 8px !important;
+    padding: 6px 16px !important;
+    font-weight: 700 !important;
+    font-size: 0.8rem !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 2px 8px rgba(133, 100, 4, 0.05);
+}
+
+@media (max-width: 768px) {
+    .status-pending-confirmation {
+        padding: 4px 12px !important;
+        font-size: 0.72rem !important;
+        width: fit-content;
+    }
+}
