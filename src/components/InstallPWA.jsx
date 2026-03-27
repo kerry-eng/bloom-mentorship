@@ -67,31 +67,37 @@ export default function InstallPWA() {
 
     const isIos = /ipad|iphone|ipod/.test(navigator.userAgent.toLowerCase());
 
-    return (
-        <div className="install-pwa-banner" style={{ flexDirection: 'column' }}>
-            <div style={{ display: 'flex', width: '100%', alignItems: 'center', justifyContent: 'space-between' }}>
-                <div className="install-pwa-content">
+        <div className="install-pwa-banner">
+            <div className="install-pwa-body">
+                <div className="install-pwa-icon-wrapper">
                     <img src="/LOGO.png" alt="Bloom" className="install-pwa-logo" />
-                    <div className="install-pwa-text">
-                        <strong>Get the Bloom App</strong>
-                        <p>Install our app for a faster, better experience.</p>
-                    </div>
                 </div>
-                <div className="install-pwa-actions">
-                    <button className="btn-install" onClick={handleInstallClick}>Install</button>
-                    <button className="btn-dismiss" onClick={handleDismiss}>✕</button>
+                <div className="install-pwa-text">
+                    <h4 className="install-pwa-title">Get the Bloom App</h4>
+                    <p className="install-pwa-desc">Install our app for a faster, better experience.</p>
                 </div>
             </div>
 
+            <div className="install-pwa-actions">
+                <button className="btn-install" onClick={handleInstallClick}>
+                    {showInstructions ? 'Got it' : 'Install Now'}
+                </button>
+                <button className="btn-dismiss" onClick={handleDismiss} aria-label="Close">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+
             {showInstructions && (
-                <div style={{ width: '100%', padding: '0.8rem 1rem', background: 'rgba(255,255,255,0.05)', fontSize: '0.85rem', color: '#ccc', borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: '0.5rem', lineHeight: 1.5 }}>
+                <div className="install-pwa-instructions">
                     {isIos ? (
-                        <span>To install on iOS: Tap the <strong>Share</strong> icon (the square with an arrow) at the bottom toolbar, then tap <strong>Add to Home Screen</strong>.</span>
+                        <span>To install on iOS: Tap the <strong>Share</strong> icon (square with arrow) at the bottom toolbar, then tap <strong>Add to Home Screen</strong>.</span>
                     ) : (
                         <span>To install manually: Tap the browser <strong>Menu (⋮)</strong> at the top right, then tap <strong>Add to Home screen</strong> or <strong>Install app</strong>.</span>
                     )}
                 </div>
             )}
         </div>
-    );
 }
