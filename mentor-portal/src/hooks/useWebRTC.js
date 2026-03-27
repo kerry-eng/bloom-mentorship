@@ -15,10 +15,14 @@ export function useWebRTC(sessionId, isMentor = true) {
     const [isCameraOff, setIsCameraOff] = useState(false)
     const [callStatus, setCallStatus] = useState('connecting')
     const [error, setError] = useState(null)
+    const [isScreenSharing, setIsScreenSharing] = useState(false)
+    const [messages, setMessages] = useState([])
+    const screenStreamRef = useRef(null)
     
     const peerRef = useRef(null)
     const channelRef = useRef(null)
     const localStreamRef = useRef(null)
+    const pendingCandidates = useRef([])
 
     const startCall = useCallback(async () => {
         const idToUse = sessionId || 'instant-meeting-room'
@@ -26,7 +30,6 @@ export function useWebRTC(sessionId, isMentor = true) {
         setCallStatus('connecting')
 
         try {
-            // Get local media first - this should NOT block the UI
             const stream = await navigator.mediaDevices.getUserMedia({ 
                 video: true, 
                 audio: true 
@@ -38,7 +41,6 @@ export function useWebRTC(sessionId, isMentor = true) {
             localStreamRef.current = stream
             setLocalStream(stream)
 
-            // Setup PC
             const pc = new RTCPeerConnection(ICE_SERVERS)
             peerRef.current = pc
 
@@ -51,12 +53,11 @@ export function useWebRTC(sessionId, isMentor = true) {
                 }
             }
 
-            // Signaling
             const channel = supabase.channel(`room-${idToUse}`)
             channelRef.current = channel
 
             pc.onicecandidate = (event) => {
-                if (event.candidate) {
+                if (event.candidate && channelRef.current) {
                     channel.send({
                         type: 'broadcast',
                         event: 'ice-candidate',
@@ -65,8 +66,24 @@ export function useWebRTC(sessionId, isMentor = true) {
                 }
             }
 
+            const processPendingCandidates = async () => {
+                while (pendingCandidates.current.length > 0) {
+                    const candidate = pendingCandidates.current.shift()
+                    await pc.addIceCandidate(new RTCIceCandidate(candidate)).catch(e => console.warn("Lazy candidate error:", e))
+                }
+            }
+
             channel.on('broadcast', { event: 'peer-joined' }, async ({ payload }) => {
+                channel.send({ type: 'broadcast', event: 'peer-presence', payload: { from: isMentor ? 'mentor' : 'client' } })
                 if (isMentor && payload.from === 'client') {
+                    const offer = await pc.createOffer()
+                    await pc.setLocalDescription(offer)
+                    channel.send({ type: 'broadcast', event: 'offer', payload: { sdp: offer } })
+                }
+            })
+
+            channel.on('broadcast', { event: 'peer-presence' }, async ({ payload }) => {
+                if (isMentor && payload.from === 'client' && !pc.localDescription) {
                     const offer = await pc.createOffer()
                     await pc.setLocalDescription(offer)
                     channel.send({ type: 'broadcast', event: 'offer', payload: { sdp: offer } })
@@ -78,22 +95,31 @@ export function useWebRTC(sessionId, isMentor = true) {
                     await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp))
                     const answer = await pc.createAnswer()
                     await pc.setLocalDescription(answer)
-                    channel.send({ type: 'broadcast', event: 'offer', payload: { sdp: answer } }) // Correct event is 'answer', but some signaling expects 'offer' in response? No, usually 'answer'.
+                    channel.send({ type: 'broadcast', event: 'answer', payload: { sdp: answer } })
+                    processPendingCandidates()
                 }
             })
-            
-            // Fix: ensure we handle 'answer' event
+
             channel.on('broadcast', { event: 'answer' }, async ({ payload }) => {
                 if (isMentor) {
                     await pc.setRemoteDescription(new RTCSessionDescription(payload.sdp))
+                    processPendingCandidates()
                 }
             })
 
             channel.on('broadcast', { event: 'ice-candidate' }, async ({ payload }) => {
                 const fromOther = isMentor ? payload.from === 'client' : payload.from === 'mentor'
-                if (fromOther && payload.candidate && pc.remoteDescription) {
-                    await pc.addIceCandidate(new RTCIceCandidate(payload.candidate)).catch(e => console.warn(e))
+                if (fromOther && payload.candidate) {
+                    if (pc.remoteDescription) {
+                        await pc.addIceCandidate(new RTCIceCandidate(payload.candidate)).catch(e => console.warn(e))
+                    } else {
+                        pendingCandidates.current.push(payload.candidate)
+                    }
                 }
+            })
+
+            channel.on('broadcast', { event: 'chat-msg' }, ({ payload }) => {
+                setMessages(prev => [...prev, payload])
             })
 
             channel.subscribe((status) => {
@@ -117,10 +143,29 @@ export function useWebRTC(sessionId, isMentor = true) {
         startCall()
         return () => {
             if (localStreamRef.current) localStreamRef.current.getTracks().forEach(t => t.stop())
-            if (peerRef.current) peerRef.current.close()
+            if (screenStreamRef.current) screenStreamRef.current.getTracks().forEach(t => t.stop())
+            if (peerRef.current) {
+                peerRef.current.ontrack = null
+                peerRef.current.onicecandidate = null
+                peerRef.current.close()
+            }
             if (channelRef.current) supabase.removeChannel(channelRef.current)
         }
     }, [startCall])
+
+    useEffect(() => {
+        if (callStatus !== 'connecting' && callStatus !== 'idle') return
+        const heartbeat = setInterval(() => {
+            if (channelRef.current) {
+                channelRef.current.send({
+                    type: 'broadcast',
+                    event: 'peer-presence',
+                    payload: { from: isMentor ? 'mentor' : 'client' }
+                })
+            }
+        }, 3000)
+        return () => clearInterval(heartbeat)
+    }, [callStatus, isMentor])
 
     const toggleMic = () => {
         setIsMuted(m => {
@@ -138,5 +183,53 @@ export function useWebRTC(sessionId, isMentor = true) {
         })
     }
 
-    return { localStream, remoteStream, isMuted, isCameraOff, callStatus, error, toggleMic, toggleCamera, startCall }
+    const toggleScreenShare = async () => {
+        if (isScreenSharing) {
+            const videoTrack = localStreamRef.current.getVideoTracks()[0]
+            const sender = peerRef.current.getSenders().find(s => s.track?.kind === 'video')
+            if (sender) sender.replaceTrack(videoTrack)
+            screenStreamRef.current?.getTracks().forEach(t => t.stop())
+            screenStreamRef.current = null
+            setIsScreenSharing(false)
+        } else {
+            try {
+                const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true })
+                screenStreamRef.current = screenStream
+                const screenTrack = screenStream.getVideoTracks()[0]
+                const sender = peerRef.current.getSenders().find(s => s.track?.kind === 'video')
+                if (sender) sender.replaceTrack(screenTrack)
+                setIsScreenSharing(true)
+                const handleStop = () => {
+                    if (screenStreamRef.current) {
+                        toggleScreenShare()
+                    }
+                }
+                screenTrack.onended = handleStop
+            } catch (e) {
+                console.error("Screen share error:", e)
+            }
+        }
+    }
+
+    const sendMessage = (text, senderName) => {
+        const msg = { text, sender: isMentor ? 'mentor' : 'client', senderName, timestamp: new Date().toISOString() }
+        setMessages(prev => [...prev, msg])
+        channelRef.current?.send({ type: 'broadcast', event: 'chat-msg', payload: msg })
+    }
+
+    const endCall = () => {
+        if (localStreamRef.current) localStreamRef.current.getTracks().forEach(t => t.stop())
+        if (screenStreamRef.current) screenStreamRef.current.getTracks().forEach(t => t.stop())
+        if (peerRef.current) peerRef.current.close()
+        if (channelRef.current) supabase.removeChannel(channelRef.current)
+        setLocalStream(null)
+        setRemoteStream(null)
+        setCallStatus('ended')
+    }
+
+    return { 
+        localStream, remoteStream, isMuted, isCameraOff, isScreenSharing, messages,
+        callStatus, error, toggleMic, toggleCamera, toggleScreenShare, sendMessage, 
+        startCall, endCall 
+    }
 }

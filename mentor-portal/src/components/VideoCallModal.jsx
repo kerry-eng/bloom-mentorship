@@ -11,11 +11,16 @@ export default function VideoCallModal({ session, onClose }) {
         remoteStream, 
         isMuted, 
         isCameraOff, 
+        isScreenSharing,
+        messages = [],
         callStatus, 
         error,
         toggleMic, 
         toggleCamera,
-        startCall 
+        toggleScreenShare,
+        sendMessage,
+        startCall,
+        endCall 
     } = useWebRTC(sessionId, true)
 
     const [timer, setTimer] = useState(0)
@@ -182,6 +187,9 @@ export default function VideoCallModal({ session, onClose }) {
                                 </button>
                                 <button className={`control-btn ${isCameraOff ? 'disabled' : ''}`} onClick={toggleCamera}>
                                     <span className="icon">{isCameraOff ? '📵' : '📹'}</span>
+                                </button>
+                                <button className={`control-btn ${isScreenSharing ? 'active' : ''}`} onClick={toggleScreenShare} title="Share Screen">
+                                    <span className="icon">📺</span>
                                 </button>
                             </div>
 

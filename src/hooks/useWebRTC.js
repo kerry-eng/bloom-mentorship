@@ -209,7 +209,14 @@ export function useWebRTC(sessionId, isMentor = false) {
                 const sender = peerRef.current.getSenders().find(s => s.track?.kind === 'video')
                 if (sender) sender.replaceTrack(screenTrack)
                 setIsScreenSharing(true)
-                screenTrack.onended = () => toggleScreenShare()
+                
+                // Use a separate handler to avoid recursive ReferenceError in some environments
+                const handleStop = () => {
+                    if (screenStreamRef.current) {
+                        toggleScreenShare()
+                    }
+                }
+                screenTrack.onended = handleStop
             } catch (e) {
                 console.error("Screen share error:", e)
             }
