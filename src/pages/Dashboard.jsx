@@ -698,7 +698,7 @@ export default function Dashboard() {
                                                 </button>
                                             ) : (
                                                 <button className="btn btn-vibration-outline disabled" disabled>
-                                                    Awaiting Approval
+                                                    Record Reflection
                                                 </button>
                                             )}
                                         </div>
