@@ -1,0 +1,349 @@
+/* Freedom & Restoration Page Styles */
+
+.freedom-page {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+}
+
+/* ─── Hero Section ─── */
+.freedom-hero {
+    position: relative;
+    padding: 10rem 0 6rem;
+    background: linear-gradient(135deg, #f0fdfa 0%, #ffffff 100%);
+    overflow: hidden;
+    text-align: center;
+}
+
+.freedom-hero__glow {
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.freedom-hero__content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.freedom-hero__eyebrow {
+    display: inline-block;
+    padding: 0.5rem 1.25rem;
+    background: rgba(20, 184, 166, 0.1);
+    color: #0d9488;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 2rem;
+}
+
+.freedom-hero__title {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.1;
+    font-weight: 800;
+    color: #0f172a;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+}
+
+.freedom-hero__subtitle {
+    font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+    color: #475569;
+    margin-bottom: 3rem;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.freedom-hero__actions {
+    display: flex;
+    justify-content: center;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+}
+
+/* ─── Struggles Section ─── */
+.freedom-struggles {
+    padding: 6rem 0;
+    background: #ffffff;
+}
+
+.section-tag {
+    text-align: center;
+    color: #0d9488;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.section-title-alt {
+    text-align: center;
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    color: #0f172a;
+}
+
+.section-subtitle-alt {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+    color: #64748b;
+    font-size: 1.1rem;
+}
+
+.struggles-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.struggle-card {
+    padding: 2.5rem;
+    background: #f8fafc;
+    border-radius: 24px;
+    border: 1px solid rgba(0, 0, 0, 0.04);
+    transition: all 0.3s ease;
+}
+
+.struggle-card:hover {
+    transform: translateY(-5px);
+    background: #ffffff;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(20, 184, 166, 0.2);
+}
+
+.struggle-icon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.struggle-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #0f172a;
+}
+
+.struggle-card p {
+    color: #64748b;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ─── Biblical Foundation ─── */
+.freedom-truth {
+    padding: 8rem 0;
+    background: #0f172a;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+}
+
+.truth-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: radial-gradient(circle, rgba(20, 184, 166, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.truth-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5rem;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.truth-content h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    line-height: 1.1;
+}
+
+.truth-content p {
+    font-size: 1.12rem;
+    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+}
+
+.scripture-list {
+    display: grid;
+    gap: 2rem;
+}
+
+.scripture-item {
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    border-left: 4px solid #14b8a6;
+}
+
+.scripture-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+    color: #ffffff;
+    line-height: 1.6;
+}
+
+.scripture-ref {
+    display: block;
+    font-weight: 700;
+    color: #14b8a6;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+/* ─── Framework Section ─── */
+.freedom-path {
+    padding: 8rem 0;
+    background: #f8fafc;
+}
+
+.path-steps {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1.5rem;
+    margin-top: 4rem;
+}
+
+.step-card {
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 20px;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.step-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+}
+
+.step-num {
+    position: absolute;
+    top: -15px;
+    left: 20px;
+    width: 32px;
+    height: 32px;
+    background: #14b8a6;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.9rem;
+    box-shadow: 0 4px 12px rgba(20, 184, 166, 0.3);
+}
+
+.step-card h3 {
+    margin: 1rem 0 0.75rem;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.step-card p {
+    font-size: 0.88rem;
+    color: #64748b;
+    line-height: 1.5;
+}
+
+/* ─── CTA & Footer ─── */
+.freedom-cta {
+    padding: 8rem 0;
+    text-align: center;
+    background: linear-gradient(to bottom, #f8fafc 0%, #ffffff 100%);
+}
+
+.freedom-cta__card {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 5rem;
+    background: #0d9488;
+    color: #ffffff;
+    border-radius: 40px;
+    position: relative;
+    overflow: hidden;
+}
+
+.freedom-cta__content {
+    position: relative;
+    z-index: 1;
+}
+
+.freedom-cta h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+}
+
+.disclaimer-box {
+    margin-top: 4rem;
+    padding: 2rem;
+    background: #f1f5f9;
+    border-radius: 16px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.disclaimer-box p {
+    font-size: 0.85rem;
+    color: #64748b;
+}
+
+/* ─── Mobile Responsiveness ─── */
+@media (max-width: 1024px) {
+    .path-steps {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    .truth-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .path-steps {
+        grid-template-columns: 1fr;
+    }
+    .freedom-hero {
+        padding: 8rem 0 4rem;
+    }
+    .freedom-cta__card {
+        padding: 3rem 1.5rem;
+    }
+}

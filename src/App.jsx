@@ -23,6 +23,7 @@ const Reflections = lazy(() => import('./pages/Reflections'))
 const About = lazy(() => import('./pages/About'))
 const Blogs = lazy(() => import('./pages/Blogs'))
 const BlogDetail = lazy(() => import('./pages/BlogDetail'))
+const Freedom = lazy(() => import('./pages/Freedom'))
 const EditProfile = lazy(() => import('./pages/EditProfile'))
 const MentorDashboard = lazy(() => import('./pages/MentorDashboard'))
 
@@ -49,7 +50,7 @@ function App() {
         <ThemeProvider>
             <MusicProvider>
                 {!['/dashboard', '/mentor-dashboard', '/auth', '/reflections'].includes(location.pathname) && <Navbar />}
-                {['/dashboard', '/mentor-dashboard', '/', '/about', '/reflections', '/blogs', '/booking'].includes(location.pathname) && <MobileNavbar />}
+                {['/dashboard', '/mentor-dashboard', '/', '/about', '/reflections', '/blogs', '/freedom', '/booking'].includes(location.pathname) && <MobileNavbar />}
                 <InstallPWA />
                 <Suspense fallback={<LoadingSpinner />}>
                     <Routes>
@@ -69,6 +70,7 @@ function App() {
                         } />
                         <Route path="/about" element={<About />} />
                         <Route path="/blogs" element={<Blogs />} />
+                        <Route path="/freedom" element={<Freedom />} />
                         <Route path="/blogs/:blogId" element={<BlogDetail />} />
                         <Route path="/edit-profile" element={
                             <ProtectedRoute><EditProfile /></ProtectedRoute>

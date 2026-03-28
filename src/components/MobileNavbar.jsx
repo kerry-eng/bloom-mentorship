@@ -16,6 +16,7 @@ export default function MobileNavbar() {
 
     const isHome = location.pathname === '/';
     const isAbout = location.pathname === '/about';
+    const isFreedom = location.pathname === '/freedom';
     const isBlogs = location.pathname === '/blogs';
     const isReflections = location.pathname === '/reflections';
 
@@ -82,6 +83,21 @@ export default function MobileNavbar() {
                                         </span> Dashboard
                                     </Link>
                                 )}
+                                <Link to="/about" className={`menu-link ${isAbout ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                    </span> About
+                                </Link>
+                                <Link to="/freedom" className={`menu-link ${isFreedom ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06z"></path></svg>
+                                    </span> Freedom
+                                </Link>
+                                <Link to="/blogs" className={`menu-link ${isBlogs ? 'active' : ''}`} onClick={() => setIsMenuOpen(false)}>
+                                    <span className="link-icon">
+                                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                                    </span> Blogs
+                                </Link>
                             </>
                         )}
                         
@@ -176,6 +192,14 @@ export default function MobileNavbar() {
                                 </svg>
                             </div>
                             <span className="mobile-nav-label">About</span>
+                        </Link>
+                        <Link to="/freedom" className={`mobile-nav-item ${isFreedom ? 'active' : ''}`}>
+                            <div className="mobile-nav-icon">
+                                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06z"></path>
+                                </svg>
+                            </div>
+                            <span className="mobile-nav-label">Freedom</span>
                         </Link>
                         <Link to="/blogs" className={`mobile-nav-item ${isBlogs ? 'active' : ''}`}>
                             <div className="mobile-nav-icon">
