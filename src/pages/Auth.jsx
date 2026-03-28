@@ -87,7 +87,7 @@ export default function Auth() {
 
                     <div className="auth-card-switcher">
                         {mode === 'signin' ? (
-                            <span>New here? <button onClick={() => setMode('signup')}>Join us</button></span>
+                            <span>New here? <button onClick={() => setMode('signup')}>Sign Up</button></span>
                         ) : (
                             <span>Already a member? <button onClick={() => setMode('signin')}>Log in</button></span>
                         )}
@@ -107,9 +107,9 @@ export default function Auth() {
                                         required
                                     />
                                 </div>
-                                <div className="mentor-portal-hint">
+                                {/* <div className="mentor-portal-hint">
                                     Are you a Mentor? <a href={mentorPortalUrl}>Join the Mentor Portal</a>
-                                </div>
+                                </div> */}
                             </>
                         )}
 
