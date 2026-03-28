@@ -150,10 +150,10 @@ export default function Auth() {
                         </button>
                     </form>
 
-                    <div className="auth-social-sect">
+                    {/* <div className="auth-social-sect">
                         <div className="social-divider">
                             <span>or {mode === 'signin' ? 'sign in' : 'sign up'} with</span>
-                        </div>
+                        </div> */}
                         {/* <div className="social-btns-row">
                             <button 
                                 className="social-btn face" 
