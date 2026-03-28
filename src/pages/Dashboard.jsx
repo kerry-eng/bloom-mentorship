@@ -8,7 +8,6 @@ import GroupChat from '../components/GroupChat'
 import { useRef } from 'react'
 import './Dashboard.css'
 import DashboardLayout from '../components/DashboardLayout'
-import DashboardTopbar from '../components/DashboardTopbar'
 import DirectMessagesPanel from '../../shared/components/DirectMessagesPanel'
 import Swal from 'sweetalert2'
 
@@ -654,14 +653,14 @@ export default function Dashboard() {
                         const isJoined = myGroups.has(g.id)
                         return (
                             <div key={g.id} className="glass-card-vibe group-card">
-                                {g.is_active_now && <div className="group-badge">ACTIVE NOW</div>}
+                                {g.is_active_now && <div className="group-badge active">ACTIVE NOW</div>}
                                 <div className="group-content">
                                     <div className="group-icon">{g.icon}</div>
                                     <h3>{g.name}</h3>
                                     <p>{g.description}</p>
                                     <div className="group-stats">
                                         <span className="stat-tag">{g.member_count_display}</span>
-                                        {g.is_active_now && <span className="stat-tag">Live Now</span>}
+                                        {g.is_active_now && <span className="stat-tag active">Live Now</span>}
                                     </div>
                                 </div>
                                 <div className="group-actions-arch mt-4">
