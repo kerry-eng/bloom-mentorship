@@ -22,6 +22,21 @@ function timeUntil(dateStr) {
     return `In ${mins} min`
 }
 
+function timeAgo(date) {
+    const seconds = Math.floor((new Date() - new Date(date)) / 1000);
+    let interval = seconds / 31536000;
+    if (interval > 1) return Math.floor(interval) + " years ago";
+    interval = seconds / 2592000;
+    if (interval > 1) return Math.floor(interval) + " months ago";
+    interval = seconds / 86400;
+    if (interval > 1) return Math.floor(interval) + " days ago";
+    interval = seconds / 3600;
+    if (interval > 1) return Math.floor(interval) + " hours ago";
+    interval = seconds / 60;
+    if (interval > 1) return Math.floor(interval) + " mins ago";
+    return "just now";
+}
+
 function isJoinable(dateStr) {
     const diff = new Date(dateStr) - new Date()
     // Joinable 15m before and up to 24 hours after
@@ -108,10 +123,15 @@ export default function Dashboard() {
     const [myGroups, setMyGroups] = useState(new Set())
     const [joining, setJoining] = useState({})
     const [activeGroup, setActiveGroup] = useState(null)
+    const [unreadMessagesCount, setUnreadMessagesCount] = useState(0)
+    const [unreadNotificationsCount, setUnreadNotificationsCount] = useState(0)
+    const [dbNotifications, setDbNotifications] = useState([])
 
     useEffect(() => {
         if (!user) return
         fetchAllData()
+        fetchUnreadCounts()
+        setupRealtimeSubscriptions()
     }, [user])
 
     useEffect(() => {
@@ -238,6 +258,99 @@ export default function Dashboard() {
             console.error('Error fetching dashboard data:', e)
         } finally {
             setLoading(false)
+        }
+    }
+
+    async function fetchUnreadCounts() {
+        if (!user) return
+        try {
+            // Count unread direct messages where current user is the "other" person (receiver)
+            // Note: This logic assumes if I am the client, I care about mentor messages.
+            const { count: msgCount } = await supabase
+                .from('direct_messages')
+                .select('*', { count: 'exact', head: true })
+                .eq('is_read', false)
+                .neq('sender_id', user.id)
+                .or(`client_id.eq.${user.id},mentor_id.eq.${user.id}`)
+            
+            setUnreadMessagesCount(msgCount || 0)
+
+            // Count unread notifications
+            const { count: notifCount, data: notifData } = await supabase
+                .from('notifications')
+                .select('*', { count: 'exact' })
+                .eq('user_id', user.id)
+                .order('created_at', { ascending: false })
+            
+            setUnreadNotificationsCount(notifData?.filter(n => !n.is_read).length || 0)
+            setDbNotifications(notifData || [])
+        } catch (e) {
+            console.error('Error fetching unread counts:', e)
+        }
+    }
+
+    function setupRealtimeSubscriptions() {
+        if (!user) return
+
+        const dmChannel = supabase
+            .channel('dashboard-dm-updates')
+            .on('postgres_changes', { 
+                event: '*', 
+                schema: 'public', 
+                table: 'direct_messages' 
+            }, (payload) => {
+                const msg = payload.new
+                if (!msg) return
+                
+                // If it's a new message for me
+                if (payload.eventType === 'INSERT' && msg.sender_id !== user.id && (msg.client_id === user.id || msg.mentor_id === user.id)) {
+                    setUnreadMessagesCount(prev => prev + 1)
+                }
+                // If a message was marked as read
+                if (payload.eventType === 'UPDATE' && msg.is_read && (msg.client_id === user.id || msg.mentor_id === user.id)) {
+                    setUnreadMessagesCount(prev => Math.max(0, prev - 1))
+                }
+            })
+            .subscribe()
+
+        const notifChannel = supabase
+            .channel('dashboard-notif-updates')
+            .on('postgres_changes', { 
+                event: '*', 
+                schema: 'public', 
+                table: 'notifications',
+                filter: `user_id=eq.${user.id}`
+            }, (payload) => {
+                if (payload.eventType === 'INSERT') {
+                    setUnreadNotificationsCount(prev => prev + 1)
+                    setDbNotifications(prev => [payload.new, ...prev])
+                }
+                if (payload.eventType === 'UPDATE' && payload.new.is_read) {
+                    setUnreadNotificationsCount(prev => Math.max(0, prev - 1))
+                    setDbNotifications(prev => prev.map(n => n.id === payload.new.id ? payload.new : n))
+                }
+            })
+            .subscribe()
+
+        return () => {
+            supabase.removeChannel(dmChannel)
+            supabase.removeChannel(notifChannel)
+        }
+    }
+
+    async function markNotificationsAsRead() {
+        if (!user || unreadNotificationsCount === 0) return
+        try {
+            await supabase
+                .from('notifications')
+                .update({ is_read: true })
+                .eq('user_id', user.id)
+                .eq('is_read', false)
+            
+            setUnreadNotificationsCount(0)
+            setDbNotifications(prev => prev.map(n => ({ ...n, is_read: true })))
+        } catch (e) {
+            console.error('Error marking notifications as read:', e)
         }
     }
 
@@ -764,30 +877,24 @@ export default function Dashboard() {
             </div>
 
             <div className="notifications-list-arch mt-5 glass-card-vibe">
-                <div className="notif-item-arch p-4 active">
-                    <div className="notif-icon-arch">📅</div>
-                    <div className="notif-content-arch">
-                        <strong>New Session Booked</strong>
-                        <p>Your session with Mentor Njeri is confirmed for tomorrow at 10:00 AM.</p>
-                        <span className="notif-time-arch">Just now</span>
+                {dbNotifications.length === 0 ? (
+                    <div className="p-5 text-center opacity-70">
+                        <p>No notifications yet.</p>
                     </div>
-                </div>
-                <div className="notif-item-arch p-4">
-                    <div className="notif-icon-arch">📝</div>
-                    <div className="notif-content-arch">
-                        <strong>Reflection Reminder</strong>
-                        <p>Don't forget to record your reflections for yesterday's session.</p>
-                        <span className="notif-time-arch">2 hours ago</span>
-                    </div>
-                </div>
-                <div className="notif-item-arch p-4">
-                    <div className="notif-icon-arch">🌸</div>
-                    <div className="notif-content-arch">
-                        <strong>Welcome to Bloom</strong>
-                        <p>Explore the dashboard to start your journey.</p>
-                        <span className="notif-time-arch">1 day ago</span>
-                    </div>
-                </div>
+                ) : (
+                    dbNotifications.map(n => (
+                        <div key={n.id} className={`notif-item-arch p-4 ${!n.is_read ? 'active' : ''}`}>
+                            <div className="notif-icon-arch">
+                                {n.type === 'message' ? '💬' : n.type === 'session' ? '📅' : '🌸'}
+                            </div>
+                            <div className="notif-content-arch">
+                                <strong>{n.title}</strong>
+                                <p>{n.content}</p>
+                                <span className="notif-time-arch">{timeAgo(n.created_at)}</span>
+                            </div>
+                        </div>
+                    ))
+                )}
             </div>
         </div>
     )
@@ -860,6 +967,17 @@ export default function Dashboard() {
             setActiveView={setActiveView}
             onProfileClick={() => setActiveView('overview')}
         >
+            <DashboardTopbar 
+                isMobileMenuOpen={isMobileMenuOpen} 
+                setIsMobileMenuOpen={setIsMobileMenuOpen}
+                setActiveView={(v) => {
+                    setActiveView(v)
+                    if (v === 'notifications') markNotificationsAsRead()
+                }}
+                unreadMessages={unreadMessagesCount}
+                unreadNotifications={unreadNotificationsCount}
+                onProfileClick={() => setActiveView('overview')}
+            />
             {showBookingSuccess && (
                 <div className="booking-success-toast fade-in">
                     <div className="toast-icon"></div>

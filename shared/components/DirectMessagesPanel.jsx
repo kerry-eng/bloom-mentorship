@@ -88,7 +88,7 @@ export default function DirectMessagesPanel({
 
             const { data, error } = await supabase
                 .from('direct_messages')
-                .select('id, client_id, mentor_id, sender_id, content, created_at')
+                .select('id, client_id, mentor_id, sender_id, content, created_at, is_read')
                 .eq('client_id', selectedThread.clientId)
                 .eq('mentor_id', selectedThread.mentorId)
                 .order('created_at', { ascending: true })
@@ -107,6 +107,17 @@ export default function DirectMessagesPanel({
             } else {
                 setSetupRequired(false)
                 setMessages(data || [])
+            }
+
+            if (data?.length > 0) {
+                const unreadFromOthers = data.filter(m => !m.is_read && m.sender_id !== userId)
+                if (unreadFromOthers.length > 0) {
+                    supabase
+                        .from('direct_messages')
+                        .update({ is_read: true })
+                        .in('id', unreadFromOthers.map(m => m.id))
+                        .then(() => {})
+                }
             }
 
             setLoadingMessages(false)
@@ -169,7 +180,7 @@ export default function DirectMessagesPanel({
                 sender_id: userId,
                 content: draft.trim()
             })
-            .select('id, client_id, mentor_id, sender_id, content, created_at')
+            .select('id, client_id, mentor_id, sender_id, content, created_at, is_read')
             .single()
 
         if (error) {

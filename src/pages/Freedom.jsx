@@ -28,7 +28,7 @@ export default function Freedom() {
                                 Start Your Journey
                             </Link>
                             <Link to="/booking" className="btn-replica-outline">
-                                Talk to a Mentor
+                                Talk to a Counsellor
                             </Link>
                         </div>
                     </div>

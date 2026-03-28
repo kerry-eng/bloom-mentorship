@@ -304,15 +304,23 @@
     box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-.topbar-btn-circle .notification-dot {
+.topbar-btn-circle .notification-badge-arch {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 8px;
-    height: 8px;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
     background: #f97316;
-    border-radius: 50%;
+    color: white;
+    border-radius: 9px;
     border: 2px solid white;
+    font-size: 0.65rem;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+    box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3);
 }
 
 .user-profile-arch {
