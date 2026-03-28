@@ -189,7 +189,7 @@
 
 .truth-content p {
     font-size: 1.12rem;
-    color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 2.5rem;
     max-width: 500px;
 }
@@ -200,18 +200,20 @@
 }
 
 .scripture-item {
-    padding: 2rem;
-    background: rgba(255, 255, 255, 0.05);
+    padding: 2.25rem;
+    background: rgba(255, 255, 255, 0.08); /* More opaque for readability */
     border-radius: 20px;
     border-left: 4px solid #14b8a6;
+    backdrop-filter: blur(10px);
 }
 
 .scripture-text {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-style: italic;
-    margin-bottom: 1rem;
+    margin-bottom: 1.25rem;
     color: #ffffff;
     line-height: 1.6;
+    font-weight: 500; /* Slightly heavier for contrast */
 }
 
 .scripture-ref {
@@ -338,6 +340,9 @@
 }
 
 @media (max-width: 768px) {
+    .freedom-page {
+        padding-bottom: 120px; /* Clearance for mobile bottom navbar */
+    }
     .path-steps {
         grid-template-columns: 1fr;
     }
@@ -345,6 +350,15 @@
         padding: 8rem 0 4rem;
     }
     .freedom-cta__card {
-        padding: 3rem 1.5rem;
+        padding: 3.5rem 1.5rem;
+    }
+    .truth-content h2 {
+        font-size: 2.25rem;
+    }
+    .truth-grid {
+        gap: 2.5rem;
+    }
+    .scripture-item {
+        padding: 1.75rem;
     }
 }
