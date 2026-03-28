@@ -1,13 +1,34 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useTheme } from '../context/ThemeContext'
 import './Home.css'
 
 export default function Home() {
     const { theme } = useTheme()
+    const [votd, setVotd] = useState({ 
+        text: '"For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."', 
+        reference: 'Jeremiah 29:11' 
+    })
+
     useEffect(() => {
         window.scrollTo(0, 0)
+        fetchVotd()
     }, [])
+
+    async function fetchVotd() {
+        try {
+            const resp = await fetch('https://labs.bible.org/api/?passage=votd&type=json')
+            const data = await resp.json()
+            if (data && data[0]) {
+                setVotd({ 
+                    text: `"${data[0].text}"`, 
+                    reference: `${data[0].bookname} ${data[0].chapter}:${data[0].verse}` 
+                })
+            }
+        } catch (e) {
+            console.error('Failed to fetch VOTD:', e)
+        }
+    }
 
     return (
         <div className={`home-container ${theme === 'pink' ? 'theme-pink' : ''}`}>
@@ -256,9 +277,9 @@ export default function Home() {
                         <div className="verse-icon">📖</div>
                             <h3 className="verse-title">Verse of the Day</h3>
                         <blockquote className="verse-text">
-                            "For I know the plans I have for you," declares the Lord, "plans to prosper you and not to harm you, plans to give you hope and a future."
+                            {votd.text}
                         </blockquote>
-                        <cite className="verse-reference">— Jeremiah 29:11</cite>
+                        <cite className="verse-reference">— {votd.reference}</cite>
                     </div>
                 </div>
             </section>
