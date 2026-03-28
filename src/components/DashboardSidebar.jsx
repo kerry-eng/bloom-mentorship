@@ -53,7 +53,6 @@ export default function DashboardSidebar({ isMobileMenuOpen, setIsMobileMenuOpen
                         SESSIONS
                     </button>
                     <div className="nav-item-wrapper">
-                        <span className="nav-dot reflections-dot"></span>
                         <button 
                             className={`nav-item-arch ${activeView === 'reflections' ? 'active' : ''}`} 
                             onClick={() => handleNavClick('reflections')}
