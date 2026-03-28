@@ -150,11 +150,12 @@ export default function Auth() {
                         </button>
                     </form>
 
-                    {/* <div className="auth-social-sect">
+                    {/* 
+                    <div className="auth-social-sect">
                         <div className="social-divider">
                             <span>or {mode === 'signin' ? 'sign in' : 'sign up'} with</span>
-                        </div> */}
-                        {/* <div className="social-btns-row">
+                        </div>
+                        <div className="social-btns-row">
                             <button 
                                 className="social-btn face" 
                                 onClick={() => handleSocial('facebook')}
@@ -169,8 +170,9 @@ export default function Auth() {
                             >
                                 <span className="icon">G</span>
                             </button>
-                        </div> */}
-                    </div>
+                        </div>
+                    </div> 
+                    */}
                 </div>
             </div>
         </div>
