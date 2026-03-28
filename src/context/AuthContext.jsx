@@ -109,14 +109,19 @@ export function AuthProvider({ children }) {
     }
 
     async function signInWithGoogle(role = 'client', redirectPath = '/dashboard') {
+        const finalUrl = getAppUrlForRole(role, redirectPath)
+        console.log(`Initiating Google OAuth for role: ${role}, redirecting to: ${finalUrl}`)
         const { error } = await supabase.auth.signInWithOAuth({
             provider: 'google',
             options: {
-                redirectTo: getAppUrlForRole(role, redirectPath),
+                redirectTo: finalUrl,
                 data: { role }
             }
         })
-        if (error) throw error
+        if (error) {
+            console.error('Supabase Google OAuth initialization error:', error)
+            throw error
+        }
     }
 
     async function signInWithFacebook(role = 'client', redirectPath = '/dashboard') {

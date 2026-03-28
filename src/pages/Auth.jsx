@@ -19,14 +19,14 @@ export default function Auth() {
     const mentorPortalUrl = getMentorAppUrl('/auth')
 
     async function handleSocial(provider) {
+        console.log(`Initiating social login for provider: ${provider}`)
         setError('')
         setLoading(true)
         try {
             if (provider === 'google') await signInWithGoogle('client')
             if (provider === 'facebook') await signInWithFacebook('client')
-            // Note: OAuth redirects away, so navigation here is usually not needed immediately,
-            // but Supabase will redirect back to /dashboard based on our redirectTo config.
         } catch (err) {
+            console.error('Social login error caught in component:', err)
             setError(err.message || 'Social login failed.')
             setLoading(false)
         }
@@ -154,7 +154,7 @@ export default function Auth() {
                         <div className="social-divider">
                             <span>or {mode === 'signin' ? 'sign in' : 'sign up'} with</span>
                         </div>
-                        <div className="social-btns-row">
+                        {/* <div className="social-btns-row">
                             <button 
                                 className="social-btn face" 
                                 onClick={() => handleSocial('facebook')}
@@ -169,7 +169,7 @@ export default function Auth() {
                             >
                                 <span className="icon">G</span>
                             </button>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>
