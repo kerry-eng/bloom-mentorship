@@ -8,6 +8,7 @@ import GroupChat from '../components/GroupChat'
 import { useRef } from 'react'
 import './Dashboard.css'
 import DashboardLayout from '../components/DashboardLayout'
+import DashboardTopbar from '../components/DashboardTopbar'
 import DirectMessagesPanel from '../../shared/components/DirectMessagesPanel'
 import Swal from 'sweetalert2'
 
