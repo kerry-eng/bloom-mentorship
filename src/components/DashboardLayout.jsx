@@ -3,7 +3,16 @@ import { useTheme } from '../context/ThemeContext';
 import DashboardSidebar from './DashboardSidebar';
 import DashboardTopbar from './DashboardTopbar';
 
-export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobileMenuOpen, activeView, setActiveView, onProfileClick }) {
+export default function DashboardLayout({ 
+    children, 
+    isMobileMenuOpen, 
+    setIsMobileMenuOpen, 
+    activeView, 
+    setActiveView, 
+    onProfileClick,
+    unreadMessages = 0,
+    unreadNotifications = 0
+}) {
     const { theme } = useTheme();
 
     return (
@@ -22,6 +31,8 @@ export default function DashboardLayout({ children, isMobileMenuOpen, setIsMobil
                         setIsMobileMenuOpen={setIsMobileMenuOpen}
                         onProfileClick={onProfileClick}
                         setActiveView={setActiveView}
+                        unreadMessages={unreadMessages}
+                        unreadNotifications={unreadNotifications}
                     />
 
                     <div className="workspace-content">

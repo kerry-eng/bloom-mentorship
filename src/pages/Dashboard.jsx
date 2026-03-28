@@ -965,20 +965,14 @@ export default function Dashboard() {
             isMobileMenuOpen={isMobileMenuOpen}
             setIsMobileMenuOpen={setIsMobileMenuOpen}
             activeView={activeView}
-            setActiveView={setActiveView}
+            setActiveView={(v) => {
+                setActiveView(v)
+                if (v === 'notifications') markNotificationsAsRead()
+            }}
+            unreadMessages={unreadMessagesCount}
+            unreadNotifications={unreadNotificationsCount}
             onProfileClick={() => setActiveView('overview')}
         >
-            <DashboardTopbar 
-                isMobileMenuOpen={isMobileMenuOpen} 
-                setIsMobileMenuOpen={setIsMobileMenuOpen}
-                setActiveView={(v) => {
-                    setActiveView(v)
-                    if (v === 'notifications') markNotificationsAsRead()
-                }}
-                unreadMessages={unreadMessagesCount}
-                unreadNotifications={unreadNotificationsCount}
-                onProfileClick={() => setActiveView('overview')}
-            />
             {showBookingSuccess && (
                 <div className="booking-success-toast fade-in">
                     <div className="toast-icon"></div>
