@@ -13,6 +13,7 @@ export default function Auth() {
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(false)
     const [success, setSuccess] = useState('')
+    const [showPassword, setShowPassword] = useState(false)
     const { signIn, signUp, signInWithGoogle, signInWithFacebook } = useAuth()
     const navigate = useNavigate()
     const mentorPortalUrl = getMentorAppUrl('/auth')
@@ -125,13 +126,23 @@ export default function Auth() {
 
                         <div className="nature-input-group">
                             <label>Password</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={e => setPassword(e.target.value)}
-                                required
-                                minLength={6}
-                            />
+                            <div className="password-input-wrapper">
+                                <input
+                                    type={showPassword ? 'text' : 'password'}
+                                    value={password}
+                                    onChange={e => setPassword(e.target.value)}
+                                    required
+                                    minLength={6}
+                                />
+                                <button 
+                                    type="button" 
+                                    className="password-toggle-btn"
+                                    onClick={() => setShowPassword(!showPassword)}
+                                    tabIndex="-1"
+                                >
+                                    {showPassword ? '👁️' : '👁️‍🗨️'}
+                                </button>
+                            </div>
                         </div>
 
                         <button id="auth-submit" type="submit" className="nature-submit-btn" disabled={loading}>

@@ -150,6 +150,7 @@
 }
 
 .nature-input-group input {
+    width: 100%;
     background: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -158,6 +159,34 @@
     color: #ffffff;
     font-size: 1.05rem;
     transition: all 0.3s;
+}
+
+.password-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    z-index: 10;
+}
+
+.password-toggle-btn:hover {
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.1);
 }
 
 .nature-input-group input:focus {
